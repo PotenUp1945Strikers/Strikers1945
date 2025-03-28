@@ -104,7 +104,7 @@ void UIManager::SetLife(int input)
 		life->SetCount(input);
 }
 
-void UIManager::setBomb(int input)
+void UIManager::SetBomb(int input)
 {
 	if(life)
 		life->SetCount(input);
