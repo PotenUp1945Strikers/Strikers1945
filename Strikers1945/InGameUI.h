@@ -2,7 +2,7 @@
 #include "UI.h"
 #include "config.h"
 
-class InGameUI : UI
+class InGameUI : public UI
 {
 private:
 	int count;
@@ -11,5 +11,6 @@ private:
 public:
 	void Render(HDC hdc) override;
 	void SetCount(int count) { this->count = count; }
+
 };
 
