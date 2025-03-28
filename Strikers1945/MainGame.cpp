@@ -4,30 +4,20 @@
 void MainGame::Init()
 {
 	hdc = GetDC(g_hWnd);
-
+	state = GameStates::Intro;
 	backBuffer = new Image();
 	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
 	{
 		MessageBox(g_hWnd, 
-			TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
+			TEXT("Cannot Create Back Buffer"), TEXT("Warning"), MB_OK);
 	}
-	backGround = new Image();
-	if (FAILED(backGround->Init(TEXT("Image/BackGround.bmp"), WINSIZE_X, WINSIZE_Y)))
-	{
-		MessageBox(g_hWnd,
-			TEXT("Image/backGround.bmp 생성 실패"), TEXT("경고"), MB_OK);
-	}
+	BackgroundManager::GetInstance()->Init();
+	UIManager::GetInstance()->Init();
+	
 }
 
 void MainGame::Release()
 {
-	if (backGround)
-	{
-		backGround->Release();
-		delete backGround;
-		backGround = nullptr;
-	}
-
 	if (backBuffer)
 	{
 		backBuffer->Release();
@@ -36,20 +26,53 @@ void MainGame::Release()
 	}
 
 	ReleaseDC(g_hWnd, hdc);
-	KeyManager::GetInstance()->ReleaseInstance();
+	KeyManager::GetInstance()->Release();
 	KeyManager::ReleaseInstance();
+	UIManager::GetInstance()->Release();
+	UIManager::ReleaseInstance();
+	BackgroundManager::GetInstance()->Release();
+	BackgroundManager::ReleaseInstance();
+	EventHandler::ReleaseInstance();
 }
 
 void MainGame::Update()
 {
-	
+	switch (state)
+	{
+	case GameStates::Intro:
+		UpdateIntro();
+		break;
+	case GameStates::InGame:
+		UpdateInGame();
+		break;
+	case GameStates::Pause:
+		UpdatePause();
+		break;
+	case GameStates::Ending:
+		UpdateEnding();
+		break;
+	}
 }
 
 void MainGame::Render()
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
 
-	backGround->Render(hBackBufferDC);
+	switch (state)
+	{
+	case GameStates::Intro:
+		RenderIntro(hBackBufferDC);
+		break;
+	case GameStates::InGame:
+		RenderInGame(hBackBufferDC);
+		break;
+	case GameStates::Pause:
+		RenderPause(hBackBufferDC);
+		break;
+	case GameStates::Ending:
+		RenderEnding(hBackBufferDC);
+		break;
+	}
 
 	backBuffer->Render(hdc);
 }
@@ -86,4 +109,78 @@ MainGame::MainGame()
 
 MainGame::~MainGame()
 {
+}
+
+void MainGame::RenderIntro(HDC hdc)
+{
+	UIManager::GetInstance()->RenderIntro(hdc);
+}
+
+void MainGame::RenderInGame(HDC hdc)
+{
+	BackgroundManager::GetInstance()->Render(hdc);
+	UIManager::GetInstance()->RenderInGame(hdc);
+}
+
+void MainGame::RenderPause(HDC hdc)
+{
+	BackgroundManager::GetInstance()->Render(hdc);
+	UIManager::GetInstance()->RenderPause(hdc);
+}
+
+void MainGame::RenderEnding(HDC hdc)
+{
+	UIManager::GetInstance()->RenderEnding(hdc);
+}
+
+void MainGame::UpdateIntro()
+{
+	if (PressAnyKey())
+		state = GameStates::InGame;
+}
+
+void MainGame::UpdateInGame()
+{
+	KeyManager* km = KeyManager::GetInstance();
+
+	if (km->IsOnceKeyDown(PAUSE_KEY)
+		|| km->IsStayKeyDown(PAUSE_KEY))
+	{
+		state = GameStates::Pause;
+		return;
+	}
+	
+	BackgroundManager::GetInstance()->Update();
+	EventHandler::GetInstance()->Update();
+}
+
+void MainGame::UpdatePause()
+{
+	KeyManager* km = KeyManager::GetInstance();
+
+	if (km->IsOnceKeyDown(PAUSE_KEY)
+		|| km->IsStayKeyDown(PAUSE_KEY))
+		state = GameStates::InGame;
+}
+
+void MainGame::UpdateEnding()
+{
+	KeyManager* km = KeyManager::GetInstance();
+	
+	if (km->IsOnceKeyDown(REGAME_KEY)
+		|| km->IsStayKeyDown(REGAME_KEY))
+		state = GameStates::Intro;
+}
+
+bool MainGame::PressAnyKey()
+{
+	KeyManager* km = KeyManager::GetInstance();
+
+	for (int key = 0; key < MAX_KEY_COUNT; ++key)
+	{
+		if (km->IsOnceKeyDown(key)
+			|| km->IsStayKeyDown(key))
+			return true;
+	}
+	return false;
 }
