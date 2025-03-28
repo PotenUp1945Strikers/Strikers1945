@@ -20,6 +20,7 @@ public:
 	void Update();
 	void RenderIntro(HDC hdc);
 	void RenderPause(HDC hdc);
+	void RenderInGame(HDC hdc);
 	void RenderEnding(HDC hdc);
 	void SetLife(int input);
 	void setBomb(int input);
