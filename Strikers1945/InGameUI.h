@@ -2,7 +2,7 @@
 #include "UI.h"
 #include "config.h"
 
-class InGameUI : UI
+class InGameUI : public UI
 {
 private:
 	int count;

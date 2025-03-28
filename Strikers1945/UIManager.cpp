@@ -1,17 +1,28 @@
 #include "UIManager.h"
 #include "Image.h"
 #include "ImageManager.h"
-
+#include "UI.h"
+#include "InGameUI.h"
 
 void UIManager::Init()
 {
 	// TODO : Init
 
 	intro->Init();
+	intro->SetImage(TEXT("Image/UI/UI_Intro.bmp"), 0, 0, 0, 0);
+	
 	pause->Init();
+	pause->SetImage(TEXT("Image/UI/UI_Pause.bmp"), 0, 0, 0, 0);
+	
 	ending->Init();
+	ending->SetImage(TEXT("Image/UI/UI_Ending.bmp"), 0, 0, 0, 0);
+	
 	life->Init();
+	life->SetImage(TEXT("Image/UI/UI_Life.bmp"),0,0,0,0);
+
 	bomb->Init();
+	bomb->SetImage(TEXT("Image/UI/UI_Bomb.bmp"), 0, 0, 0, 0);
+
 
 }
 
@@ -41,42 +52,25 @@ void UIManager::Release()
 
 void UIManager::Render(HDC hdc)
 {
-	if (GameStates::InGame)
-	{
-		if (life)
-			life->Render(hdc);
-		if (bomb)
-			bomb->Render(hdc);
-	}
+		
+	
 }
 
 void UIManager::Update()
 {
-	switch (GameManager::GetInstance()->GetCurrState())
-	{
-		case GameStates::Intro:
-			
-			if(intro)
-				intro->Update(hdc);
-			break;
-		case GameStates::InGame:
-			
-			if(life)
-				life->Update(hdc);
-			if(bomb)
-				bomb->Update(hdc);
-			break;
-		case GameStates::Pause:
-		
-			if(pause)
-				pause->Update(hdc);
-			break;
-		case GameStates::Ending:
-			if(ending)
-				ending->Update(hdc);
-			break;
-	}
+
+	if (intro)
+		intro->Update();
+	if (life)
+		life->Update();
+	if (bomb)
+		bomb->Update();
+	if (pause)
+		pause->Update();
+	if (ending)
+		ending->Update();
 }
+
 
 void UIManager::RenderIntro(HDC hdc)
 {
@@ -90,6 +84,14 @@ void UIManager::RenderPause(HDC hdc)
 		pause->Render(hdc);
 }
 
+void UIManager::RenderInGame(HDC hdc)
+{
+	if (life)
+		life->Render(hdc);
+	if (bomb)
+		bomb->Render(hdc);
+}
+
 void UIManager::RenderEnding(HDC hdc)
 {
 	if (ending)
@@ -99,11 +101,11 @@ void UIManager::RenderEnding(HDC hdc)
 void UIManager::SetLife(int input)
 {
 	if(life)
-		life->SetLife(input);
+		life->SetCount(input);
 }
 
 void UIManager::setBomb(int input)
 {
 	if(life)
-		life->SetBomb(input);
+		life->SetCount(input);
 }
