@@ -1,7 +1,7 @@
 #pragma once
 #include "config.h"
 class Image;
-
+class ImageManager;
 class BackgroundManager : public Singleton<BackgroundManager>
 {
 private:

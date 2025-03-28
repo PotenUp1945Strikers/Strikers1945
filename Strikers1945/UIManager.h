@@ -8,7 +8,7 @@ class UIManager : public Singleton<UIManager>
 private:
 	UI* intro;
 	UI* pause;
-	UI* Ending;
+	UI* ending;
 	InGameUI* life;
 	InGameUI* bomb;
 
