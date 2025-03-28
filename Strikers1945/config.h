@@ -16,6 +16,10 @@ using namespace std;
 #define PAUSE_KEY 'P'
 #define REGAME_KEY 'R'
 
+#define SCROLL_TIME 0.025f
+
+#define BACKGROUND_PATH "Image/Background.bmp"
+
 typedef struct tagFPOINT
 {
 	float x;

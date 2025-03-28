@@ -1,5 +1,8 @@
 #pragma once
 #include "config.h"
+#include "Singleton.h"
+#include "TimerManager.h"
+
 class Image;
 class ImageManager;
 class BackgroundManager : public Singleton<BackgroundManager>
@@ -7,6 +10,7 @@ class BackgroundManager : public Singleton<BackgroundManager>
 private:
 	Image* image;
 	int currPosY;
+	float deltaTime;
 
 public:
 

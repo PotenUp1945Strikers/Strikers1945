@@ -7,7 +7,7 @@
 void UIManager::Init()
 {
 	// TODO : Init
-
+	intro = new UI;
 	intro->Init();
 	intro->SetImage(TEXT("Image/UI/UI_Intro.bmp"), 0, 0, 0, 0);
 	

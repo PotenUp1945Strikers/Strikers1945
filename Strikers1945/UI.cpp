@@ -41,5 +41,6 @@ void UI::Render(HDC hdc)
 
 void UI::SetImage(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY)
 {
-	image = ImageManager::GetInstance()->AddImage("이미지 키값", filePath, width, height, maxFrameX, maxFrameY, true, RGB(255, 0, 255));
+	key = filePath;
+	image = ImageManager::GetInstance()->AddImage(key, filePath, width, height, maxFrameX, maxFrameY, true, RGB(255, 0, 255));
 }

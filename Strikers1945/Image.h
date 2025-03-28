@@ -66,7 +66,8 @@ public:
 		int maxFrameX, int maxFrameY,
 		bool isTransparent = FALSE, COLORREF transColor = FALSE);
 
-	void Render(HDC hdc, int destX = 0, int destY = 0);
+	void Render(HDC hdc, int destX, int destY);
+	void Render(HDC hdc, int srcY);
 	void Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip = false);
 	void FrameRender(HDC hdc, int destX, int destY, int frameX, int frameY, bool isFlip = false);
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "config.h"
+#include "Singleton.h"
 
 class UI;
 class InGameUI;

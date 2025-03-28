@@ -11,22 +11,22 @@
 class ImageManager: public Singleton<ImageManager>
 {
 private:
-	map<const char*, Image*> store;
+	map<const wchar_t*, Image*> store;
 
 public:
 	void Init();
 	void Release();
-	Image* AddImage(const char* key, const WCHAR* filepath,
+	Image* AddImage(const wchar_t* key, const WCHAR* filepath,
 		int width, int height,
 		bool isTransparent = FALSE,
 		COLORREF transColor = FALSE);
-	Image* AddImage(const char* key, const WCHAR* filepath,
+	Image* AddImage(const wchar_t* key, const WCHAR* filepath,
 		int width, int height,
 		int maxFrameX, int maxFrameY,
 		bool isTransparent = FALSE,
 		COLORREF transColor = FALSE);
-	void DeleteImage(const char* key);
-	Image* GetImage(const char* key);
+	void DeleteImage(const wchar_t* key);
+	Image* GetImage(const wchar_t* key);
 
 };
 

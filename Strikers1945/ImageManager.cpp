@@ -12,7 +12,7 @@ void ImageManager::Release()
     store.clear();
 }
 
-Image* ImageManager::AddImage(const char* key, const WCHAR* filepath,
+Image* ImageManager::AddImage(const wchar_t* key, const WCHAR* filepath,
     int width, int height, bool isTransparent, COLORREF transColor)
 {
     if (store.find(key) != store.end())
@@ -33,7 +33,7 @@ Image* ImageManager::AddImage(const char* key, const WCHAR* filepath,
     return image;
 }
 
-Image* ImageManager::AddImage(const char* key, const WCHAR* filepath,
+Image* ImageManager::AddImage(const wchar_t* key, const WCHAR* filepath,
     int width, int height, int maxFrameX, int maxFrameY, bool isTransparent, COLORREF transColor)
 {
     if (store.find(key) != store.end())
@@ -54,7 +54,7 @@ Image* ImageManager::AddImage(const char* key, const WCHAR* filepath,
     return image;
 }
 
-void ImageManager::DeleteImage(const char* key)
+void ImageManager::DeleteImage(const wchar_t* key)
 {
     auto iter = store.find(key);
 
@@ -68,7 +68,7 @@ void ImageManager::DeleteImage(const char* key)
     store.erase(iter);
 }
 
-Image* ImageManager::GetImage(const char* key)
+Image* ImageManager::GetImage(const wchar_t* key)
 {
     return store.find(key) == store.end() ? nullptr : store[key];
 }

@@ -133,7 +133,18 @@ void Image::Render(HDC hdc, int destX, int destY)
         );
     }
 }
-
+void Image::Render(HDC hdc, int srcY)
+{
+    BitBlt(
+        hdc,
+        0, 0,
+        imageInfo->width,
+        imageInfo->height,
+        imageInfo->hMemDC,
+        0, srcY,
+        SRCCOPY
+    );
+}
 void Image::Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip)
 {
     imageInfo->currFrameX = frameIndex;
