@@ -1,18 +1,28 @@
 #pragma once
 #include "Image.h"
+#include "KeyManager.h"
+#include "UIManager.h"
+#include "BackgroundManager.h"
+#include "EventHandler.h"
 
 class MainGame
 {
 private:
 	HDC hdc;
-	PAINTSTRUCT ps;
-	HANDLE hTimer;
-	int mousePosX = 0, mousePosY = 0;
-	FPOINT mousePos;
-	wchar_t szText[128];
-
+	GameStates state;
 	Image* backBuffer;
-	Image* backGround;
+
+	void RenderIntro(HDC hdc);
+	void RenderInGame(HDC hdc);
+	void RenderPause(HDC hdc);
+	void RenderEnding(HDC hdc);
+
+	void UpdateIntro();
+	void UpdateInGame();
+	void UpdatePause();
+	void UpdateEnding();
+
+	bool PressAnyKey();
 
 public:
 	void Init();	

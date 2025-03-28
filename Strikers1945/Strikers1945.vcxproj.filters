@@ -51,6 +51,15 @@
     <ClInclude Include="CommonFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>TG</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundManager.h">
+      <Filter>TG</Filter>
+	</ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>BH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -73,6 +82,15 @@
     </ClCompile>
     <ClCompile Include="TimerManager.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>TG</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundManager.cpp">
+      <Filter>TG</Filter>
+	</ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>BH</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
