@@ -22,6 +22,7 @@
     <Filter Include="SG">
       <UniqueIdentifier>{e89462b4-26b3-44a1-9b7a-b21826e0a5b1}</UniqueIdentifier>
     </Filter>
+	  
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -60,6 +61,12 @@
     <ClInclude Include="EventHandler.h">
       <Filter>BH</Filter>
     </ClInclude>
+	  <ClInclude Include="InGameUI.h">
+		  <Filter>SG</Filter>
+	  </ClInclude>
+	  <ClInclude Include="UI.h">
+		  <Filter>SG</Filter>
+	  </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -91,6 +98,12 @@
 	</ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>BH</Filter>
+	</ClCompile>
+	<ClCompile Include="InGameUI.cpp">
+		<Filter>SG</Filter>
     </ClCompile>
+	  <ClCompile Include="UI.cpp">
+		  <Filter>SG</Filter>
+	  </ClCompile>
   </ItemGroup>
 </Project>
