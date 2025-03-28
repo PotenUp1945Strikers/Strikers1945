@@ -11,5 +11,6 @@ private:
 public:
 	void Render(HDC hdc) override;
 	void SetCount(int count) { this->count = count; }
+
 };
 

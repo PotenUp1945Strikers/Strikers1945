@@ -15,16 +15,21 @@ void UI::Release()
 
 void UI::Update()
 {
-	/*elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
 	if (elapsedTime > 0.1f)
 	{
 		currFrameX++;
 		if (currFrameX > image->GetMaxFrameX())
 		{
 			currFrameX = 0;
+			currFrameY++;
+			if (currFrameY > image->GetMaxFrameY())
+			{
+				currFrameY = 0;
+			}
 		}
 		elapsedTime = 0.0f;
-	}*/
+	}
 
 }
 
