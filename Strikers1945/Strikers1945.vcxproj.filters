@@ -56,9 +56,15 @@
     </ClInclude>
     <ClInclude Include="BackgroundManager.h">
       <Filter>TG</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameUI.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>SG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +94,15 @@
     </ClCompile>
     <ClCompile Include="BackgroundManager.cpp">
       <Filter>TG</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameUI.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>SG</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
