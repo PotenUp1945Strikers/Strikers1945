@@ -23,7 +23,7 @@ public:
 	void RenderInGame(HDC hdc);
 	void RenderEnding(HDC hdc);
 	void SetLife(int input);
-	void setBomb(int input);
+	void SetBomb(int input);
 
 };
 
