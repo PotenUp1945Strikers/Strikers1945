@@ -6,12 +6,11 @@
 
 void UIManager::Init()
 {
-	// TODO : Init
 	intro = new UI;
-	intro->Init();
-	intro->SetImage(TEXT("Image/UI/UI_Intro.bmp"), 0, 0, 0, 0);
+	intro->Init({ 300,400 });
+	intro->SetImage(TEXT("Image/opening.bmp"), 600, 800, 1, 1);
 	
-	pause->Init();
+	/*pause->Init();	
 	pause->SetImage(TEXT("Image/UI/UI_Pause.bmp"), 0, 0, 0, 0);
 	
 	ending->Init();
@@ -21,7 +20,7 @@ void UIManager::Init()
 	life->SetImage(TEXT("Image/UI/UI_Life.bmp"),0,0,0,0);
 
 	bomb->Init();
-	bomb->SetImage(TEXT("Image/UI/UI_Bomb.bmp"), 0, 0, 0, 0);
+	bomb->SetImage(TEXT("Image/UI/UI_Bomb.bmp"), 0, 0, 0, 0);*/
 
 
 }
@@ -47,6 +46,11 @@ void UIManager::Release()
 	{
 		delete life;
 		life = nullptr;
+	}
+	if (bomb)
+	{
+		delete bomb;
+		bomb = nullptr;
 	}
 }
 
@@ -106,6 +110,6 @@ void UIManager::SetLife(int input)
 
 void UIManager::SetBomb(int input)
 {
-	if(life)
-		life->SetCount(input);
+	if(bomb)
+		bomb->SetCount(input);
 }

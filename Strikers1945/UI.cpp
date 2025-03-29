@@ -9,6 +9,11 @@ void UI::Init()
 	renderPos = { 0.0f, 0.0f };
 }
 
+void UI::Init(FPOINT renderPos)
+{
+	this->renderPos = { renderPos.x, renderPos.y };
+}
+
 void UI::Release()
 {
 }

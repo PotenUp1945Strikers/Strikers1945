@@ -12,7 +12,7 @@ void MainGame::Init()
 			TEXT("Cannot Create Back Buffer"), TEXT("Warning"), MB_OK);
 	}
 	BackgroundManager::GetInstance()->Init();
-	//UIManager::GetInstance()->Init();
+	UIManager::GetInstance()->Init();
 	
 }
 
@@ -28,8 +28,8 @@ void MainGame::Release()
 	ReleaseDC(g_hWnd, hdc);
 	KeyManager::GetInstance()->Release();
 	KeyManager::ReleaseInstance();
-	/*UIManager::GetInstance()->Release();
-	UIManager::ReleaseInstance();*/
+	UIManager::GetInstance()->Release();
+	UIManager::ReleaseInstance();
 	BackgroundManager::GetInstance()->Release();
 	BackgroundManager::ReleaseInstance();
 	EventHandler::ReleaseInstance();
@@ -113,7 +113,7 @@ MainGame::~MainGame()
 
 void MainGame::RenderIntro(HDC hdc)
 {
-	//UIManager::GetInstance()->RenderIntro(hdc);
+	UIManager::GetInstance()->RenderIntro(hdc);
 }
 
 void MainGame::RenderInGame(HDC hdc)
