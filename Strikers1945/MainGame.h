@@ -11,6 +11,7 @@ private:
 	HDC hdc;
 	GameStates state;
 	Image* backBuffer;
+	bool pause;
 
 	void RenderIntro(HDC hdc);
 	void RenderInGame(HDC hdc);

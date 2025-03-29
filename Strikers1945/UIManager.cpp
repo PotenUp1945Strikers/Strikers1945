@@ -10,8 +10,10 @@ void UIManager::Init()
 	intro->Init({ 300,400 });
 	intro->SetImage(TEXT("Image/opening.bmp"), 600, 800, 1, 1);
 	
-	/*pause->Init();	
-	pause->SetImage(TEXT("Image/UI/UI_Pause.bmp"), 0, 0, 0, 0);
+	pause = new UI;
+	pause->Init({300,400});
+	pause->SetImage(TEXT("Image/pause.bmp"), 600, 800, 1, 1);
+	/*
 	
 	ending->Init();
 	ending->SetImage(TEXT("Image/UI/UI_Ending.bmp"), 0, 0, 0, 0);

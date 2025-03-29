@@ -5,6 +5,7 @@ void MainGame::Init()
 {
 	hdc = GetDC(g_hWnd);
 	state = GameStates::Intro;
+	pause = false;
 	backBuffer = new Image();
 	if (FAILED(backBuffer->Init(WINSIZE_X, WINSIZE_Y)))
 	{
@@ -125,7 +126,7 @@ void MainGame::RenderInGame(HDC hdc)
 void MainGame::RenderPause(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
-	//UIManager::GetInstance()->RenderPause(hdc);
+	UIManager::GetInstance()->RenderPause(hdc);
 }
 
 void MainGame::RenderEnding(HDC hdc)
@@ -142,25 +143,34 @@ void MainGame::UpdateIntro()
 void MainGame::UpdateInGame()
 {
 	KeyManager* km = KeyManager::GetInstance();
-
-	if (km->IsOnceKeyDown(PAUSE_KEY)
-		|| km->IsStayKeyDown(PAUSE_KEY))
-	{
-		state = GameStates::Pause;
-		return;
-	}
 	
-	BackgroundManager::GetInstance()->Update();
-	EventHandler::GetInstance()->Update();
+
+	if (!pause && km->IsOnceKeyDown(PAUSE_KEY) )
+	{
+		pause = !pause;
+		state = GameStates::Pause;
+	}
+
+	if (!pause)
+	{
+		state = GameStates::InGame;
+		BackgroundManager::GetInstance()->Update();
+		EventHandler::GetInstance()->Update();
+	}
+
+
+	
 }
 
 void MainGame::UpdatePause()
 {
 	KeyManager* km = KeyManager::GetInstance();
 
-	if (km->IsOnceKeyDown(PAUSE_KEY)
-		|| km->IsStayKeyDown(PAUSE_KEY))
+	if (pause && km->IsOnceKeyDown(PAUSE_KEY))
+	{
+		pause = !pause;
 		state = GameStates::InGame;
+	}
 }
 
 void MainGame::UpdateEnding()
