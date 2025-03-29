@@ -133,11 +133,11 @@ void Image::Render(HDC hdc, int destX, int destY)
         );
     }
 }
-void Image::Render(HDC hdc, int srcY)
+void Image::RenderBackground(HDC hdc, int destY, int srcY)
 {
     BitBlt(
         hdc,
-        0, 0,
+        0, destY,
         imageInfo->width,
         imageInfo->height,
         imageInfo->hMemDC,
@@ -186,10 +186,10 @@ void Image::Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip)
         BitBlt(
             hdc,
             destX, destY,
-            imageInfo->width / 9,
+            imageInfo->width,
             imageInfo->height,
             imageInfo->hMemDC,
-            imageInfo->width / 9 * frameIndex, 0,
+            imageInfo->width * frameIndex, 0,
             SRCCOPY
         );
     }

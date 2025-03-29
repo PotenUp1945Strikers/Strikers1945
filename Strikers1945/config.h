@@ -14,11 +14,22 @@ using namespace std;
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
 
 #define PAUSE_KEY 'P'
+#define SUICIDE_KEY 'K'
 #define REGAME_KEY 'R'
 
-#define SCROLL_TIME 0.025f
-
 #define BACKGROUND_PATH "Image/Background.bmp"
+#define OPENING_PATH "Image/Opening.bmp"
+#define PAUSE_PATH "Image/Pause.bmp"
+#define GAMEOVER_PATH "Image/GameOver.bmp"
+#define ENDING_PATH "Image/Ending.bmp"
+#define LIFE_COUNT_PATH "Image/PlayerLifeCount.bmp"
+#define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
+#define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
+
+#define BACKGROUND_SPEED 120
+#define BACKGROUND_SIZE 4781
+
+#define MAX_GAME_LENGTH 30000
 
 typedef struct tagFPOINT
 {
@@ -31,6 +42,7 @@ enum class GameStates: UINT8
 	Intro,
 	InGame,
 	Pause,
+	GameOver,
 	Ending
 };
 
