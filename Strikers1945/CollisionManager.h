@@ -21,9 +21,9 @@ public:
 
 
     void AddCollider(GameObject* owner, CollisionType type, float size);
-    void DeleteCollider(Collider* collider);
 
 private:
+    void deleteCollider(Collider* collider);
     void checkCollisions();
 
     void renderColliders(HDC hdc, vector<Collider*>& colliders);

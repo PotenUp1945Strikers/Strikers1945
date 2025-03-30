@@ -48,7 +48,6 @@ void CollisionManager::checkCollisions()
             if (playerCollider->IsColliding(*enemyCollider))
             {
                 // 플레이어 데미지
-                int a = 0;
             }
         }
     }
@@ -128,6 +127,8 @@ void CollisionManager::updateColliders(vector<Collider*>& colliders)
         if (collider)
         {
             collider->Update();
+            // 화면 밖으로 나가거나 owner죽으면
+            // deleteCollider(*collider)호출
         }
     }
 }
