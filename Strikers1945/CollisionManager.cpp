@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include "Collider.h"
+// #include "GameObject.h"
 
 void CollisionManager::Init()
 {
@@ -33,6 +34,8 @@ void CollisionManager::Release()
     releaseColliders(enemyColliders);
     releaseColliders(playerBulletColliders);
     releaseColliders(enemyBulletColliders);
+
+    ReleaseInstance();
 }
 
 void CollisionManager::checkCollisions()
@@ -45,6 +48,7 @@ void CollisionManager::checkCollisions()
             if (playerCollider->IsColliding(*enemyCollider))
             {
                 // 플레이어 데미지
+                int a = 0;
             }
         }
     }
@@ -73,10 +77,10 @@ void CollisionManager::checkCollisions()
     }
 }
 
-void CollisionManager::AddCollider(/*GameObject* owner, */CollisionType type, FPOINT pos, float size)
+void CollisionManager::AddCollider(GameObject* owner, CollisionType type, float size)
 {
     Collider* collider = new Collider();
-    collider->Init(/*GameObject* owner, */type, pos, size);
+    // collider->Init(owner, type, owner->GetPos(), size);
     switch (type)
     {
     case CollisionType::PLAYER:

@@ -1,14 +1,7 @@
 #pragma once
 #include "config.h"
-enum class CollisionType
-{
-	NONE,
-	PLAYER,
-	ENEMY,
-	PLAYER_BULLET,
-	ENEMY_BULLET,
-};
 
+class GameObject;
 class Collider
 {
 private:
@@ -16,10 +9,10 @@ private:
 	FPOINT pos; // 충돌체 사각형 중점
 	float size;
 	RECT collisionRC;
-	// GameObject* owner;
+	GameObject* owner;
 
 public:
-	void Init(/*GameObject* owner, */CollisionType type, FPOINT pos, float size);
+	void Init(GameObject* owner, CollisionType type, FPOINT pos, float size);
 	void Update();
 	void Render(HDC hdc);
 	void Release();

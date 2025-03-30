@@ -4,6 +4,7 @@
 #include <vector>
 
 class Collider;
+class GameObject;
 class CollisionManager : public Singleton<CollisionManager>
 {
 private:
@@ -19,7 +20,7 @@ public:
     void Release();
 
 
-    void AddCollider(/*GameObject* owner, */CollisionType type, FPOINT pos, float size);
+    void AddCollider(GameObject* owner, CollisionType type, float size);
     void DeleteCollider(Collider* collider);
 
 private:
