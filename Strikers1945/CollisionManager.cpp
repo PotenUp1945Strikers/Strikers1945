@@ -99,7 +99,7 @@ void CollisionManager::AddCollider(GameObject* owner, CollisionType type, float 
     }
 }
 
-void CollisionManager::DeleteCollider(Collider* collider)
+void CollisionManager::deleteCollider(Collider* collider)
 {
     switch (collider->GetType())
     {
