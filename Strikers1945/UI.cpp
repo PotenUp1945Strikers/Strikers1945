@@ -50,8 +50,7 @@ void UI::Render(HDC hdc)
 		image->Render(hdc, renderPos.x, renderPos.y, 0);
 }
 
-void UI::SetImage(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY)
+void UI::SetImage(const wchar_t* key)
 {
-	key = filePath;
-	image = ImageManager::GetInstance()->AddImage(key, filePath, width, height, maxFrameX, maxFrameY, true, RGB(255, 0, 255));
+	image = ImageManager::GetInstance()->GetImage(key);
 }

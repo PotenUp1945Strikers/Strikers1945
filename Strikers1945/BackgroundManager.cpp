@@ -5,8 +5,7 @@
 void BackgroundManager::Init()
 {
     if (!image)
-        image = ImageManager::GetInstance()->
-            AddImage(TEXT(BACKGROUND_PATH), TEXT(BACKGROUND_PATH),WINSIZE_X, BACKGROUND_SIZE);
+        image = ImageManager::GetInstance()->GetImage(TEXT(BACKGROUND_PATH));
     tileY[0] = BACKGROUND_SIZE - WINSIZE_Y;
     tileY[1] = BACKGROUND_SIZE;
     screenY[0] = 0;
@@ -17,7 +16,6 @@ void BackgroundManager::Init()
 
 void BackgroundManager::Release()
 {
-    ImageManager::GetInstance()->DeleteImage(TEXT(BACKGROUND_PATH));
     image = nullptr;
 }
 
