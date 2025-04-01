@@ -1,7 +1,7 @@
 #pragma once
 #include "config.h"
+#include "Missile.h"
 
-class Missile;
 class MissileFactory
 {
 protected:

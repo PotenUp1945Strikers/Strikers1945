@@ -11,6 +11,10 @@ void ImageManager::Init()
     AddImage(TEXT(LIFE_COUNT_PATH), TEXT(LIFE_COUNT_PATH), 27, 35, 1, 1, true, RGB(255, 0, 255));
     AddImage(TEXT(BOMB_COUNT_PATH), TEXT(BOMB_COUNT_PATH), 23, 32, 1, 1, true, RGB(255, 0, 255));
     AddImage(TEXT(NUMBER_SET1_PATH), TEXT(NUMBER_SET1_PATH), 38, 380, 1, 10, true, RGB(255, 0, 255));
+
+    AddImage(TEXT(PLAYER_PATH), TEXT(PLAYER_PATH), 32, 47, 1, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(ENEMY1_PATH), TEXT(ENEMY1_PATH), 39, 32, 1, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(NORMAL_BULLET_PATH), TEXT(NORMAL_BULLET_PATH), 33, 49, 1, 1, true, RGB(255, 0, 255));
 }
 
 void ImageManager::Release()

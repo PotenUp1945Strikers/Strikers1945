@@ -17,16 +17,28 @@ void Missile::Init()
 	size = { 0, 0, 0, 0 };
 }
 
-void Missile::Init(Type type, FPOINT dir, FPOINT pos, float speed, Image* image)
+void Missile::Init(Type type)
 {
 	this->type = type;
+	active = false;
+	render = false;
+	dir = { 0.0f, 0.0f };
+	pos = { 0.0f, 0.0f };
+	speed = 0.0f;
+	image = nullptr;
+	health = 0;
+	size = { 0, 0, 0, 0 };
+}
+
+void Missile::Init(FPOINT dir, float speed, Image* image, RECT size, int health)
+{
 	this->dir = dir;
-	this->pos = pos;
 	this->speed = speed;
 	this->image = image;
-	active = true;
-	render = true;
-	health = 1;
+	active = false;
+	render = false;
+	this->health = health;
+	this->size = size;
 }
 
 void Missile::Update()
@@ -44,7 +56,7 @@ void Missile::Update()
 void Missile::Render(HDC hdc)
 {
 	if(render)
-		image->Render(hdc, pos.x, pos.y, 0);
+		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
 }
 
 void Missile::Release()
@@ -70,6 +82,13 @@ void Missile::OnDamage()
 		active = false;
 		render = false;
 	}
+}
+
+void Missile::Shoot(FPOINT pos)
+{
+	this->pos = pos;
+	active = true;
+	render = true;
 }
 
 bool Missile::outOfWindow()

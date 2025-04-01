@@ -7,15 +7,16 @@ class Missile;
 class MissileManager
 {
 private:
-	Image* bulletImage;
-	float bulletSpeed;
+	Image* missileImage;
+	float missileSpeed;
 	float shootRate;
-	int bulletDamage;
+	int missileDamage;
 	RECT size;
 	Type type;
 	vector<Missile*> missiles;
 	FPOINT dir;
 	float elapsedTime;
+
 public:
 	void Init();
 	void Init(const wchar_t* key, Type type);
@@ -23,6 +24,6 @@ public:
 	void Render(HDC hdc);
 	void Release();
 
-	void Shoot(FPOINT vec);
+	void Shoot(FPOINT pos);
 
 };

@@ -7,14 +7,12 @@
 #include <map>
 #include "config.h"
 
-class Plane
+class Plane: public GameObject
 {
-	
 private:
 	static map<const wchar_t*, PlaneType> dict;
 
 	float				location;
-	FPOINT				wingPos;
 	GameObjectStates	state;
 	MissileManager*		launcher;
 	
@@ -32,7 +30,7 @@ public:
 	void Render(HDC hdc);
 
 	void FillDict(void);
-	void Init(const wchar_t* key, float startPos);
+	void Init(const wchar_t* key, float startPos, Type type);
 	void Shoot(void);
 	void UpgradeMissile();
 	void Move(FPOINT dir);

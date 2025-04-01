@@ -11,8 +11,12 @@ void MainGame::Init()
 		MessageBox(g_hWnd, 
 			TEXT("Cannot Create Back Buffer"), TEXT("Warning"), MB_OK);
 	}
+	ImageManager::GetInstance()->Init();
+	CollisionManager::GetInstance()->Init();
 	BackgroundManager::GetInstance()->Init();
 	UIManager::GetInstance()->Init();
+	PlayerManager::GetInstance()->Init();
+	EnemyManager::GetInstance()->Init();
 	
 }
 
@@ -26,12 +30,20 @@ void MainGame::Release()
 	}
 
 	ReleaseDC(g_hWnd, hdc);
+	PlayerManager::GetInstance()->Release();
+	PlayerManager::ReleaseInstance();
+	EnemyManager::GetInstance()->Release();
+	EnemyManager::ReleaseInstance();
 	KeyManager::GetInstance()->Release();
 	KeyManager::ReleaseInstance();
 	UIManager::GetInstance()->Release();
 	UIManager::ReleaseInstance();
 	BackgroundManager::GetInstance()->Release();
 	BackgroundManager::ReleaseInstance();
+	CollisionManager::GetInstance()->Release();
+	CollisionManager::ReleaseInstance();
+	ImageManager::GetInstance()->Release();
+	ImageManager::ReleaseInstance();
 }
 
 void MainGame::Update()
@@ -124,20 +136,21 @@ void MainGame::RenderIntro(HDC hdc)
 void MainGame::RenderInGame(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
+	PlayerManager::GetInstance()->Render(hdc);
+	EnemyManager::GetInstance()->Render(hdc);
+	CollisionManager::GetInstance()->Render(hdc);
 	UIManager::GetInstance()->RenderInGame(hdc);
 }
 
 void MainGame::RenderPause(HDC hdc)
 {
-	BackgroundManager::GetInstance()->Render(hdc);
-	UIManager::GetInstance()->RenderInGame(hdc);
+	RenderInGame(hdc);
 	UIManager::GetInstance()->RenderPause(hdc);
 }
 
 void MainGame::RenderGameOver(HDC hdc)
 {
-	BackgroundManager::GetInstance()->Render(hdc);
-	UIManager::GetInstance()->RenderInGame(hdc);
+	RenderInGame(hdc);
 	UIManager::GetInstance()->RenderGameOver(hdc);
 }
 
@@ -169,6 +182,10 @@ void MainGame::UpdateInGame()
 	}
 	
 	BackgroundManager::GetInstance()->Update();
+	PlayerManager::GetInstance()->Update();
+	EnemyManager::GetInstance()->Update();
+	CollisionManager::GetInstance()->Update();
+
 	if (EventHandler::Update())
 	{
 		state = GameStates::Ending;
@@ -178,9 +195,7 @@ void MainGame::UpdateInGame()
 
 void MainGame::UpdatePause()
 {
-	KeyManager* km = KeyManager::GetInstance();
-
-	if (km->IsOnceKeyDown(PAUSE_KEY))
+	if (KeyManager::GetInstance()->IsOnceKeyDown(PAUSE_KEY))
 		state = GameStates::InGame;
 }
 
@@ -204,9 +219,7 @@ void MainGame::UpdateGameOver()
 
 void MainGame::UpdateEnding()
 {
-	KeyManager* km = KeyManager::GetInstance();
-	
-	if (km->IsOnceKeyDown(REGAME_KEY))
+	if (KeyManager::GetInstance()->IsOnceKeyDown(REGAME_KEY))
 	{
 		BackgroundManager::GetInstance()->Init();
 		state = GameStates::Intro;

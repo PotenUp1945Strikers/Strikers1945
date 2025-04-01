@@ -4,7 +4,8 @@ void PlayerManager::Init(void)
 {
 	if (!player1)
 		player1 = new Plane;
-	player1->Init(TEXT(PLAYER_PATH));
+	player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y - WINSIZE_Y / 3 });
 	player1Life = 3;
 	player1Bomb = 2;
 	CollisionManager::GetInstance()->AddCollider(player1);
@@ -16,9 +17,9 @@ void PlayerManager::Update(void)
 	KeyManager* km = KeyManager::GetInstance();
 
 	if (km->IsStayKeyDown(VK_UP))
-		player1Pos.y += 1;
-	if (km->IsStayKeyDown(VK_DOWN))
 		player1Pos.y += -1;
+	if (km->IsStayKeyDown(VK_DOWN))
+		player1Pos.y += 1;
 	if (km->IsStayKeyDown(VK_LEFT))
 		player1Pos.x += -1;
 	if (km->IsStayKeyDown(VK_RIGHT))

@@ -1,12 +1,14 @@
 #pragma once
 #include "config.h"
+#include "Singleton.h"
 
-class EnemyManager
+class Plane;
+class EnemyManager: public Singleton<EnemyManager>
 {
 private:
-	vector<struct Script> scripts;
+	//vector<struct Script> scripts;
 	size_t scriptIndex;
-	vector<class Plane*> planes;
+	vector<Plane*> planes;
 
 public:
 	

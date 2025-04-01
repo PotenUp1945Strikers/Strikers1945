@@ -3,7 +3,6 @@
 #include "TimerManager.h"
 void UI::Init()
 {
-	key = nullptr;
 	image = nullptr;
 	currFrameX = 0;
 	currFrameY = 0;

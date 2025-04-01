@@ -7,10 +7,10 @@ void MissileManager::Init()
 {
 	elapsedTime = 0.0f;
 	type = Type::NONE;
-	bulletImage = nullptr;
-	bulletSpeed = 0.0f;
+	missileImage = nullptr;
+	missileSpeed = 0.0f;
 	shootRate = 0.1f;
-	bulletDamage = 1;
+	missileDamage = 1;
 	size = { 0,0,0,0 };
 
 	missiles.resize(30);
@@ -25,16 +25,31 @@ void MissileManager::Init()
 
 void MissileManager::Init(const wchar_t* key, Type type)
 {
-	bulletImage = ImageManager::GetInstance()->GetImage(key);
-	this->type = type;
+	if (missiles.empty())
+	{
+		missiles.resize(30);
+		for (int i = 0; i < 30; ++i)
+		{
+			missiles[i] = new Missile();
+			missiles[i]->Init(type);
+			CollisionManager::GetInstance()->AddCollider(missiles[i]);
+		}
+	}
 
-	bulletSpeed = 0.0f;
-	shootRate = 1.0f;
-	if (type == Type::PLAYER_BULLET) dir = { 0,-1 };
-	else if (type == Type::ENEMY_BULLET) dir = { 0,1 };
-	size = { bulletImage->GetWidth() / 2, bulletImage->GetHeight() / 2, 
-		bulletImage->GetWidth() / 2, bulletImage->GetHeight() / 2 };
+	if (!missiles.empty())
+	{
+		missileImage = ImageManager::GetInstance()->GetImage(key);
+		this->type = type;
 
+		missileSpeed = 400.0f;
+		shootRate = 0.1f;
+		if (type == Type::PLAYER_BULLET) dir = { 0,-1 };
+		else if (type == Type::ENEMY_BULLET) dir = { 0,1 };
+		size = { -missileImage->GetWidth() / 2, -missileImage->GetHeight() / 2,
+			missileImage->GetWidth() / 2, missileImage->GetHeight() / 2 };
+		for (auto& missile : missiles)
+			missile->Init(dir, missileSpeed, missileImage, size);
+	}
 }
 
 void MissileManager::Update()
@@ -71,13 +86,14 @@ void MissileManager::Release()
 
 void MissileManager::Shoot(FPOINT pos)
 {
-	if (elapsedTime < shootRate)return;
+	if (elapsedTime < shootRate)
+		return;
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		if (missiles[i]->GetActive() == false)
 		{
-			missiles[i]->Init(type, dir, pos, bulletSpeed, bulletImage);
-			return;
+			missiles[i]->Shoot(pos);
+			break;
 		}
 	}
 	elapsedTime = 0;

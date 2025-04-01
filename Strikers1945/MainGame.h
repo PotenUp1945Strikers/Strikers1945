@@ -4,6 +4,8 @@
 #include "UIManager.h"
 #include "BackgroundManager.h"
 #include "EventHandler.h"
+#include "PlayerManager.h"
+#include "EnemyManager.h"
 
 class MainGame
 {
