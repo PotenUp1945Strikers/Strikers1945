@@ -23,11 +23,7 @@ public:
     void AddCollider(GameObject* gameObject);
 private:
     void checkCollisions();
-
-    void renderColliders(HDC hdc, vector<Plane*>& planes);
-    void renderColliders(HDC hdc, vector<Missile*>& missiles);
-
-    bool isColliding(Plane* plane1, Plane* plane2);
-    bool isColliding(Plane* plane, Missile* missile);
+    void renderColliders(HDC hdc, vector<GameObject*>& gameObjects);
+    bool isColliding(GameObject* gameObject1, GameObject* gameObject2);
 };
 

@@ -12,10 +12,12 @@ private:
 	float shootRate;
 	int bulletDamage;
 	RECT size;
-
+	Type type;
 	vector<Missile*> missiles;
+	FPOINT dir;
 public:
 	void Init();
+	void Init(const wchar_t* key, Type type);
 	void Update();
 	void Render(HDC hdc);
 	void Release();

@@ -20,40 +20,29 @@ void CollisionManager::Update()
 
 void CollisionManager::Render(HDC hdc)
 {
-	renderColliders(hdc, playerColliders);
-	renderColliders(hdc, enemyColliders);
-	renderColliders(hdc, playerBulletColliders);
-	renderColliders(hdc, enemyBulletColliders);
+	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(playerColliders));
+	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(enemyColliders));
+	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(playerBulletColliders));
+	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(enemyBulletColliders));
 }
 
 void CollisionManager::Release()
 {
-	ReleaseInstance();
+	playerColliders.clear();
+	playerBulletColliders.clear();
+	enemyColliders.clear();
+	enemyBulletColliders.clear();
 }
 
 void CollisionManager::checkCollisions()
 {
-	// 플레이어 - 적
-	for (auto player : playerColliders)
-	{
-		for (auto enemy : enemyColliders)
-		{
-			if (player->GetActive() == false || enemy->GetActive() == false)
-				continue;
-			if (isColliding(player, enemy))
-			{
-				// 플레이어 데미지
-				player->OnDamage();
-				enemy->OnDamage();
-			}
-		}
-	}
 	// 플레이어 - 적 총알
-	for (auto player : playerColliders)
+	for (auto& player : playerColliders)
 	{
-		for (auto enemyBullet : enemyBulletColliders)
+		if (player->GetActive() == false) continue;
+		for (auto& enemyBullet : enemyBulletColliders)
 		{
-			if (player->GetActive() == false || enemyBullet->GetActive() == false) continue;
+			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(player, enemyBullet))
 			{
 				player->OnDamage();
@@ -63,11 +52,12 @@ void CollisionManager::checkCollisions()
 	}
 
 	// 적 - 플레이어 총알
-	for (auto enemy : enemyColliders)
+	for (auto& enemy : enemyColliders)
 	{
-		for (auto playerBullet : playerBulletColliders)
+		if (enemy->GetActive() == false) continue;
+		for (auto& playerBullet : playerBulletColliders)
 		{
-			if (enemy->GetActive() == false || playerBullet->GetActive() == false) continue;
+			if (playerBullet->GetActive() == false) continue;
 			if (isColliding(enemy, playerBullet))
 			{
 				// 적 데미지
@@ -78,28 +68,14 @@ void CollisionManager::checkCollisions()
 	}
 }
 
-void CollisionManager::renderColliders(HDC hdc, vector<Plane*>& planes)
+void CollisionManager::renderColliders(HDC hdc, vector<GameObject*>& gameObjects)
 {
-	for (auto plane : planes)
+	for (auto& gameObject : gameObjects)
 	{
-		if (plane->GetActive() == false) continue;
-		RECT body = plane->GetCollider().body;
-		RECT wing = plane->GetCollider().wing;
-
-		Rectangle(hdc, body.left, body.top, body.right, body.bottom);
-		Rectangle(hdc, wing.left, wing.top, wing.right, wing.bottom);
+		if (gameObject->GetActive() == false || gameObject->GetRender() == false) continue;
+		RECT rc = gameObject->GetCollider();
+		Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
 	}
-}
-
-void CollisionManager::renderColliders(HDC hdc, vector<Missile*>& missiles)
-{
-	for (auto missile : missiles)
-	{
-		if (missile->GetActive() == false) continue;
-		RECT missileRc = missile->GetCollider();
-		Rectangle(hdc, missileRc.left, missileRc.top, missileRc.right, missileRc.bottom);
-	}
-
 }
 void CollisionManager::AddCollider(GameObject* gameObject)
 {
@@ -122,23 +98,7 @@ void CollisionManager::AddCollider(GameObject* gameObject)
 	}
 }
 
-bool CollisionManager::isColliding(Plane* plane1, Plane* plane2)
+bool CollisionManager::isColliding(GameObject* gameObject1, GameObject* gameObject2)
 {
-	RECT p1Body = plane1->GetCollider().body;
-	RECT p1Wing = plane1->GetCollider().wing;
-
-	RECT p2Body = plane1->GetCollider().body;
-	RECT p2Wing = plane1->GetCollider().wing;
-
-	return (RectInRect(p1Body, p2Body) || RectInRect(p1Body, p2Wing) || RectInRect(p1Wing, p2Body) || RectInRect(p1Wing, p2Wing));
-}
-
-bool CollisionManager::isColliding(Plane* plane, Missile* missile)
-{
-	RECT body = plane->GetCollider().body;
-	RECT wing = plane->GetCollider().wing;
-
-	RECT missileRc = missile->GetCollider();
-
-	return (RectInRect(body, missileRc) || RectInRect(wing, missileRc));
+	return RectInRect(gameObject1->GetCollider(), gameObject2->GetCollider());
 }

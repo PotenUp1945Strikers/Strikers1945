@@ -8,6 +8,7 @@ private:
 
 public:
 	void Init() override;
+	void Init(Type type, FPOINT dir, FPOINT pos, float speed, Image* image);
 	void Update() override;
 	void Render(HDC hdc) override;
 	void Release() override;
@@ -16,4 +17,3 @@ public:
 private:
 	bool outOfWindow();
 };
-

@@ -13,6 +13,18 @@ void Missile::Init()
 	pos = { 0.0f, 0.0f };
 	speed = 0.0f;
 	image = nullptr;
+	health = 0;
+}
+
+void Missile::Init(Type type, FPOINT dir, FPOINT pos, float speed, Image* image)
+{
+	this->type = type;
+	this->dir = dir;
+	this->pos = pos;
+	this->speed = speed;
+	this->image = image;
+	active = true;
+	render = true;
 	health = 1;
 }
 
@@ -48,6 +60,15 @@ RECT Missile::GetCollider()
 		pos.y + size.bottom 
 	};
 	return rc;
+}
+
+void Missile::OnDamage()
+{
+	health--;
+	if (health <= 0) {
+		active = false;
+		render = false;
+	}
 }
 
 bool Missile::outOfWindow()
