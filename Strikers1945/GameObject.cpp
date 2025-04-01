@@ -40,6 +40,11 @@ Type GameObject::GetType()
     return type;
 }
 
+void GameObject::SetType(Type type)
+{
+    this->type = type;
+}
+
 bool GameObject::GetActive()
 {
     return active;
@@ -48,6 +53,18 @@ bool GameObject::GetActive()
 bool GameObject::GetRender()
 {
     return render;
+}
+
+RECT GameObject::GetColider()
+{
+   RECT rc = {
+       pos.x - size.left,
+       pos.y - size.top,
+       pos.x + size.right,
+       pos.y + size.bottom
+   };
+   return rc;
+    
 }
 
 void GameObject::OnDamage()
