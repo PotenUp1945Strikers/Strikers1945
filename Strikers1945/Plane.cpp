@@ -9,7 +9,9 @@ void Plane::Init(void)
 		launcher = new MissileManager;
 		launcher->Init();
 	}
-	state = GameObjectStates::Born;
+	active = false;
+	render = false;
+	state = GameObjectStates::Wait;
 }
 
 void Plane::Release(void)
@@ -25,23 +27,16 @@ void Plane::Release(void)
 void Plane::Update(void)
 {
 	switch (state) {
+	case GameObjectStates::Wait:
+		UpdateWait();
+		break;
 	case GameObjectStates::Born:
+		UpdateBorn();
 		break;
 	case GameObjectStates::Alive:
-		break;
-	case GameObjectStates::Die:
+		UpdateAlive();
 		break;
 	}
-
-	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
-	FPOINT oldPos = pos;
-	pos.x += speed * dir.x * deltatime;
-	pos.y += speed * dir.y * deltatime;
-
-	if (type == Type::PLAYER && InOfWindow())
-		pos = oldPos;
-	else if (type == Type::ENEMY && OutOfWindow())
-		active = false;
 
 	if (launcher)
 		launcher->Update();
@@ -53,6 +48,15 @@ void Plane::Render(HDC hdc)
 		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
 	if (launcher)
 		launcher->Render(hdc);
+}
+
+void Plane::UpdateWait(void)
+{
+	if (BackgroundManager::GetInstance()->GetCurrPosY() >= location)
+	{
+		render = true;
+		state = GameObjectStates::Born;
+	}
 }
 
 void Plane::UpdateBorn(void)
@@ -71,10 +75,20 @@ void Plane::UpdateBorn(void)
 
 void Plane::UpdateAlive(void)
 {
-}
 
-void Plane::UpdateDie(void)
-{
+	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+	FPOINT oldPos = pos;
+	pos.x += speed * dir.x * deltatime;
+	pos.y += speed * dir.y * deltatime;
+
+	if (type == Type::PLAYER && InOfWindow())
+		pos = oldPos;
+	else if (type == Type::ENEMY && OutOfWindow())
+	{
+		active = false;
+		render = false;
+		state = GameObjectStates::Die;
+	}
 }
 
 void Plane::FillDict(void)
@@ -100,7 +114,7 @@ void Plane::FillDict(void)
 	dict.insert(make_pair(TEXT(ENEMY1_PATH), enemy1));
 }
 
-void Plane::Init(const wchar_t* key)
+void Plane::Init(const wchar_t* key, float startPos)
 {
 	if (dict.empty())
 		FillDict();
@@ -108,37 +122,38 @@ void Plane::Init(const wchar_t* key)
 	auto var = dict.find(key);
 	if (var != dict.end())
 		*this = var->second;
-}
 
-Colider Plane::GetColider(void)
-{
-	RECT posBodySize = { pos.x + bodySize.left, pos.y + bodySize.top,
-		pos.x + bodySize.right, pos.y + bodySize.bottom };
-	RECT posWingSize = { pos.x + wingPos.x + bodySize.left, pos.y + wingPos.y + bodySize.top,
-	pos.x + wingPos.x + bodySize.right, pos.y + wingPos.y + bodySize.bottom };
-	return Colider{ posBodySize, posWingSize };
+	location = startPos;
+	
 }
 
 void Plane::Shoot(void)
 {
 	if (launcher)
-	{
 		launcher->Shoot(pos);
-	}
 }
 
 void Plane::UpgradeMissile()
 {
 	if (launcher)
-	{
 		launcher->Upgrade();
-	}
 }
 
 void Plane::Move(FPOINT dir)
 {
 	float length = sqrtf(pow(dir.x, 2) + pow(dir.y, 2));
 	this->dir = { dir.x * length, dir.y * length };
+}
+
+void Plane::OnDamage(void)
+{
+	--health;
+	if (health <= 0)
+	{
+		active = false;
+		render = false;
+		state = GameObjectStates::Die;
+	}
 }
 
 Plane& Plane::operator=(const PlaneType& target)
@@ -152,7 +167,7 @@ Plane& Plane::operator=(const PlaneType& target)
 	if (!launcher)
 		launcher = new MissileManager;
 	launcher->Init(target.missileType);
-	state = GameObjectStates::Born;
+	state = GameObjectStates::Wait;
 	active = false;
 	render = false;
 }

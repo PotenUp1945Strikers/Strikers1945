@@ -77,10 +77,10 @@ enum class GameStates: UINT8
 
 enum class GameObjectStates : UINT8
 {
+	Die,
 	Wait,
 	Born,
-	Alive,
-	Die
+	Alive
 };
 
 extern HWND g_hWnd;

@@ -3,6 +3,7 @@
 #include "MissileManager.h"
 #include "ImageManager.h"
 #include "TimerManager.h"
+#include "BackgroundManager.h"
 #include <map>
 #include "config.h"
 
@@ -13,15 +14,13 @@ private:
 	static map<const wchar_t*, PlaneType> dict;
 
 	float				location;
-	RECT				bodySize;
-	RECT				wingSize;
 	FPOINT				wingPos;
 	GameObjectStates	state;
 	MissileManager*		launcher;
 	
+	void UpdateWait(void);
 	void UpdateBorn(void);
 	void UpdateAlive(void);
-	void UpdateDie(void);
 
 	bool OutOfWindow(void);
 	bool InOfWindow(void);
@@ -33,12 +32,11 @@ public:
 	void Render(HDC hdc);
 
 	void FillDict(void);
-	void Init(const wchar_t* key);
-	Colider GetColider(void);
+	void Init(const wchar_t* key, float startPos);
 	void Shoot(void);
 	void UpgradeMissile();
 	void Move(FPOINT dir);
-
+	void OnDamage(void);
 
 	Plane& operator=(const PlaneType& target);
 };
