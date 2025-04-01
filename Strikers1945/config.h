@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 
@@ -49,7 +50,7 @@ enum class GameStates: UINT8
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 
-enum class CollisionType
+enum class Type
 {
 	NONE,
 	PLAYER,
