@@ -14,6 +14,7 @@ void Missile::Init()
 	speed = 0.0f;
 	image = nullptr;
 	health = 0;
+	size = { 0, 0, 0, 0 };
 }
 
 void Missile::Init(Type type, FPOINT dir, FPOINT pos, float speed, Image* image)
@@ -51,16 +52,16 @@ void Missile::Release()
 	image = nullptr;
 }
 
-RECT Missile::GetCollider()
-{
-	RECT rc = { 
-		pos.x - size.left, 
-		pos.y - size.top, 
-		pos.x + size.right, 
-		pos.y + size.bottom 
-	};
-	return rc;
-}
+//RECT Missile::GetCollider()
+//{
+//	RECT rc = { 
+//		pos.x - size.left, 
+//		pos.y - size.top, 
+//		pos.x + size.right, 
+//		pos.y + size.bottom 
+//	};
+//	return rc;
+//}
 
 void Missile::OnDamage()
 {
