@@ -27,7 +27,7 @@ void MissileManager::Render(HDC hdc)
 {
 	for (auto missile : missiles)
 	{
-		if (missile->GetActive() == false && missile->GetRender()) continue;
+		if (missile->GetActive() == false || missile->GetRender() == false) continue;
 		missile->Render(hdc);
 	}
 }
