@@ -33,7 +33,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 	wndClass.cbClsExtra = 2068;
 	wndClass.cbWndExtra = 2068;
-	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wndClass.hCursor = LoadCursor(g_hInstance, IDC_ARROW);
 	wndClass.hIcon = LoadIcon(g_hInstance, IDI_APPLICATION);
 	wndClass.hInstance = g_hInstance;

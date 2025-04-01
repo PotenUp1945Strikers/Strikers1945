@@ -14,10 +14,10 @@ protected:
 
 public:
 	void Init();
+	void Init(FPOINT renderPos);
 	void Release();
 	void Update();
 	virtual void Render(HDC hdc);
-
 
 	void SetImage(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY);
 

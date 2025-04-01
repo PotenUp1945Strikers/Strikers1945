@@ -8,18 +8,21 @@
 class MainGame
 {
 private:
-	HDC hdc;
-	GameStates state;
-	Image* backBuffer;
+	HDC			hdc;
+	GameStates	state;
+	float		gameOverTime;
+	Image*		backBuffer;
 
 	void RenderIntro(HDC hdc);
 	void RenderInGame(HDC hdc);
 	void RenderPause(HDC hdc);
+	void RenderGameOver(HDC hdc);
 	void RenderEnding(HDC hdc);
 
 	void UpdateIntro();
 	void UpdateInGame();
 	void UpdatePause();
+	void UpdateGameOver();
 	void UpdateEnding();
 
 	bool PressAnyKey();

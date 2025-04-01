@@ -1,9 +1,10 @@
 #pragma once
-#include "Singleton.h"
+#include "BackgroundManager.h"
+#include "config.h"
 
-class EventHandler: public Singleton<EventHandler>
+class EventHandler
 {
 public:
-	static void Update();
+	static bool Update();
 };
 

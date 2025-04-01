@@ -4,8 +4,15 @@
 
 void BackgroundManager::Init()
 {
-    image = ImageManager::GetInstance()->AddImage(TEXT(BACKGROUND_PATH), TEXT(BACKGROUND_PATH), 600, 4882);
-    currPosY = 4082;
+    if (!image)
+        image = ImageManager::GetInstance()->
+            AddImage(TEXT(BACKGROUND_PATH), TEXT(BACKGROUND_PATH),WINSIZE_X, BACKGROUND_SIZE);
+    tileY[0] = BACKGROUND_SIZE - WINSIZE_Y;
+    tileY[1] = BACKGROUND_SIZE;
+    screenY[0] = 0;
+    screenY[1] = WINSIZE_Y;
+    currPosY = 0;
+    speed = BACKGROUND_SPEED;
 }
 
 void BackgroundManager::Release()
@@ -17,20 +24,38 @@ void BackgroundManager::Release()
 void BackgroundManager::Render(HDC hdc)
 {
     if (image)
-        image->Render(hdc, currPosY);
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (screenY[i] < WINSIZE_Y)
+                image->RenderBackground(hdc, screenY[i], tileY[i]);
+        }
+    }
 }
 
 void BackgroundManager::Update()
 {
-    deltaTime += TimerManager::GetInstance()->GetDeltaTime();
-    if (deltaTime > SCROLL_TIME)
+    float velocity = speed * TimerManager::GetInstance()->GetDeltaTime();
+    currPosY += velocity;
+
+    for (int i = 0; i < 2; ++i)
     {
-        if (currPosY > 0)
-            --currPosY;
-        deltaTime = 0.0f;
+        if (screenY[i] < WINSIZE_Y)
+        {
+            if (tileY[i] <= 0)
+            {
+                screenY[i] += velocity;
+                if (screenY[i] >= WINSIZE_Y)
+                    tileY[i] = BACKGROUND_SIZE;
+            }
+            else
+            {
+                tileY[i] -= velocity;
+                if (tileY[i] <= 0)
+                    screenY[(i + 1) % 2] = 0;
+            }
+        }
     }
-
-
 }
 
 int BackgroundManager::GetCurrPosY()

@@ -8,9 +8,11 @@ class ImageManager;
 class BackgroundManager : public Singleton<BackgroundManager>
 {
 private:
-	Image* image;
-	int currPosY;
-	float deltaTime;
+	Image*	image;
+	float	tileY[2];
+	float	screenY[2];
+	float	speed;
+	float	currPosY;
 
 public:
 

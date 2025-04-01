@@ -3,27 +3,48 @@
 #include "ImageManager.h"
 #include "UI.h"
 #include "InGameUI.h"
+#include "NumberUI.h"
 
 void UIManager::Init()
 {
 	// TODO : Init
 	intro = new UI;
 	intro->Init();
-	intro->SetImage(TEXT("Image/UI/UI_Intro.bmp"), 0, 0, 0, 0);
-	
+	intro->SetImage(TEXT(OPENING_PATH), WINSIZE_X, WINSIZE_Y, 1, 1);
+
+	pause = new UI;
 	pause->Init();
-	pause->SetImage(TEXT("Image/UI/UI_Pause.bmp"), 0, 0, 0, 0);
+	pause->SetImage(TEXT(PAUSE_PATH), WINSIZE_X, WINSIZE_Y, 1, 1);
 	
+	pause = new UI;
+	pause->Init();
+	pause->SetImage(TEXT(PAUSE_PATH), WINSIZE_X, WINSIZE_Y, 1, 1);
+
+	gameOver = new UI;
+	gameOver->Init();
+	gameOver->SetImage(TEXT(GAMEOVER_PATH), WINSIZE_X, WINSIZE_Y, 1, 1);
+	
+	ending = new UI;
 	ending->Init();
-	ending->SetImage(TEXT("Image/UI/UI_Ending.bmp"), 0, 0, 0, 0);
+	ending->SetImage(TEXT(ENDING_PATH), WINSIZE_X, WINSIZE_Y, 1, 1);
 	
-	life->Init();
-	life->SetImage(TEXT("Image/UI/UI_Life.bmp"),0,0,0,0);
+	life = new InGameUI;
+	life->Init({ 36, 50});
+	life->SetImage(TEXT(LIFE_COUNT_PATH),27,35,1,1);
+	life->Setinterval(42);
+	life->SetCount(3);
 
-	bomb->Init();
-	bomb->SetImage(TEXT("Image/UI/UI_Bomb.bmp"), 0, 0, 0, 0);
+	bomb = new InGameUI;
+	bomb->Init({ 38, WINSIZE_Y - 50 });
+	bomb->SetImage(TEXT(BOMB_COUNT_PATH), 23, 32, 1, 1);
+	bomb->Setinterval(38);
+	bomb->SetCount(2);
 
-
+	number1 = new NumberUI;
+	number1->Init({ 390, 418 });
+	number1->SetImage(TEXT(NUMBER_SET1_PATH), 38, 380, 1, 10);
+	number1->SetInterval(38);
+	number1->SetNumber(10);
 }
 
 void UIManager::Release()
@@ -38,6 +59,11 @@ void UIManager::Release()
 		delete pause;
 		pause = nullptr;
 	}
+	if (gameOver)
+	{
+		delete gameOver;
+		gameOver = nullptr;
+	}
 	if (ending)
 	{
 		delete ending;
@@ -48,27 +74,30 @@ void UIManager::Release()
 		delete life;
 		life = nullptr;
 	}
-}
-
-void UIManager::Render(HDC hdc)
-{
-		
-	
+	if (bomb)
+	{
+		delete bomb;
+		bomb = nullptr;
+	}
+	if (number1)
+	{
+		delete number1;
+		number1 = nullptr;
+	}
 }
 
 void UIManager::Update()
 {
-
-	if (intro)
-		intro->Update();
 	if (life)
 		life->Update();
 	if (bomb)
 		bomb->Update();
-	if (pause)
-		pause->Update();
-	if (ending)
-		ending->Update();
+}
+
+void UIManager::UpdateGameOver(int count)
+{
+	if (number1)
+		number1->SetNumber(count);
 }
 
 
@@ -90,6 +119,14 @@ void UIManager::RenderInGame(HDC hdc)
 		life->Render(hdc);
 	if (bomb)
 		bomb->Render(hdc);
+}
+
+void UIManager::RenderGameOver(HDC hdc)
+{
+	if (gameOver)
+		gameOver->Render(hdc);
+	if (number1)
+		number1->Render(hdc);
 }
 
 void UIManager::RenderEnding(HDC hdc)

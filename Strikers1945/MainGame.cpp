@@ -12,7 +12,7 @@ void MainGame::Init()
 			TEXT("Cannot Create Back Buffer"), TEXT("Warning"), MB_OK);
 	}
 	BackgroundManager::GetInstance()->Init();
-	//UIManager::GetInstance()->Init();
+	UIManager::GetInstance()->Init();
 	
 }
 
@@ -28,11 +28,10 @@ void MainGame::Release()
 	ReleaseDC(g_hWnd, hdc);
 	KeyManager::GetInstance()->Release();
 	KeyManager::ReleaseInstance();
-	/*UIManager::GetInstance()->Release();
-	UIManager::ReleaseInstance();*/
+	UIManager::GetInstance()->Release();
+	UIManager::ReleaseInstance();
 	BackgroundManager::GetInstance()->Release();
 	BackgroundManager::ReleaseInstance();
-	EventHandler::ReleaseInstance();
 }
 
 void MainGame::Update()
@@ -47,6 +46,9 @@ void MainGame::Update()
 		break;
 	case GameStates::Pause:
 		UpdatePause();
+		break;
+	case GameStates::GameOver:
+		UpdateGameOver();
 		break;
 	case GameStates::Ending:
 		UpdateEnding();
@@ -68,6 +70,9 @@ void MainGame::Render()
 		break;
 	case GameStates::Pause:
 		RenderPause(hBackBufferDC);
+		break;
+	case GameStates::GameOver:
+		RenderGameOver(hBackBufferDC);
 		break;
 	case GameStates::Ending:
 		RenderEnding(hBackBufferDC);
@@ -113,24 +118,32 @@ MainGame::~MainGame()
 
 void MainGame::RenderIntro(HDC hdc)
 {
-	//UIManager::GetInstance()->RenderIntro(hdc);
+	UIManager::GetInstance()->RenderIntro(hdc);
 }
 
 void MainGame::RenderInGame(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
-	//UIManager::GetInstance()->RenderInGame(hdc);
+	UIManager::GetInstance()->RenderInGame(hdc);
 }
 
 void MainGame::RenderPause(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
-	//UIManager::GetInstance()->RenderPause(hdc);
+	UIManager::GetInstance()->RenderInGame(hdc);
+	UIManager::GetInstance()->RenderPause(hdc);
+}
+
+void MainGame::RenderGameOver(HDC hdc)
+{
+	BackgroundManager::GetInstance()->Render(hdc);
+	UIManager::GetInstance()->RenderInGame(hdc);
+	UIManager::GetInstance()->RenderGameOver(hdc);
 }
 
 void MainGame::RenderEnding(HDC hdc)
 {
-	//UIManager::GetInstance()->RenderEnding(hdc);
+	UIManager::GetInstance()->RenderEnding(hdc);
 }
 
 void MainGame::UpdateIntro()
@@ -143,33 +156,61 @@ void MainGame::UpdateInGame()
 {
 	KeyManager* km = KeyManager::GetInstance();
 
-	if (km->IsOnceKeyDown(PAUSE_KEY)
-		|| km->IsStayKeyDown(PAUSE_KEY))
+	if (km->IsOnceKeyDown(PAUSE_KEY))
 	{
 		state = GameStates::Pause;
+		return;
+	} 
+	else if (km->IsOnceKeyDown(SUICIDE_KEY))
+	{
+		state = GameStates::GameOver;
+		gameOverTime = 10;
 		return;
 	}
 	
 	BackgroundManager::GetInstance()->Update();
-	EventHandler::GetInstance()->Update();
+	if (EventHandler::Update())
+	{
+		state = GameStates::Ending;
+		return;
+	}
 }
 
 void MainGame::UpdatePause()
 {
 	KeyManager* km = KeyManager::GetInstance();
 
-	if (km->IsOnceKeyDown(PAUSE_KEY)
-		|| km->IsStayKeyDown(PAUSE_KEY))
+	if (km->IsOnceKeyDown(PAUSE_KEY))
 		state = GameStates::InGame;
+}
+
+void MainGame::UpdateGameOver()
+{
+	if (gameOverTime < 0)
+	{
+		state = GameStates::Intro;
+		BackgroundManager::GetInstance()->Init();
+		return;
+	}
+	else if (PressAnyKey())
+	{
+		state = GameStates::InGame;
+		return;
+	}
+	
+	gameOverTime -= TimerManager::GetInstance()->GetDeltaTime();
+	UIManager::GetInstance()->UpdateGameOver(gameOverTime);
 }
 
 void MainGame::UpdateEnding()
 {
 	KeyManager* km = KeyManager::GetInstance();
 	
-	if (km->IsOnceKeyDown(REGAME_KEY)
-		|| km->IsStayKeyDown(REGAME_KEY))
+	if (km->IsOnceKeyDown(REGAME_KEY))
+	{
+		BackgroundManager::GetInstance()->Init();
 		state = GameStates::Intro;
+	}
 }
 
 bool MainGame::PressAnyKey()
@@ -178,8 +219,7 @@ bool MainGame::PressAnyKey()
 
 	for (int key = 0; key < MAX_KEY_COUNT; ++key)
 	{
-		if (km->IsOnceKeyDown(key)
-			|| km->IsStayKeyDown(key))
+		if (km->IsOnceKeyDown(key))
 			return true;
 	}
 	return false;
