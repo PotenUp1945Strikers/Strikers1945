@@ -1,6 +1,9 @@
 #include "CollisionManager.h"
 #include "Collider.h"
-// #include "GameObject.h"
+#include "CommonFunction.h"
+#include "GameObject.h"
+#include "Missile.h"
+#include "Plane.h"
 
 void CollisionManager::Init()
 {
@@ -12,162 +15,90 @@ void CollisionManager::Init()
 
 void CollisionManager::Update()
 {
-    updateColliders(playerColliders);
-    updateColliders(enemyColliders);
-    updateColliders(playerBulletColliders);
-    updateColliders(enemyBulletColliders);
-
-    checkCollisions();
+	checkCollisions();
 }
 
 void CollisionManager::Render(HDC hdc)
 {
-    renderColliders(hdc, playerColliders);
-    renderColliders(hdc, enemyColliders);
-    renderColliders(hdc, playerBulletColliders);
-    renderColliders(hdc, enemyBulletColliders);
+	renderColliders(hdc, playerColliders);
+	renderColliders(hdc, enemyColliders);
+	renderColliders(hdc, playerBulletColliders);
+	renderColliders(hdc, enemyBulletColliders);
 }
 
 void CollisionManager::Release()
 {
-    releaseColliders(playerColliders);
-    releaseColliders(enemyColliders);
-    releaseColliders(playerBulletColliders);
-    releaseColliders(enemyBulletColliders);
-
-    ReleaseInstance();
+	playerColliders.clear();
+	playerBulletColliders.clear();
+	enemyColliders.clear();
+	enemyBulletColliders.clear();
 }
 
 void CollisionManager::checkCollisions()
 {
-    // 플레이어 - 적
-    for (auto playerCollider : playerColliders)
-    {
-        for (auto enemyCollider : enemyColliders)
-        {
-            if (playerCollider->IsColliding(*enemyCollider))
-            {
-                // 플레이어 데미지
-            }
-        }
-    }
-    // 플레이어 - 적 총알
-    for (auto playerCollider : playerColliders)
-    {
-        for (auto enemyBulletCollider : enemyBulletColliders)
-        {
-            if (playerCollider->IsColliding(*enemyBulletCollider))
-            {
-                // 플레이어 데미지
-            }
-        }
-    }
+	// 플레이어 - 적 총알
+	for (auto& player : playerColliders)
+	{
+		if (player->GetActive() == false) continue;
+		for (auto& enemyBullet : enemyBulletColliders)
+		{
+			if (enemyBullet->GetActive() == false) continue;
+			if (isColliding(player, enemyBullet))
+			{
+				player->OnDamage();
+				enemyBullet->OnDamage();
+			}
+		}
+	}
 
-    // 적 - 플레이어 총알
-    for (auto enemyCollider : enemyColliders)
-    {
-        for (auto playerBulletCollider : playerBulletColliders)
-        {
-            if (enemyCollider->IsColliding(*playerBulletCollider))
-            {
-                // 적 데미지
-            }
-        }
-    }
+	// 적 - 플레이어 총알
+	for (auto& enemy : enemyColliders)
+	{
+		if (enemy->GetActive() == false) continue;
+		for (auto& playerBullet : playerBulletColliders)
+		{
+			if (playerBullet->GetActive() == false) continue;
+			if (isColliding(enemy, playerBullet))
+			{
+				// 적 데미지
+				enemy->OnDamage();
+				playerBullet->OnDamage();
+			}
+		}
+	}
+}
+template<typename T>
+void CollisionManager::renderColliders(HDC hdc, vector<T*>& gameObjects)
+{
+	for (auto& gameObject : gameObjects)
+	{
+		if (gameObject->GetActive() == false || gameObject->GetRender() == false) continue;
+		RECT rc = gameObject->GetCollider();
+		Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
+	}
+}
+void CollisionManager::AddCollider(GameObject* gameObject)
+{
+	switch (gameObject->GetType())
+	{
+	case Type::PLAYER:
+		playerColliders.push_back(dynamic_cast<Plane*>(gameObject));
+		break;
+	case Type::ENEMY:
+		enemyColliders.push_back(dynamic_cast<Plane*>(gameObject));
+		break;
+	case Type::PLAYER_BULLET:
+		playerBulletColliders.push_back(dynamic_cast<Missile*>(gameObject));
+		break;
+	case Type::ENEMY_BULLET:
+		enemyBulletColliders.push_back(dynamic_cast<Missile*>(gameObject));
+		break;
+	default:
+		break;
+	}
 }
 
-void CollisionManager::AddCollider(GameObject* owner, CollisionType type, float size)
+bool CollisionManager::isColliding(GameObject* gameObject1, GameObject* gameObject2)
 {
-    Collider* collider = new Collider();
-    // collider->Init(owner, type, owner->GetPos(), size);
-    switch (type)
-    {
-    case CollisionType::PLAYER:
-        playerColliders.push_back(collider);
-        break;
-    case CollisionType::ENEMY:
-        enemyColliders.push_back(collider);
-        break;
-    case CollisionType::PLAYER_BULLET:
-        playerBulletColliders.push_back(collider);
-        break;
-    case CollisionType::ENEMY_BULLET:
-        enemyBulletColliders.push_back(collider);
-        break;
-    default:
-        break;
-    }
-}
-
-void CollisionManager::deleteCollider(Collider* collider)
-{
-    switch (collider->GetType())
-    {
-    case CollisionType::PLAYER:
-        removeColliderFromVector(playerColliders, collider);
-        break;  
-    case CollisionType::ENEMY:
-        removeColliderFromVector(enemyColliders, collider);
-        break;
-    case CollisionType::PLAYER_BULLET:
-        removeColliderFromVector(playerBulletColliders, collider);
-        break;
-    case CollisionType::ENEMY_BULLET:
-        removeColliderFromVector(enemyBulletColliders, collider);
-        break;
-    default:
-        break;
-    }
-}
-
-void CollisionManager::updateColliders(vector<Collider*>& colliders)
-{
-    for (auto collider : colliders)
-    {
-        if (collider)
-        {
-            collider->Update();
-            // 화면 밖으로 나가거나 owner죽으면
-            // deleteCollider(*collider)호출
-        }
-    }
-}
-
-void CollisionManager::renderColliders(HDC hdc, vector<Collider*>& colliders)
-{
-    for (auto collider : colliders)
-    {
-        if (collider)
-        {
-            collider->Render(hdc);
-        }
-    }
-}
-
-void CollisionManager::removeColliderFromVector(vector<Collider*>& colliders, Collider* collider)
-{
-    auto it = find(colliders.begin(), colliders.end(), collider);
-    if (it != colliders.end())
-    {
-        if (*it)
-        {
-            (*it)->Release();
-            delete (*it);
-            (*it) = nullptr;
-        }
-        colliders.erase(it);
-    }
-}
-
-void CollisionManager::releaseColliders(vector<Collider*>& colliders)
-{
-    for (auto collider : colliders)
-    {
-        if (collider)
-        {
-            collider->Release();
-            delete collider;
-            collider = nullptr;
-        }
-    }
+	return RectInRect(gameObject1->GetCollider(), gameObject2->GetCollider());
 }

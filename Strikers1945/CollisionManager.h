@@ -3,15 +3,16 @@
 #include "Singleton.h"
 #include <vector>
 
-class Collider;
 class GameObject;
+class Plane;
+class Missile;
 class CollisionManager : public Singleton<CollisionManager>
 {
 private:
-    vector<Collider*> playerColliders;
-    vector<Collider*> playerBulletColliders;
-    vector<Collider*> enemyColliders;
-    vector<Collider*> enemyBulletColliders;    
+    vector<Plane*> playerColliders;
+    vector<Missile*> playerBulletColliders;
+    vector<Plane*> enemyColliders;
+    vector<Missile*> enemyBulletColliders;    
 
 public:
     void Init();
@@ -19,16 +20,12 @@ public:
     void Render(HDC hdc);
     void Release();
 
-
-    void AddCollider(GameObject* owner, CollisionType type, float size);
-
+    void AddCollider(GameObject* gameObject);
 private:
-    void deleteCollider(Collider* collider);
     void checkCollisions();
 
-    void renderColliders(HDC hdc, vector<Collider*>& colliders);
-    void updateColliders(vector<Collider*>& colliders);
-    void removeColliderFromVector(vector<Collider*>& colliders, Collider* collider);
-    void releaseColliders(vector<Collider*>& colliders);
+    template<typename T>
+    void renderColliders(HDC hdc, vector<T*>& gameObjects);
+    bool isColliding(GameObject* gameObject1, GameObject* gameObject2);
 };
 

@@ -27,6 +27,7 @@ using namespace std;
 #define LIFE_COUNT_PATH "Image/PlayerLifeCount.bmp"
 #define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
+#define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 
 #define BACKGROUND_SPEED 120
