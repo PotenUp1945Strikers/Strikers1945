@@ -2,13 +2,14 @@
 #include "Missile.h"
 #include "ImageManager.h"
 #include "CollisionManager.h"
-
+#include "TimerManager.h"
 void MissileManager::Init()
 {
+	elapsedTime = 0.0f;
 	type = Type::NONE;
 	bulletImage = nullptr;
 	bulletSpeed = 0.0f;
-	shootRate = 1.0f;
+	shootRate = 0.1f;
 	bulletDamage = 1;
 	size = { 0,0,0,0 };
 
@@ -38,6 +39,7 @@ void MissileManager::Init(const wchar_t* key, Type type)
 
 void MissileManager::Update()
 {
+	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
 	for (auto missile : missiles)
 	{
 		if (missile->GetActive() == false) continue;
@@ -69,6 +71,7 @@ void MissileManager::Release()
 
 void MissileManager::Shoot(FPOINT pos)
 {
+	if (elapsedTime < shootRate)return;
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		if (missiles[i]->GetActive() == false)
@@ -77,4 +80,5 @@ void MissileManager::Shoot(FPOINT pos)
 			return;
 		}
 	}
+	elapsedTime = 0;
 }

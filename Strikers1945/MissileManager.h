@@ -15,6 +15,7 @@ private:
 	Type type;
 	vector<Missile*> missiles;
 	FPOINT dir;
+	float elapsedTime;
 public:
 	void Init();
 	void Init(const wchar_t* key, Type type);
