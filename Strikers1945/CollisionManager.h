@@ -23,7 +23,9 @@ public:
     void AddCollider(GameObject* gameObject);
 private:
     void checkCollisions();
-    void renderColliders(HDC hdc, vector<GameObject*>& gameObjects);
+
+    template<typename T>
+    void renderColliders(HDC hdc, vector<T*>& gameObjects);
     bool isColliding(GameObject* gameObject1, GameObject* gameObject2);
 };
 

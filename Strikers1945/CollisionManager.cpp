@@ -20,10 +20,10 @@ void CollisionManager::Update()
 
 void CollisionManager::Render(HDC hdc)
 {
-	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(playerColliders));
-	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(enemyColliders));
-	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(playerBulletColliders));
-	renderColliders(hdc, reinterpret_cast<vector<GameObject*>&>(enemyBulletColliders));
+	renderColliders(hdc, playerColliders);
+	renderColliders(hdc, enemyColliders);
+	renderColliders(hdc, playerBulletColliders);
+	renderColliders(hdc, enemyBulletColliders);
 }
 
 void CollisionManager::Release()
@@ -67,8 +67,8 @@ void CollisionManager::checkCollisions()
 		}
 	}
 }
-
-void CollisionManager::renderColliders(HDC hdc, vector<GameObject*>& gameObjects)
+template<typename T>
+void CollisionManager::renderColliders(HDC hdc, vector<T*>& gameObjects)
 {
 	for (auto& gameObject : gameObjects)
 	{
