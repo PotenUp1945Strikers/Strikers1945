@@ -5,7 +5,6 @@ class Image;
 class UI
 {
 protected:
-	const wchar_t* key;
 	Image* image;
 	int currFrameX;
 	int currFrameY;
@@ -19,7 +18,7 @@ public:
 	void Update();
 	virtual void Render(HDC hdc);
 
-	void SetImage(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY);
+	void SetImage(const wchar_t* key);
 
 	UI() {};
 	virtual ~UI() {};
