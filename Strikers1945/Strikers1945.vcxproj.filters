@@ -66,6 +66,12 @@
     <ClInclude Include="UI.h">
       <Filter>SG</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>SG</Filter>
+      </ClInclude>
     <ClInclude Include="NumberUI.h">
       <Filter>BH</Filter>
     </ClInclude>
@@ -107,6 +113,12 @@
     <ClCompile Include="UI.cpp">
       <Filter>SG</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>SG</Filter>
+      </ClCompile>
     <ClCompile Include="NumberUI.cpp">
       <Filter>BH</Filter>
     </ClCompile>

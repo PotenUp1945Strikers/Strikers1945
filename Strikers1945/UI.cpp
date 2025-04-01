@@ -3,10 +3,12 @@
 #include "TimerManager.h"
 void UI::Init()
 {
+	key = nullptr;
 	image = nullptr;
 	currFrameX = 0;
 	currFrameY = 0;
 	renderPos = { 0.0f, 0.0f };
+	elapsedTime = 0.0f;
 }
 
 void UI::Init(FPOINT renderPos)
@@ -19,6 +21,7 @@ void UI::Init(FPOINT renderPos)
 
 void UI::Release()
 {
+	image = nullptr;
 }
 
 void UI::Update()

@@ -48,3 +48,12 @@ enum class GameStates: UINT8
 
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
+
+enum class CollisionType
+{
+	NONE,
+	PLAYER,
+	ENEMY,
+	PLAYER_BULLET,
+	ENEMY_BULLET,
+};

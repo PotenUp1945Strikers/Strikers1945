@@ -10,7 +10,7 @@ protected:
 	int currFrameX;
 	int currFrameY;
 	FPOINT renderPos;
-	float	elapsedTime;
+	float elapsedTime;
 
 public:
 	void Init();
