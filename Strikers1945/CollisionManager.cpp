@@ -2,6 +2,8 @@
 #include "Collider.h"
 #include "CommonFunction.h"
 #include "GameObject.h"
+#include "Missile.h"
+#include "Plane.h"
 
 void CollisionManager::Init()
 {

@@ -2,7 +2,7 @@
 #include "CommonFunction.h"
 // #include "GameObject.h"
 
-void Collider::Init(GameObject* owner, CollisionType type, FPOINT pos, float size)
+void Collider::Init(GameObject* owner, Type type, FPOINT pos, float size)
 {
     this->owner = owner;
     this->type = type;

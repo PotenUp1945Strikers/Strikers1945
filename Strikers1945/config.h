@@ -25,6 +25,7 @@ using namespace std;
 #define LIFE_COUNT_PATH "Image/PlayerLifeCount.bmp"
 #define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
+#define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
@@ -49,7 +50,7 @@ enum class GameStates: UINT8
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 
-enum class CollisionType
+enum class Type
 {
 	NONE,
 	PLAYER,

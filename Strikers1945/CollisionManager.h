@@ -22,7 +22,6 @@ public:
 
     void AddCollider(GameObject* gameObject);
 private:
-    // void deleteCollider(GameObject* gameObject);
     void checkCollisions();
 
     void renderColliders(HDC hdc, vector<Plane*>& planes);
