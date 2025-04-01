@@ -9,6 +9,14 @@ void UI::Init()
 	renderPos = { 0.0f, 0.0f };
 }
 
+void UI::Init(FPOINT renderPos)
+{
+	image = nullptr;
+	currFrameX = 0;
+	currFrameY = 0;
+	this->renderPos = { renderPos.x, renderPos.y };
+}
+
 void UI::Release()
 {
 }
@@ -36,7 +44,7 @@ void UI::Update()
 void UI::Render(HDC hdc)
 {
 	if(image)
-		image->FrameRender(hdc, renderPos.x, renderPos.y, currFrameX, currFrameY, false);
+		image->Render(hdc, renderPos.x, renderPos.y, 0);
 }
 
 void UI::SetImage(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY)
