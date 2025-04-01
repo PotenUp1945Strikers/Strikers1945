@@ -10,9 +10,9 @@ class CollisionManager : public Singleton<CollisionManager>
 {
 private:
     vector<Plane*> playerColliders;
-    vector<Missile*> playerBulletColliders;
+    vector<Missile*> playerMissileColliders;
     vector<Plane*> enemyColliders;
-    vector<Missile*> enemyBulletColliders;    
+    vector<Missile*> enemyMissileColliders;    
 
 public:
     void Init();

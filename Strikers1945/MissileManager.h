@@ -7,10 +7,10 @@ class Missile;
 class MissileManager
 {
 private:
-	Image* bulletImage;
-	float bulletSpeed;
+	Image* missileImage;
+	float missileSpeed;
 	float shootRate;
-	int bulletDamage;
+	int missileDamage;
 	RECT size;
 	Type type;
 	vector<Missile*> missiles;

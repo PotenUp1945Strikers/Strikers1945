@@ -7,10 +7,10 @@ void MissileManager::Init()
 {
 	elapsedTime = 0.0f;
 	type = Type::NONE;
-	bulletImage = nullptr;
-	bulletSpeed = 0.0f;
+	missileImage = nullptr;
+	missileSpeed = 0.0f;
 	shootRate = 0.1f;
-	bulletDamage = 1;
+	missileDamage = 1;
 	size = { 0,0,0,0 };
 
 	missiles.resize(30);
@@ -25,15 +25,15 @@ void MissileManager::Init()
 
 void MissileManager::Init(const wchar_t* key, Type type)
 {
-	bulletImage = ImageManager::GetInstance()->GetImage(key);
+	missileImage = ImageManager::GetInstance()->GetImage(key);
 	this->type = type;
 
-	bulletSpeed = 0.0f;
+	missileSpeed = 0.0f;
 	shootRate = 1.0f;
 	if (type == Type::PLAYER_BULLET) dir = { 0,-1 };
 	else if (type == Type::ENEMY_BULLET) dir = { 0,1 };
-	size = { bulletImage->GetWidth() / 2, bulletImage->GetHeight() / 2, 
-		bulletImage->GetWidth() / 2, bulletImage->GetHeight() / 2 };
+	size = { missileImage->GetWidth() / 2, missileImage->GetHeight() / 2, 
+		missileImage->GetWidth() / 2, missileImage->GetHeight() / 2 };
 
 }
 
@@ -76,7 +76,7 @@ void MissileManager::Shoot(FPOINT pos)
 	{
 		if (missiles[i]->GetActive() == false)
 		{
-			missiles[i]->Init(type, dir, pos, bulletSpeed, bulletImage);
+			missiles[i]->Init(type, dir, pos, missileSpeed, missileImage);
 			return;
 		}
 	}
