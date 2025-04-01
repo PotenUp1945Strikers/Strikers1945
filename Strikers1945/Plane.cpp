@@ -9,6 +9,7 @@ void Plane::Init(void)
 		launcher = new MissileManager;
 		launcher->Init();
 	}
+	state = GameObjectStates::Born;
 }
 
 void Plane::Release(void)
@@ -23,6 +24,15 @@ void Plane::Release(void)
 
 void Plane::Update(void)
 {
+	switch (state) {
+	case GameObjectStates::Born:
+		break;
+	case GameObjectStates::Alive:
+		break;
+	case GameObjectStates::Die:
+		break;
+	}
+
 	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
 	FPOINT oldPos = pos;
 	pos.x += speed * dir.x * deltatime;
@@ -43,6 +53,28 @@ void Plane::Render(HDC hdc)
 		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
 	if (launcher)
 		launcher->Render(hdc);
+}
+
+void Plane::UpdateBorn(void)
+{
+	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+	pos.x += speed * dir.x * deltatime;
+	pos.y += speed * dir.y * deltatime;
+
+	if ((type == Type::PLAYER && !InOfWindow()) ||
+		(type == Type::ENEMY && !OutOfWindow()))
+	{
+		active = true;
+		state = GameObjectStates::Alive;
+	}
+}
+
+void Plane::UpdateAlive(void)
+{
+}
+
+void Plane::UpdateDie(void)
+{
 }
 
 void Plane::FillDict(void)
@@ -120,6 +152,9 @@ Plane& Plane::operator=(const PlaneType& target)
 	if (!launcher)
 		launcher = new MissileManager;
 	launcher->Init(target.missileType);
+	state = GameObjectStates::Born;
+	active = false;
+	render = false;
 }
 
 bool Plane::OutOfWindow(void)

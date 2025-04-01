@@ -7,7 +7,7 @@ void PlayerManager::Init(void)
 	player1->Init(TEXT(PLAYER_PATH));
 	player1Life = 3;
 	player1Bomb = 2;
-	CollisionManager::GetInstance()->AddCollider(player1, Type::PLAYER);
+	CollisionManager::GetInstance()->AddCollider(player1);
 }
 
 void PlayerManager::Update(void)

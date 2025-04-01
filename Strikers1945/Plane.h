@@ -11,10 +11,17 @@ class Plane
 	
 private:
 	static map<const wchar_t*, PlaneType> dict;
-	RECT	bodySize;
-	RECT	wingSize;
-	FPOINT	wingPos;
-	MissileManager* launcher;
+
+	float				location;
+	RECT				bodySize;
+	RECT				wingSize;
+	FPOINT				wingPos;
+	GameObjectStates	state;
+	MissileManager*		launcher;
+	
+	void UpdateBorn(void);
+	void UpdateAlive(void);
+	void UpdateDie(void);
 
 	bool OutOfWindow(void);
 	bool InOfWindow(void);
@@ -31,6 +38,7 @@ public:
 	void Shoot(void);
 	void UpgradeMissile();
 	void Move(FPOINT dir);
+
 
 	Plane& operator=(const PlaneType& target);
 };
