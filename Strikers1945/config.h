@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 
@@ -22,10 +23,12 @@ using namespace std;
 #define PAUSE_PATH "Image/Pause.bmp"
 #define GAMEOVER_PATH "Image/GameOver.bmp"
 #define ENDING_PATH "Image/Ending.bmp"
+#define PLAYER_PATH "Image/Player.bmp"
 #define LIFE_COUNT_PATH "Image/PlayerLifeCount.bmp"
 #define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
+#define ENEMY1_PATH "Image/Enemy1.bmp"
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
@@ -38,6 +41,33 @@ typedef struct tagFPOINT
 	float y;
 } FPOINT;
 
+typedef struct tagColider
+{
+	RECT Body;
+	RECT Wing;
+} Colider;
+
+typedef struct tagPlaneType
+{
+	const wchar_t*	key;
+	float			speed;
+	int				health;
+	RECT			bodySize;
+	RECT			wingSize;
+	FPOINT			wingPos;
+	const wchar_t*	missileType;
+} PlaneType;
+
+typedef struct tagMissileType
+{
+	const wchar_t*	key;
+	float			bulletSpeed;
+	float			shootRate;
+	int				damage;
+	RECT			size;
+	const wchar_t*	upgrade;
+} MissileType;
+
 enum class GameStates: UINT8
 {
 	Intro,
@@ -45,6 +75,14 @@ enum class GameStates: UINT8
 	Pause,
 	GameOver,
 	Ending
+};
+
+enum class GameObjectStates : UINT8
+{
+	Die,
+	Wait,
+	Born,
+	Alive
 };
 
 extern HWND g_hWnd;

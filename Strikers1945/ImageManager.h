@@ -4,10 +4,6 @@
 #include "config.h";
 #include <map>
 
-#define ENEMY "Image/ufo.bmp"
-#define PLAYER "Image/rocket.bmp"
-#define NORMAL_MISSILE "Image/bullet.bmp"
-
 class ImageManager: public Singleton<ImageManager>
 {
 private:
