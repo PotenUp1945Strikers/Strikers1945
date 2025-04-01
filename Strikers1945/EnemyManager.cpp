@@ -24,7 +24,7 @@ void EnemyManager::Update()
 	// depends on struct
 	if (BackgroundManager::GetInstance()->GetCurrPosY() >= scripts[scriptIndex].second)
 	{
-		DeployEnemy();
+		if (DeployEnemy()) scriptIndex += 1;
 	}
 
 
@@ -60,14 +60,18 @@ bool EnemyManager::DeployEnemy()
 		// Init and addEnemy
 		case NormalEnemy:
 			
-
+			return true;
 			break;
 		case HeliEnemy:
 
+			return true;
 			break;
 		case BossEnemy:
 
+			return true;
 			break;
 	}
+
+	return false;
 
 }

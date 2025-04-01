@@ -69,7 +69,7 @@ void GameObject::OnDamage()
    case Type::PLAYER_BULLET: 
    case Type::ENEMY_BULLET:
 
-       //TODO : DestroyActor, DestroyEffect
+       //TODO : DestroyActor, Start Effect Animation
 
        active = false;
        render = false;
