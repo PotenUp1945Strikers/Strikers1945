@@ -31,6 +31,8 @@ using namespace std;
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 
+#define BOSS_PATH "Image/Boss.bmp"
+
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
 
