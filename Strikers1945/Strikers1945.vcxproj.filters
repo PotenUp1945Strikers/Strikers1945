@@ -78,24 +78,27 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>TG</Filter>
     </ClInclude>
-	  <ClInclude Include="Plane.h">
-		  <Filter>BH</Filter>
-	  </ClInclude>
-	  <ClInclude Include="PlayerManager.h">
-		  <Filter>BH</Filter>
-	  </ClInclude>
-	  <ClInclude Include="MainGame.h">
-		  <Filter>BH</Filter>
-	  </ClInclude>
-	  <ClInclude Include="MissileManager.h">
-		  <Filter>SG</Filter>
-	  </ClInclude>
-	  <ClInclude Include="MissileFactory.h">
-		  <Filter>SG</Filter>
-	  </ClInclude>
-	  <ClInclude Include="Missile.h">
-		  <Filter>SG</Filter>
-	  </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileManager.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileFactory.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>SG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -146,23 +149,26 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>TG</Filter>
     </ClCompile>
-	  <ClCompile Include="Plane.cpp">
-		  <Filter>BH</Filter>
-	  </ClCompile>
-	  <ClCompile Include="PlayerManager.cpp">
-		  <Filter>BH</Filter>
-	  </ClCompile>
-	  <ClCompile Include="MainGame.cpp">
-		  <Filter>BH</Filter>
-	  </ClCompile>
-	  <ClCompile Include="MissileManager.cpp">
-		  <Filter>SG</Filter>
-	  </ClCompile>
-	  <ClCompile Include="MissileFactory.cpp">
-		  <Filter>SG</Filter>
-	  </ClCompile>
-	  <ClCompile Include="Missile.cpp">
-		  <Filter>SG</Filter>
-	  </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileManager.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileFactory.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

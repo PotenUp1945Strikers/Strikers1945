@@ -15,6 +15,10 @@ void ImageManager::Init()
     AddImage(TEXT(PLAYER_PATH), TEXT(PLAYER_PATH), 32, 47, 1, 1, true, RGB(255, 0, 255));
     AddImage(TEXT(ENEMY1_PATH), TEXT(ENEMY1_PATH), 39, 32, 1, 1, true, RGB(255, 0, 255));
     AddImage(TEXT(NORMAL_BULLET_PATH), TEXT(NORMAL_BULLET_PATH), 33, 49, 1, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(HIT_EFFECT_PATH), TEXT(HIT_EFFECT_PATH), 120, 40, 3, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(TARGETTING_BULLET_PATH), TEXT(TARGETTING_BULLET_PATH), 12, 12, 1, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(AROUND_BULLET_PATH), TEXT(AROUND_BULLET_PATH), 25, 25, 1, 1, true, RGB(255, 0, 255));
+    
 }
 
 void ImageManager::Release()

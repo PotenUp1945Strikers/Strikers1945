@@ -29,7 +29,10 @@ using namespace std;
 #define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
+#define TARGETTING_BULLET_PATH "Image/TargettingBullet.bmp"
+#define AROUND_BULLET_PATH "Image/AroundBullet.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
+#define HIT_EFFECT_PATH "Image/hitEffect.bmp"
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
@@ -59,6 +62,14 @@ typedef struct tagPlaneType
 	const wchar_t*	missileType;
 } PlaneType;
 
+enum class MissileKind
+{
+	None,
+	Basic,
+	Targetting,
+	Around
+};
+
 typedef struct tagMissileType
 {
 	const wchar_t*	key;
@@ -69,7 +80,11 @@ typedef struct tagMissileType
 	int				missileAmount;
 	// RECT			size;
 	const wchar_t*	upgrade;
+	MissileKind		missileKind;
+
 } MissileType;
+
+
 
 enum class GameStates: UINT8
 {

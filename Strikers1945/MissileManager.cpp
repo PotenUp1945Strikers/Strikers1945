@@ -1,36 +1,46 @@
 #include "MissileManager.h"
+#include "CommonFunction.h"
 #include "Missile.h"
 #include "ImageManager.h"
 #include "CollisionManager.h"
 #include "TimerManager.h"
+#include "Plane.h"
+#include "PlayerManager.h"
 
 map<const wchar_t*, MissileType> MissileManager::missileDict;
 
 void MissileManager::FillDict()
 {
-	MissileType playerNormalMissile;
-	playerNormalMissile.key = TEXT(NORMAL_BULLET_PATH);
-	playerNormalMissile.missileSpeed = 400.0f;
-	playerNormalMissile.shootRate = 1.0f;
-	playerNormalMissile.damage = 1;
-	playerNormalMissile.reloadRate = 1;
-	playerNormalMissile.missileAmount = 30;
-	// playerNormalMissile.size = {};
-	// playerNormalMissile.upgrade = TEXT("");
-	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), playerNormalMissile));
-
-	MissileType enemyNormalMissile;
-	enemyNormalMissile.key = TEXT(NORMAL_BULLET_PATH);
-	enemyNormalMissile.missileSpeed = 400.0f;
-	enemyNormalMissile.shootRate = 0.1;
-	enemyNormalMissile.damage = 1;
-	enemyNormalMissile.reloadRate = 1;
-	enemyNormalMissile.missileAmount = 10;
-	// enemyNormalMissile.size = {};
-	// enemyNormalMissile.upgrade = TEXT("");
-	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), enemyNormalMissile));
+	MissileType normalMissile;
+	normalMissile.key = TEXT(NORMAL_BULLET_PATH);
+	normalMissile.missileKind = MissileKind::Basic;
+	normalMissile.missileSpeed = 400.0f;
+	normalMissile.shootRate = 0.5f;
+	normalMissile.damage = 1;
+	normalMissile.reloadRate = 3.0f;
+	normalMissile.missileAmount = 10;
+	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), normalMissile));
 
 
+	MissileType targettingMissile;
+	targettingMissile.key = TEXT(TARGETTING_BULLET_PATH);
+	targettingMissile.missileKind = MissileKind::Targetting;
+	targettingMissile.missileSpeed = 200.0f;
+	targettingMissile.shootRate = 1.0f;
+	targettingMissile.damage = 1;
+	targettingMissile.reloadRate = 3.0f;
+	targettingMissile.missileAmount = 10;
+	missileDict.insert(make_pair(TEXT(TARGETTING_BULLET_PATH), targettingMissile));
+
+	MissileType aroundMissile;
+	aroundMissile.key = TEXT(AROUND_BULLET_PATH);
+	aroundMissile.missileKind = MissileKind::Around;
+	aroundMissile.missileSpeed = 200.0f;
+	aroundMissile.shootRate = 0.1f;
+	aroundMissile.damage = 1;
+	aroundMissile.reloadRate = 5.0f;
+	aroundMissile.missileAmount = 100;
+	missileDict.insert(make_pair(TEXT(AROUND_BULLET_PATH), aroundMissile));
 }
 void MissileManager::Init()
 {
@@ -46,8 +56,10 @@ void MissileManager::Init()
 	reloadRate = 0.0f;
 	missileAmount = 0;
 	missiles.resize(30);
+	missileKind = MissileKind::None;
 	if (missileDict.empty())
 		FillDict();
+	
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		Missile* missile = new Missile();
@@ -87,14 +99,11 @@ void MissileManager::Init(const wchar_t* key, Type type)
 		missileDamage = (*var).second.damage;
 		reloadRate = (*var).second.reloadRate;
 		missileAmount = (*var).second.missileAmount;
+		missileKind = (*var).second.missileKind;
+
 		// size = (*var).second.size;
 		size = { -missileImage->GetWidth() / 2, -missileImage->GetHeight() / 2,
 			missileImage->GetWidth() / 2, missileImage->GetHeight() / 2 };
-
-		if (type == Type::PLAYER_BULLET)
-			dir = { 0,-1 };
-		else if (type == Type::ENEMY_BULLET)
-			dir = { 0,1 };
 
 		for (auto& missile : missiles)
 			missile->Init(dir, missileSpeed, missileImage, size);
@@ -108,7 +117,7 @@ void MissileManager::Update()
 	{
 		reloadTime += TimerManager::GetInstance()->GetDeltaTime();
 		if (reloadTime >= reloadRate) {
-			reloadTime = 0;
+			reloadTime = 0.0f;
 			isReloading = false;
 		}
 	}
@@ -145,12 +154,15 @@ void MissileManager::Shoot(FPOINT pos)
 {
 	if (elapsedTime < shootRate || isReloading)
 		return;
+
+
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		if (missiles[i]->GetActive() == false)
 		{
 			missileCount++;
-			missiles[i]->Shoot(pos);
+			MissileDirSetting(pos);
+			missiles[i]->Shoot(pos, dir);
 			if (missileCount >= missileAmount)
 			{
 				isReloading = true;
@@ -160,4 +172,36 @@ void MissileManager::Shoot(FPOINT pos)
 		}
 	}
 	elapsedTime = 0;
+}
+
+void MissileManager::MissileDirSetting(FPOINT pos)
+{
+	static float angle = 0.0f;
+	static bool isAngleUp = true;
+	FPOINT dest = { 100,100 };// = PlayerManager::GetInstance()->GetPlayer1()->GetPos();
+	switch (missileKind)
+	{
+	case MissileKind::None:
+	case MissileKind::Basic:
+		if (type == Type::PLAYER_BULLET)
+			dir = { 0,-1 };
+		else if (type == Type::ENEMY_BULLET)
+			dir = { 0,1 };
+		break;
+	case MissileKind::Targetting:
+		dir = GetUnitVector(pos, dest);
+		break;
+	case MissileKind::Around:
+		dir.x = cos(DEG_TO_RAD(angle));
+		dir.y = sin(DEG_TO_RAD(angle));
+		if (isAngleUp)
+			angle += 10.0f;
+		else
+			angle -= 10.0f;
+		if (angle >= 180.0f) isAngleUp = false;
+		if (angle <= 0.0f) isAngleUp = true;
+		break;
+	default:
+		break;
+	}
 }

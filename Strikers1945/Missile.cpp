@@ -88,9 +88,10 @@ void Missile::OnDamage()
 	}
 }
 
-void Missile::Shoot(FPOINT pos)
+void Missile::Shoot(FPOINT pos, FPOINT dir)
 {
 	this->pos = pos;
+	this->dir = dir;
 	active = true;
 	render = true;
 }
