@@ -8,9 +8,9 @@
 void CollisionManager::Init()
 {
 	playerColliders = {};
-	playerBulletColliders = {};
+	playerMissileColliders = {};
 	enemyColliders = {};
-	enemyBulletColliders = {};
+	enemyMissileColliders = {};
 }
 
 void CollisionManager::Update()
@@ -22,16 +22,16 @@ void CollisionManager::Render(HDC hdc)
 {
 	renderColliders(hdc, playerColliders);
 	renderColliders(hdc, enemyColliders);
-	renderColliders(hdc, playerBulletColliders);
-	renderColliders(hdc, enemyBulletColliders);
+	renderColliders(hdc, playerMissileColliders);
+	renderColliders(hdc, enemyMissileColliders);
 }
 
 void CollisionManager::Release()
 {
 	playerColliders.clear();
-	playerBulletColliders.clear();
+	playerMissileColliders.clear();
 	enemyColliders.clear();
-	enemyBulletColliders.clear();
+	enemyMissileColliders.clear();
 }
 
 void CollisionManager::checkCollisions()
@@ -40,7 +40,7 @@ void CollisionManager::checkCollisions()
 	for (auto& player : playerColliders)
 	{
 		if (player->GetActive() == false) continue;
-		for (auto& enemyBullet : enemyBulletColliders)
+		for (auto& enemyBullet : enemyMissileColliders)
 		{
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(player, enemyBullet))
@@ -55,7 +55,7 @@ void CollisionManager::checkCollisions()
 	for (auto& enemy : enemyColliders)
 	{
 		if (enemy->GetActive() == false) continue;
-		for (auto& playerBullet : playerBulletColliders)
+		for (auto& playerBullet : playerMissileColliders)
 		{
 			if (playerBullet->GetActive() == false) continue;
 			if (isColliding(enemy, playerBullet))
@@ -88,10 +88,10 @@ void CollisionManager::AddCollider(GameObject* gameObject)
 		enemyColliders.push_back(dynamic_cast<Plane*>(gameObject));
 		break;
 	case Type::PLAYER_BULLET:
-		playerBulletColliders.push_back(dynamic_cast<Missile*>(gameObject));
+		playerMissileColliders.push_back(dynamic_cast<Missile*>(gameObject));
 		break;
 	case Type::ENEMY_BULLET:
-		enemyBulletColliders.push_back(dynamic_cast<Missile*>(gameObject));
+		enemyMissileColliders.push_back(dynamic_cast<Missile*>(gameObject));
 		break;
 	default:
 		break;
