@@ -39,6 +39,7 @@ void Plane::Init(void)
 	active = false;
 	render = false;
 	state = GameObjectStates::Wait;
+	currTaskTime = 0.0f;
 }
 
 
@@ -222,6 +223,7 @@ void Plane::Move(FPOINT dir)
 void Plane::MoveAlongPath()
 {
 	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+	currTaskTime += deltatime;
 
 	if (path && path->size() < currPath)
 	{
@@ -245,9 +247,11 @@ void Plane::MoveAlongPath()
 		dir = GetUnitVector({ 0,0 }, tmpDir);
 	}
 
-	pos.x += speed * dir.x * deltatime;
-	pos.y += speed * dir.y * deltatime;
-
+	
+		pos.x += speed * dir.x * deltatime;
+		pos.y += speed * dir.y * deltatime;
+	
+	
 }
 
 void Plane::OnDamage(void)
@@ -284,10 +288,21 @@ void Plane::SetPath(vector<FPOINT>* path)
 	}
 }
 
+void Plane::SetTask(vector<Task> tasks)
+{
+	this->tasks.assign(tasks.begin(), tasks.end());
+
+	// TODO : path set
+	
+	//SetPath()
+	
+}
+
 void Plane::SetGoal(void)
 {
 	if (path && this->path->size() > currPath)
 	{
+		currTaskTime = 0.0f;
 		FPOINT tmp = this->path->at(currPath++);
 		goal = { pos.x + tmp.x, pos.y + tmp.y };
 	}
