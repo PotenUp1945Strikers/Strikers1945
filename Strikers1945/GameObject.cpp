@@ -36,6 +36,11 @@ Type GameObject::GetType()
     return type;
 }
 
+void GameObject::SetType(Type type)
+{
+    this->type = type;
+}
+
 void GameObject::SetPos(FPOINT pos)
 {
     this->pos = pos;

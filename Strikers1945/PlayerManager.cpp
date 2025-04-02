@@ -42,8 +42,8 @@ void PlayerManager::Init(void)
 	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100});
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player1Life = 3;
-	UIManager::GetInstance()->SetLife(player1Life);
 	player1Bomb = 2;
+	UIManager::GetInstance()->SetLife(player1Life);
 	UIManager::GetInstance()->SetBomb(player1Bomb);
 }
 

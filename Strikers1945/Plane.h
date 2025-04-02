@@ -14,6 +14,7 @@ private:
 	static map<const wchar_t*, PlaneType> dict;
 
 	float				location;
+	FPOINT				missilePos;
 	float				absTime;
 
 	vector<Task>*		path;
@@ -24,6 +25,10 @@ private:
 	float				startRadian;
 	float				goalRadian;
 	float				pathRadius;
+
+	FPOINT				curveContolPos;
+	FPOINT				startPos;
+	float				curveVar;
 
 	size_t				currPath;
 	float				taskTime;
@@ -54,7 +59,7 @@ private:
 	void MoveAlongPathStop();
 	void MoveAlongPathMove();
 	void MoveAlongPathMoveAround();
-	void MoveAlongPathMoveSin();
+	void MoveAlongPathMoveCurve();
 	
 public:
 	void Init(void);

@@ -45,6 +45,8 @@ using namespace std;
 #define PLAYER_END_MOVE "PlayerMoveOut"
 
 #define MAX_GAME_LENGTH 30000
+#define MAX_MISSILE	30
+#define MAX_ENEMY_PLANE 10
 
 typedef struct tagFPOINT
 {
@@ -64,6 +66,7 @@ typedef struct tagPlaneType
 	float			speed;
 	int				health;
 	RECT			size;
+	FPOINT			missilePos;
 	const wchar_t*	missileType;
 } PlaneType;
 
@@ -99,7 +102,7 @@ enum class GameObjectStates : UINT8
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 
-enum class Type
+enum class Type : UINT8
 {
 	NONE,
 	PLAYER,
@@ -108,19 +111,37 @@ enum class Type
 	ENEMY_BULLET,
 };
 
-enum class TaskType
+enum class TaskType : UINT8
 {
 	NONE,
 	STOP,
 	MOVE,
 	MOVEAROUND,
-	MOVESIN
+	MOVECURVE
 };
 
 struct Task
 {
-	TaskType type;
-	FPOINT dest;
-	float taskTime = 0.0f;
-	float destRadian = 0.0f;
+	TaskType	type;
+	FPOINT		dest;
+	FPOINT		control;
+	float		taskTime;
+	float		destRadian;
 };
+
+enum class EnemyType : UINT8
+{
+	NONE,
+	PLANE,
+	TANK,
+	BOSS
+};
+
+typedef struct tagStageScript
+{
+	EnemyType		type;
+	const wchar_t*	key;
+	vector<Task>*	path;
+	FPOINT			pos;
+	float			appeared;
+}StageScript;

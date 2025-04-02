@@ -25,6 +25,7 @@ public:
 	virtual void Render(HDC hdc) = 0;
 
 	Type GetType();
+	void SetType(Type type);
 	void SetPos(FPOINT pos);
 	bool GetActive();
 	bool GetRender();

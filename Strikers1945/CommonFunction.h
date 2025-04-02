@@ -136,3 +136,9 @@ inline FPOINT GetUnitVector(FPOINT src, FPOINT dest)
 	else
 		return { 0, 0 };
 }
+
+inline FPOINT getBezierPoint(float t, FPOINT start, FPOINT control, FPOINT end) {
+	float x = (1 - t) * (1 - t) * start.x + 2 * (1 - t) * t * control.x + t * t * end.x;
+	float y = (1 - t) * (1 - t) * start.y + 2 * (1 - t) * t * control.y + t * t * end.y;
+	return { x, y };
+}

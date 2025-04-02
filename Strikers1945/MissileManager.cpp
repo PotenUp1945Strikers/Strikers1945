@@ -45,7 +45,7 @@ void MissileManager::Init()
 	size = { 0,0,0,0 };
 	reloadRate = 0.0f;
 	missileAmount = 0;
-	missiles.resize(30);
+	missiles.resize(MAX_MISSILE);
 	if (missileDict.empty())
 		FillDict();
 	for (int i = 0; i < missiles.size(); i++)
@@ -68,8 +68,8 @@ void MissileManager::Init(const wchar_t* key, Type type)
 
 	if (missiles.empty())
 	{
-		missiles.resize(30);
-		for (int i = 0; i < 30; ++i)
+		missiles.resize(MAX_MISSILE);
+		for (int i = 0; i < MAX_MISSILE; ++i)
 		{
 			missiles[i] = new Missile();
 			missiles[i]->Init(type);

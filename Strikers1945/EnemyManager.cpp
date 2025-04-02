@@ -5,33 +5,43 @@
 #include "Plane.h"
 
 
-map<const wchar_t*, vector<Task>*> EnemyManager::dict;
-
 void EnemyManager::Init()
 {
 	// TODO : scripts init
-	if(dict.size() <= 0 )
-		FillDict();
-	
-	
+	FillDict();
+	CreateLevel();
+
 	// Planes Init (enemy)
-	scriptIndex = 0;
+	currLev = 0;
 
 	if (planes.empty())
 	{
-		planes.push_back(new Plane);
-		planes[0]->Init(TEXT(ENEMY1_PATH), 300, Type::ENEMY);
-		planes[0]->SetPos({ WINSIZE_X / 2, -100});
-		planes[0]->SetPath(dict[TEXT("Pattern_Movearound")]);
-		CollisionManager::GetInstance()->AddCollider(planes[0]);
+		planes.resize(MAX_ENEMY_PLANE);
+		for (auto& plane : planes)
+		{
+			plane = new Plane;
+			plane->Init();
+			plane->SetType(Type::ENEMY);
+			CollisionManager::GetInstance()->AddCollider(plane);
+		}
 	}
 
+	PutEnemy();
 }
 
 void EnemyManager::Release()
 {
 	//scripts.clear();
 	//scripts.shrink_to_fit();
+
+	if (!planes.empty())
+	{
+		for (auto& plane : planes)
+		{
+			plane->Release();
+			delete plane;
+		}
+	}
 	planes.clear();
 	planes.shrink_to_fit();
 }
@@ -44,12 +54,37 @@ void EnemyManager::Update()
 	//	if (DeployEnemy()) scriptIndex += 1;
 	//}
 
+	PutEnemy();
 
 	for (auto i : planes)
 	{
 		i->Update();
 	}
 
+}
+
+void EnemyManager::PutEnemy(void)
+{
+	if (currLev >= level.size())
+		return;
+
+	for (auto& plane : planes)
+	{
+		if (plane->GetActive() == false)
+		{
+			StageScript& script = level[currLev++];
+			switch (script.type)
+			{
+			case EnemyType::PLANE:
+				plane->Init(script.key, script.appeared, Type::ENEMY);
+				plane->SetPos(script.pos);
+				plane->SetPath(script.path);
+				break;
+			}
+			if (currLev >= level.size())
+				break;
+		}
+	}
 }
 
 void EnemyManager::Render(HDC hdc)
@@ -92,60 +127,61 @@ bool EnemyManager::DeployEnemy()
 
 void EnemyManager::FillDict(void)
 {
+	if (!dict.empty())
+		return;
 	{
 		vector<Task>* tmpVec = new vector<Task>;
 
-		Task moveTask1;
-		moveTask1.type = TaskType::MOVE;
-		moveTask1.dest = { 0 , 200.0f };
-		moveTask1.taskTime = 0.0f;
-		moveTask1.destRadian = 0.0f;
-		tmpVec->push_back(moveTask1);
-
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0 , 200.0f };
+		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
 		
-		Task moveTask2;
-		moveTask2.type = TaskType::MOVE;
-		moveTask2.dest = { 0 , 200.0f };
-		moveTask2.taskTime = 0.0f;
-		moveTask2.destRadian = 0.0f;
-		tmpVec->push_back(moveTask2);
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0 , 200.0f };
+		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
 
 	
-		Task moveTask3;
-		moveTask3.type = TaskType::MOVE;
-		moveTask3.dest = { 0 , WINSIZE_Y + 100.0f };
-		moveTask3.taskTime = 0.0f;
-		moveTask3.destRadian = 0.0f;
-		tmpVec->push_back(moveTask3);
-
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0 , WINSIZE_Y + 100.0f };
+		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
+		
 		dict.insert(make_pair(TEXT("Pattern_Straight"), tmpVec));
 	}
 
 	{
 		vector<Task>* tmpVec = new vector<Task>;
 
-		Task moveTask1;
-		moveTask1.type = TaskType::MOVE;
-		moveTask1.dest = { 0, 200.0f };
-		moveTask1.taskTime = 0.0f;
-		moveTask1.destRadian = 0.0f;
-		tmpVec->push_back(moveTask1);
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, 200.0f };
+		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
 
 
-		Task moveTask2;
-		moveTask2.type = TaskType::MOVEAROUND;
-		moveTask2.dest = { 0, 200.0f };
-		moveTask2.taskTime = 0.0f;
-		moveTask2.destRadian = DEG_TO_RAD(360);
-		tmpVec->push_back(moveTask2);
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVEAROUND;
+		tmpVec->back().dest = { 0, 200.0f };
+		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = DEG_TO_RAD(360);
 
 
-		Task moveTask3;
-		moveTask3.type = TaskType::MOVE;
-		moveTask3.dest = { 0, WINSIZE_Y + 100.0f };
-		moveTask3.taskTime = 0.0f;
-		moveTask3.destRadian = 0.0f;
-		tmpVec->push_back(moveTask3);
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, WINSIZE_Y + 100.0f };
+		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
 
 		dict.insert(make_pair(TEXT("Pattern_Movearound"), tmpVec));
 	}
@@ -153,25 +189,67 @@ void EnemyManager::FillDict(void)
 	{
 		vector<Task>* tmpVec = new vector<Task>;
 
-		Task moveTask1;
-		moveTask1.type = TaskType::MOVESIN;
-		moveTask1.dest = { WINSIZE_X / 2, WINSIZE_Y / 3 * 2 };
-		moveTask1.taskTime = 0.0f;
-		moveTask1.destRadian = 0.0f;
-		tmpVec->push_back(moveTask1);
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { 0, WINSIZE_Y - WINSIZE_Y / 3 };
+		tmpVec->back().control = { 200, WINSIZE_Y / 4 };
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
 
 
-		Task moveTask2;
-		moveTask2.type = TaskType::MOVESIN;
-		moveTask2.dest = { WINSIZE_X, WINSIZE_Y };
-		moveTask2.taskTime = 0.0f;
-		moveTask2.destRadian = 0.0f;
-		tmpVec->push_back(moveTask2);
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { 0, WINSIZE_Y / 3 };
+		tmpVec->back().control = { -200,  WINSIZE_Y / 6};
+		tmpVec->back().taskTime = 0.0f;
+		tmpVec->back().destRadian = 0.0f;
 
 		dict.insert(make_pair(TEXT("Pattern_Sin"), tmpVec));
 	}
 
-	
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, WINSIZE_Y / 2 };
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -WINSIZE_X / 2, WINSIZE_Y / 2 };
+		tmpVec->back().control = { 0,  WINSIZE_Y / 2 };
+
+		dict.insert(make_pair(TEXT("FOWARD_AND_TURN_LEFT"), tmpVec));
+	}
+
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, WINSIZE_Y / 2 };
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { WINSIZE_X / 2, WINSIZE_Y / 2 };
+		tmpVec->back().control = { 0,  WINSIZE_Y / 2 };
+
+		dict.insert(make_pair(TEXT("FOWARD_AND_TURN_RIGHT"), tmpVec));
+	}
+}
+
+void EnemyManager::CreateLevel(void)
+{
+	if (!level.empty() || dict.empty())
+		return;
+
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 100, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 150, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 200, -50 }, 300 });
+
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 100, -50 }, 600 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 150, -50 }, 600 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, -50 }, 600 });
 }
 
 void EnemyManager::MakePatternEnemy(const wchar_t* key)

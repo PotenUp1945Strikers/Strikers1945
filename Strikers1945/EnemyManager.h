@@ -7,11 +7,16 @@ class Plane;
 class EnemyManager: public Singleton<EnemyManager>
 {
 private:
-	static map<const wchar_t*, vector<Task>*> dict;
-	vector<Task> tasks;
-	size_t scriptIndex;
-	vector<Plane*> planes;
+	map<const wchar_t*, vector<Task>*>	dict;
+	vector<StageScript>					level;
+	vector<Task>						tasks;
+	size_t								currLev;
+	vector<Plane*>						planes;
 
+	void CreateLevel(void);
+	void FillDict(void);
+
+	void PutEnemy(void);
 public:
 	
 	void Init(); 
@@ -21,7 +26,6 @@ public:
 
 	bool DeployEnemy();
 
-	void FillDict(void);
 
 	void MakePatternEnemy(const wchar_t* key);
 
