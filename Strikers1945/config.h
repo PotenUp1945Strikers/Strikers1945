@@ -59,10 +59,12 @@ typedef struct tagPlaneType
 typedef struct tagMissileType
 {
 	const wchar_t*	key;
-	float			bulletSpeed;
+	float			missileSpeed;
 	float			shootRate;
 	int				damage;
-	RECT			size;
+	float			reloadRate;
+	int				missileAmount;
+	// RECT			size;
 	const wchar_t*	upgrade;
 } MissileType;
 
