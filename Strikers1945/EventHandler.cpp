@@ -1,8 +1,30 @@
 #include "EventHandler.h"
 
-bool EventHandler::Update()
+void EventHandler::Init()
 {
-	if (MAX_GAME_LENGTH < BackgroundManager::GetInstance()->GetCurrPosY())
-		return true;
-	return false;
+	gameOver = false;
+	gameClear = false;
+}
+
+bool EventHandler::IsGameOver()
+{
+	return gameOver;
+}
+
+bool EventHandler::IsGameClear()
+{
+	if (gameOver)
+		return false;
+
+	return gameClear;
+}
+
+void EventHandler::GameOver()
+{
+	gameOver = true;
+}
+
+void EventHandler::GameClear()
+{
+	gameClear = true;
 }

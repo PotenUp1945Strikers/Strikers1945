@@ -28,6 +28,7 @@ private:
 	void UpdateEnding();
 
 	bool PressAnyKey();
+	void ReGame(void);
 
 public:
 	void Init();	

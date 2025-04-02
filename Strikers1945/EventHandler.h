@@ -2,9 +2,17 @@
 #include "BackgroundManager.h"
 #include "config.h"
 
-class EventHandler
+class EventHandler: public Singleton<EventHandler>
 {
+private:
+	bool gameOver;
+	bool gameClear;
+
 public:
-	static bool Update();
+	void Init();
+	bool IsGameOver();
+	bool IsGameClear();
+	void GameOver();
+	void GameClear();
 };
 

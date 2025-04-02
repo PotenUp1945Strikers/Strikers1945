@@ -9,10 +9,15 @@ void EnemyManager::Init()
 	// Planes Init (enemy)
 
 	scriptIndex = 0;
-	planes.push_back(new Plane);
-	planes.back()->Init(TEXT(ENEMY1_PATH), 300, Type::ENEMY);
+	if (planes.empty())
+	{
+		planes.push_back(new Plane);
+		planes.back()->Init(TEXT(ENEMY1_PATH), 300, Type::ENEMY);
+		CollisionManager::GetInstance()->AddCollider(planes.back());
+	}
+	else
+		planes.back()->Init(TEXT(ENEMY1_PATH), 300, Type::ENEMY);
 	planes.back()->SetPos({ WINSIZE_X / 2, WINSIZE_Y / 3 });
-	CollisionManager::GetInstance()->AddCollider(planes.back());
 }
 
 void EnemyManager::Release()

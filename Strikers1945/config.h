@@ -17,6 +17,7 @@ using namespace std;
 #define PAUSE_KEY 'P'
 #define SUICIDE_KEY 'K'
 #define REGAME_KEY 'R'
+#define CLEAR_KEY 'O'
 
 #define BACKGROUND_PATH "Image/Background.bmp"
 #define OPENING_PATH "Image/Opening.bmp"
@@ -32,6 +33,8 @@ using namespace std;
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
+
+#define INVINCIBILITY_TIME 1.2f
 
 #define MAX_GAME_LENGTH 30000
 
