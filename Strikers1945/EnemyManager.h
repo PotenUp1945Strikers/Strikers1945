@@ -1,14 +1,13 @@
 #pragma once
 #include "config.h"
 #include "Singleton.h"
+#include <map>
 
 class Plane;
 class EnemyManager: public Singleton<EnemyManager>
 {
 private:
-
-	static map<const wchar_t*, TaskType> dict;
-	//vector<struct Script> scripts;
+	static map<const wchar_t*, vector<Task>*> dict;
 	vector<Task> tasks;
 	size_t scriptIndex;
 	vector<Plane*> planes;

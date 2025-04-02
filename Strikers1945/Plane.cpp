@@ -39,7 +39,7 @@ void Plane::Init(void)
 	active = false;
 	render = false;
 	state = GameObjectStates::Wait;
-	currTaskTime = 0.0f;
+	taskTime = 0.0f;
 }
 
 
@@ -150,8 +150,7 @@ void Plane::UpdateWait(void)
 
 void Plane::UpdatePlayerBorn(void)
 {
-	MoveAlongPath();
-	if (!InOfWindow())
+	if (MoveAlongPath() && !InOfWindow())
 		state = GameObjectStates::Alive;
 }
 
@@ -217,41 +216,74 @@ void Plane::UpgradeMissile()
 
 void Plane::Move(FPOINT dir)
 {
-	this->dir = GetUnitVector({ 0, 0 }, dir);
+	if (state == GameObjectStates::Alive)
+		this->dir = GetUnitVector({ 0, 0 }, dir);
 }
 
-void Plane::MoveAlongPath()
+bool Plane::MoveAlongPath()
+{
+	switch (this->pathType)
+	{
+	case TaskType::NONE:
+		return true;
+	case TaskType::STOP:
+		MoveAlongPathStop();
+		break;
+	case TaskType::MOVE:
+		MoveAlongPathMove();
+		break;
+	case TaskType::MOVEAROUND:
+		MoveAlongPathMoveAround();
+		break;
+	case TaskType::MOVESIN:
+		MoveAlongPathMoveSin();
+		break;
+	}
+	return false;
+}
+
+void Plane::MoveAlongPathStop()
 {
 	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
-	currTaskTime += deltatime;
 
-	if (path && path->size() < currPath)
-	{
-		if (IsAlmostEqual(goal.x, pos.x) &&
-			IsAlmostEqual(goal.y, pos.y))
-			SetGoal();
-		else
-			dir = GetUnitVector(pos, goal);
-	}
+	if (taskTime > 0)
+		taskTime -= deltatime;
 	else
+		SetGoal();
+}
+
+void Plane::MoveAlongPathMove()
+{
+	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+
+	if (IsAlmostEqual(goal.x, pos.x, speed * dir.x * deltatime) &&
+		IsAlmostEqual(goal.y, pos.y, speed * dir.y * deltatime))
 	{
-		FPOINT tmpDir = { 0, };
-		if (pos.x + size.left < 0)
-			tmpDir.x += 1;
-		else if (pos.x + size.right > WINSIZE_X)
-			tmpDir.x += -1;
-		if (pos.y + size.top < 0)
-			tmpDir.y += 1;
-		else if (pos.y + size.bottom > WINSIZE_Y)
-			tmpDir.y += -1;
-		dir = GetUnitVector({ 0,0 }, tmpDir);
+		pos = goal;
+		return SetGoal();
 	}
 
-	
-		pos.x += speed * dir.x * deltatime;
-		pos.y += speed * dir.y * deltatime;
-	
-	
+	dir = GetUnitVector(pos, goal);
+	pos.x += speed * dir.x * deltatime;
+	pos.y += speed * dir.y * deltatime;
+}
+
+void Plane::MoveAlongPathMoveAround()
+{
+	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+
+	pathRadian += DEG_TO_RAD(speed * pathComplex * deltatime);
+	if (fabs(pathRadian) >= fabs(goalRadian))
+		return SetGoal();
+
+	float rad = startRadian + pathRadian;
+	pos.x = goal.x + pathRadius * cosf(rad);
+	pos.y = goal.y + pathRadius * sinf(rad);
+}
+
+void Plane::MoveAlongPathMoveSin()
+{
+
 }
 
 void Plane::OnDamage(void)
@@ -278,7 +310,7 @@ GameObjectStates Plane::GetState(void)
 	return state;
 }
 
-void Plane::SetPath(vector<FPOINT>* path)
+void Plane::SetPath(vector<Task>* path)
 {
 	if (path)
 	{
@@ -288,26 +320,40 @@ void Plane::SetPath(vector<FPOINT>* path)
 	}
 }
 
-void Plane::SetTask(vector<Task> tasks)
-{
-	this->tasks.assign(tasks.begin(), tasks.end());
-
-	// TODO : path set
-	
-	//SetPath()
-	
-}
-
 void Plane::SetGoal(void)
 {
 	if (path && this->path->size() > currPath)
 	{
-		currTaskTime = 0.0f;
-		FPOINT tmp = this->path->at(currPath++);
+		Task& target = this->path->at(currPath++);
+		pathType = target.type;
+		taskTime = target.taskTime;
+		goalRadian = target.destRadian;
+		pathRadian = 0;
+		FPOINT tmp = target.dest;
 		goal = { pos.x + tmp.x, pos.y + tmp.y };
+
+		switch (pathType)
+		{
+		case TaskType::STOP:
+			dir = { 0, };
+			break;
+		case TaskType::MOVEAROUND:
+			pathRadius = sqrtf(powf(tmp.x, 2) + powf(tmp.y, 2));
+			pathComplex = 360 / (PI * (pathRadius * 2));
+			startRadian = atan2f(pos.y - goal.y, pos.x - goal.x);
+			break;
+		}
 	}
 	else
+	{
+		pathType = TaskType::NONE;
+		taskTime = 0;
+		pathRadian = 0;
+		startRadian = 0;
+		goalRadian = 0;
 		goal = { 0, 0 };
+		dir = { 0, -1 };
+	}
 }
 
 Plane& Plane::operator=(const PlaneType& target)

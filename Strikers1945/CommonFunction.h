@@ -110,12 +110,12 @@ inline float GetDistance(FPOINT p1, FPOINT p2)
 	 return sqrtf(x * x + y * y);
 }
 
-inline bool IsAlmostEqual(float a, float b, float epsilon = 1e-5f)
+inline bool IsAlmostEqual(float a, float b, float epsilon)
 {
 	if (a > b)
-		return fabs(a - b) < epsilon;
+		return fabs(a - b) <= epsilon;
 	else
-		return fabs(b - a) < epsilon;
+		return fabs(b - a) <= epsilon;
 }
 
 inline bool IsAlmostEqual(int a, int b, int epsilon = 3)

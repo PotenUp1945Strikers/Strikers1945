@@ -16,15 +16,23 @@ private:
 	float				location;
 	float				absTime;
 
-	vector<FPOINT>*		path;
+	vector<Task>*		path;
+	TaskType			pathType;
+
+	float				pathRadian;
+	float				pathComplex;
+	float				startRadian;
+	float				goalRadian;
+	float				pathRadius;
+
 	size_t				currPath;
+	float				taskTime;
 	FPOINT				goal;
 
 	GameObjectStates	state;
 
 	MissileManager*		launcher;
-	vector<Task>		tasks;
-	float				currTaskTime;
+
 	
 	void FillDict(void);
 
@@ -41,7 +49,12 @@ private:
 	bool InOfWindow(void);
 
 	void SetGoal(void);
-	void MoveAlongPath(void);
+
+	bool MoveAlongPath(void);
+	void MoveAlongPathStop();
+	void MoveAlongPathMove();
+	void MoveAlongPathMoveAround();
+	void MoveAlongPathMoveSin();
 	
 public:
 	void Init(void);
@@ -57,8 +70,7 @@ public:
 
 
 	GameObjectStates GetState(void);
-	void SetPath(vector<FPOINT>* path);
-	void SetTask(vector<Task> tasks);
+	void SetPath(vector<Task>* path);
 
 	Plane& operator=(const PlaneType& target);
 };

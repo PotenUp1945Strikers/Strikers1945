@@ -1,7 +1,35 @@
 #include "PlayerManager.h"
 
+map<const wchar_t*, vector<Task>*> PlayerManager::dict;
+
+void PlayerManager::FillDict(void)
+{
+	vector<Task>* start = new vector<Task>;
+
+	Task task;
+	task.type = TaskType::MOVE;
+	task.dest = { 0 , -(WINSIZE_Y / 3) };
+	task.taskTime = 0.0f;
+	task.destRadian = 0.0f;
+	start->push_back(task);
+
+	dict.insert(make_pair(TEXT(PLAYER_START_MOVE), start));
+
+	vector<Task>* end = new vector<Task>;
+
+	task.type = TaskType::MOVE;
+	task.dest = { 0 , -WINSIZE_Y };
+	task.taskTime = 0.0f;
+	task.destRadian = 0.0f;
+	end->push_back(task);
+
+	dict.insert(make_pair(TEXT(PLAYER_START_MOVE), end));
+}
+
 void PlayerManager::Init(void)
 {
+	if (dict.empty())
+		FillDict();
 	if (!player1)
 	{
 		player1 = new Plane;
@@ -10,7 +38,9 @@ void PlayerManager::Init(void)
 	}
 	else 
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+
 	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100});
+	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player1Life = 3;
 	UIManager::GetInstance()->SetLife(player1Life);
 	player1Bomb = 2;

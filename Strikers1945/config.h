@@ -11,8 +11,9 @@ using namespace std;
 
 #define WINSIZE_X	600
 #define WINSIZE_Y	800
-#define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
-#define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
+#define PI 3.141592
+#define DEG_TO_RAD(degree) ((PI / 180.0) * degree)
+#define RAD_TO_DEG(radian) ((180.0 / PI) * radian)
 
 #define PAUSE_KEY 'P'
 #define SUICIDE_KEY 'K'
@@ -39,6 +40,9 @@ using namespace std;
 #define BACKGROUND_SIZE 4781
 
 #define INVINCIBILITY_TIME 1.2f
+
+#define PLAYER_START_MOVE "PlayerMoveIn"
+#define PLAYER_END_MOVE "PlayerMoveOut"
 
 #define MAX_GAME_LENGTH 30000
 
@@ -75,15 +79,6 @@ typedef struct tagMissileType
 	const wchar_t*	upgrade;
 } MissileType;
 
-typedef struct tagTaskType
-{
-	const wchar_t*		 key;
-	//int					 enemyNum;
-	vector<vector<Task>> tasks;
-	
-} TaskType;
-
-
 enum class GameStates: UINT8
 {
 	Intro,
@@ -113,8 +108,9 @@ enum class Type
 	ENEMY_BULLET,
 };
 
-enum class eTaskType
+enum class TaskType
 {
+	NONE,
 	STOP,
 	MOVE,
 	MOVEAROUND,
@@ -123,7 +119,7 @@ enum class eTaskType
 
 struct Task
 {
-	eTaskType type;
+	TaskType type;
 	FPOINT dest;
 	float taskTime = 0.0f;
 	float destRadian = 0.0f;
