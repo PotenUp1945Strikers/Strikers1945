@@ -18,6 +18,8 @@ private:
 	FPOINT				goal;
 	GameObjectStates	state;
 	MissileManager*		launcher;
+	vector<Task>		tasks;
+	float				currTaskTime;
 	
 	void FillDict(void);
 
@@ -48,7 +50,9 @@ public:
 	void Move(FPOINT dir);
 	void OnDamage(void);
 
+
 	void SetPath(vector<FPOINT>* path);
+	void SetTask(vector<Task> tasks);
 
 	Plane& operator=(const PlaneType& target);
 };
