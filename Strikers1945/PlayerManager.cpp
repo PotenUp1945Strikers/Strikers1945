@@ -5,7 +5,7 @@ void PlayerManager::Init(void)
 	if (!player1)
 		player1 = new Plane;
 	player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
-	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y - WINSIZE_Y / 3 });
+	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100});
 	player1Life = 3;
 	player1Bomb = 2;
 	CollisionManager::GetInstance()->AddCollider(player1);

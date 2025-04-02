@@ -30,18 +30,25 @@ void MainGame::Release()
 	}
 
 	ReleaseDC(g_hWnd, hdc);
+
 	PlayerManager::GetInstance()->Release();
 	PlayerManager::ReleaseInstance();
+
 	EnemyManager::GetInstance()->Release();
 	EnemyManager::ReleaseInstance();
+
 	KeyManager::GetInstance()->Release();
 	KeyManager::ReleaseInstance();
+
 	UIManager::GetInstance()->Release();
 	UIManager::ReleaseInstance();
+
 	BackgroundManager::GetInstance()->Release();
 	BackgroundManager::ReleaseInstance();
+
 	CollisionManager::GetInstance()->Release();
 	CollisionManager::ReleaseInstance();
+
 	ImageManager::GetInstance()->Release();
 	ImageManager::ReleaseInstance();
 }
@@ -136,9 +143,13 @@ void MainGame::RenderIntro(HDC hdc)
 void MainGame::RenderInGame(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
+
 	PlayerManager::GetInstance()->Render(hdc);
+
 	EnemyManager::GetInstance()->Render(hdc);
-	CollisionManager::GetInstance()->Render(hdc);
+
+	//CollisionManager::GetInstance()->Render(hdc);
+
 	UIManager::GetInstance()->RenderInGame(hdc);
 }
 
@@ -182,8 +193,11 @@ void MainGame::UpdateInGame()
 	}
 	
 	BackgroundManager::GetInstance()->Update();
+
 	PlayerManager::GetInstance()->Update();
+
 	EnemyManager::GetInstance()->Update();
+
 	CollisionManager::GetInstance()->Update();
 
 	if (EventHandler::Update())

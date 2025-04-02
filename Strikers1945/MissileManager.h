@@ -10,6 +10,8 @@ private:
 	Image* missileImage;
 	float missileSpeed;
 	float shootRate;
+	float reloadRate;
+	int	  missileAmount;
 	int missileDamage;
 	RECT size;
 	Type type;

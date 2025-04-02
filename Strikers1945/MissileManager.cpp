@@ -43,8 +43,10 @@ void MissileManager::Init(const wchar_t* key, Type type)
 
 		missileSpeed = 400.0f;
 		shootRate = 0.1f;
-		if (type == Type::PLAYER_BULLET) dir = { 0,-1 };
-		else if (type == Type::ENEMY_BULLET) dir = { 0,1 };
+		if (type == Type::PLAYER_BULLET)
+			dir = { 0,-1 };
+		else if (type == Type::ENEMY_BULLET)
+			dir = { 0,1 };
 		size = { -missileImage->GetWidth() / 2, -missileImage->GetHeight() / 2,
 			missileImage->GetWidth() / 2, missileImage->GetHeight() / 2 };
 		for (auto& missile : missiles)
