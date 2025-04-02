@@ -6,6 +6,7 @@
 #include "EventHandler.h"
 #include "PlayerManager.h"
 #include "EnemyManager.h"
+#include "EffectManager.h"
 
 class MainGame
 {

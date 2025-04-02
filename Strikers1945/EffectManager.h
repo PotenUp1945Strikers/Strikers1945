@@ -1,14 +1,27 @@
-//#pragma once
-//#include "Singleton.h"
-//#include "config.h"
-//class EffectManager : public Singleton<EffectManager>
-//{
-//private:
-//	vector<const wchar_t*, int> 
-//	//FPOINT pos;
-//public:
-//	void Init();
-//	void Update();
-//	void Render(HDC hdc);
-//	void Release();
-//};
+#pragma once
+#include "Singleton.h"
+#include "config.h"
+#include <map>
+class GameObject;
+
+struct Effect
+{
+	const wchar_t* key;
+	bool active;
+	GameObject* owner;
+	int frameX;
+	int frameY;
+	float elapsedTime;
+};
+
+class EffectManager : public Singleton<EffectManager>
+{
+private:
+	map<GameObject*, Effect> dict;
+public:
+	void Update();
+	void Render(HDC hdc);
+	void Release();
+	void AddEffect(GameObject* owner);
+	void OnEffect(GameObject* owner);
+};

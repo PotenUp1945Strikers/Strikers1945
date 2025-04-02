@@ -29,6 +29,7 @@ public:
 	bool GetActive();
 	bool GetRender();
 	RECT GetCollider();
+	FPOINT GetPos();
 	virtual void OnDamage() = 0;
 
 
