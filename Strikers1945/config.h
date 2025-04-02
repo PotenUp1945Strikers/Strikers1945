@@ -31,6 +31,8 @@ using namespace std;
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 
+#define PATTERN_ENEMY_NUM 6
+
 #define BOSS_PATH "Image/Boss.bmp"
 
 #define BACKGROUND_SPEED 120
@@ -73,6 +75,15 @@ typedef struct tagMissileType
 	const wchar_t*	upgrade;
 } MissileType;
 
+typedef struct tagTaskType
+{
+	const wchar_t*		 key;
+	//int					 enemyNum;
+	vector<vector<Task>> tasks;
+	
+} TaskType;
+
+
 enum class GameStates: UINT8
 {
 	Intro,
@@ -100,4 +111,20 @@ enum class Type
 	ENEMY,
 	PLAYER_BULLET,
 	ENEMY_BULLET,
+};
+
+enum class eTaskType
+{
+	STOP,
+	MOVE,
+	MOVEAROUND,
+	MOVESIN
+};
+
+struct Task
+{
+	eTaskType type;
+	FPOINT dest;
+	float taskTime = 0.0f;
+	float destRadian = 0.0f;
 };
