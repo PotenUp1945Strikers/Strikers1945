@@ -51,6 +51,17 @@ bool GameObject::GetRender()
     return render;
 }
 
+void GameObject::SetActive(bool active)
+{
+    this->active = active;
+}
+
+void GameObject::SetRender(bool render)
+{
+    this->render = render;
+}
+
+
 RECT GameObject::GetCollider()
 {
    RECT rc = {

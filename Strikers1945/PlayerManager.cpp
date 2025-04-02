@@ -1,4 +1,6 @@
 #include "PlayerManager.h"
+#include "ItemManager.h"
+#include "UIManager.h"
 
 map<const wchar_t*, vector<Task>*> PlayerManager::dict;
 
@@ -82,6 +84,20 @@ void PlayerManager::Release(void)
 		player1 = nullptr;
 	}
 }
+
+void PlayerManager::Onplayer1Bomb()
+{
+	if (!ItemManager::GetInstance()->GetBombing() && player1Bomb != 0)
+	{
+		player1Bomb -= 1;
+	}
+}
+
+int PlayerManager::GetPlayer1Bomb()
+{
+	return player1Bomb;
+}
+
 
 bool PlayerManager::Revive(void)
 {

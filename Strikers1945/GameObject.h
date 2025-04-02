@@ -28,6 +28,8 @@ public:
 	void SetPos(FPOINT pos);
 	bool GetActive();
 	bool GetRender();
+	void SetActive(bool active);
+	void SetRender(bool render);
 	RECT GetCollider();
 	virtual void OnDamage() = 0;
 

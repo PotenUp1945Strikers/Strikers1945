@@ -24,6 +24,8 @@ void MainGame::Init()
 
 	EnemyManager::GetInstance()->Init();
 
+	ItemManager::GetInstance()->Init();
+
 	EventHandler::GetInstance()->Init();
 }
 
@@ -39,6 +41,10 @@ void MainGame::Release()
 	ReleaseDC(g_hWnd, hdc);
 	
 	EventHandler::ReleaseInstance();
+
+	ItemManager::GetInstance()->Release();
+
+	ItemManager::ReleaseInstance();
 
 	PlayerManager::GetInstance()->Release();
 	PlayerManager::ReleaseInstance();
@@ -153,6 +159,8 @@ void MainGame::RenderInGame(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
 
+	ItemManager::GetInstance()->Render(hdc);
+
 	PlayerManager::GetInstance()->Render(hdc);
 
 	EnemyManager::GetInstance()->Render(hdc);
@@ -202,7 +210,7 @@ void MainGame::UpdateInGame()
 	}
 
 	BackgroundManager::GetInstance()->Update();
-
+	ItemManager::GetInstance()->Update();
 	PlayerManager::GetInstance()->Update();
 
 	EnemyManager::GetInstance()->Update();
@@ -215,6 +223,8 @@ void MainGame::UpdateInGame()
 		return EventHandler::GetInstance()->GameClear();
 	if (km->IsOnceKeyDown(PAUSE_KEY))
 		state = GameStates::Pause;
+	if (km->IsOnceKeyDown('X'))
+		return ItemManager::GetInstance()->OnDropButton();
 }
 
 void MainGame::UpdatePause()
@@ -262,6 +272,7 @@ void MainGame::ReGame(void)
 	PlayerManager::GetInstance()->Init();
 	BackgroundManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
+	ItemManager::GetInstance()->Init();
 	EventHandler::GetInstance()->Init();
 	state = GameStates::Intro;
 }

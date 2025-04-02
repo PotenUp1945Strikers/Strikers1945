@@ -15,6 +15,12 @@ void ImageManager::Init()
     AddImage(TEXT(PLAYER_PATH), TEXT(PLAYER_PATH), 32, 47, 1, 1, true, RGB(255, 0, 255));
     AddImage(TEXT(ENEMY1_PATH), TEXT(ENEMY1_PATH), 39, 32, 1, 1, true, RGB(255, 0, 255));
     AddImage(TEXT(NORMAL_BULLET_PATH), TEXT(NORMAL_BULLET_PATH), 33, 49, 1, 1, true, RGB(255, 0, 255));
+    
+    AddImage(TEXT(BOMB_PLANE_PATH), TEXT(BOMB_PLANE_PATH), 153, 134, 1, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(BOMB_MINIBOMB_PATH), TEXT(BOMB_MINIBOMB_PATH), 480, 32, 32, 1, true, RGB(255, 0, 255));
+    AddImage(TEXT(BOMB_EFFECT_PATH), TEXT(BOMB_EFFECT_PATH), 3584, 320, 16, 1, true, RGB(255, 0, 255));
+
+
 }
 
 void ImageManager::Release()

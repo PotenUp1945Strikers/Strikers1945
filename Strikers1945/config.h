@@ -31,6 +31,9 @@ using namespace std;
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
+#define BOMB_PLANE_PATH "Image/BombPlane.bmp"
+#define BOMB_MINIBOMB_PATH "Image/MiniBomb.bmp"
+#define BOMB_EFFECT_PATH "Image/BombEffect.bmp"
 
 #define PATTERN_ENEMY_NUM 6
 
@@ -106,6 +109,8 @@ enum class Type
 	ENEMY,
 	PLAYER_BULLET,
 	ENEMY_BULLET,
+	PLAYER_UPGRADE_BULLET,
+	PLAYER_BOMB
 };
 
 enum class TaskType

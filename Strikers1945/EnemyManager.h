@@ -25,9 +25,6 @@ public:
 
 	void MakePatternEnemy(const wchar_t* key);
 
-	void MakeStraightPatternEnemy();
-	void MakeAroundPatternEnemy();
-	void MakeSinPatternEnemy();
 
 };
 

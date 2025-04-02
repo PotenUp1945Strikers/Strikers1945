@@ -29,6 +29,11 @@ public:
 	void Update(void);
 	void Render(HDC hdc);
 	void Release(void);
+	
+	void Onplayer1Bomb();
+
+	int GetPlayer1Bomb();
+
 
 	bool Revive(void);
 };
