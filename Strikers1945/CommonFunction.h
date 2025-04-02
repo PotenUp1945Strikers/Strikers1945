@@ -110,12 +110,29 @@ inline float GetDistance(FPOINT p1, FPOINT p2)
 	 return sqrtf(x * x + y * y);
 }
 
-inline bool isAlmostEqual(float a, float b, float epsilon = 1e-5f)
+inline bool IsAlmostEqual(float a, float b, float epsilon = 1e-5f)
 {
-	return std::fabs(a - b) < epsilon;
+	if (a > b)
+		return fabs(a - b) < epsilon;
+	else
+		return fabs(b - a) < epsilon;
 }
 
-inline bool isAlmostEqual(int a, int b, int epsilon = 3)
+inline bool IsAlmostEqual(int a, int b, int epsilon = 3)
 {
-	return std::abs(a - b) < epsilon;
+	if (a > b)
+		return abs(a - b) < epsilon;
+	else
+		return abs(b - a) < epsilon;
+}
+
+inline FPOINT GetUnitVector(FPOINT src, FPOINT dest)
+{
+	FPOINT result = { dest.x - src.x, dest.y - src.y };
+	float length = sqrtf(powf(result.x, 2) + powf(result.y, 2));
+
+	if (length)
+		return { result.x / length, result.y / length };
+	else
+		return { 0, 0 };
 }

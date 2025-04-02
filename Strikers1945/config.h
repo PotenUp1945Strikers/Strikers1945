@@ -52,9 +52,7 @@ typedef struct tagPlaneType
 	const wchar_t*	key;
 	float			speed;
 	int				health;
-	RECT			bodySize;
-	RECT			wingSize;
-	FPOINT			wingPos;
+	RECT			size;
 	const wchar_t*	missileType;
 } PlaneType;
 

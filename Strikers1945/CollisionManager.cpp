@@ -61,14 +61,14 @@ void CollisionManager::checkCollisions()
 			if (isColliding(enemy, playerBullet))
 			{
 				// 적 데미지
-				enemy->OnDamage();
+				//enemy->OnDamage();
 				playerBullet->OnDamage();
 			}
 		}
 	}
 }
-template<typename T>
-void CollisionManager::renderColliders(HDC hdc, vector<T*>& gameObjects)
+
+void CollisionManager::renderColliders(HDC hdc, vector<GameObject*>& gameObjects)
 {
 	for (auto& gameObject : gameObjects)
 	{
@@ -82,16 +82,23 @@ void CollisionManager::AddCollider(GameObject* gameObject)
 	switch (gameObject->GetType())
 	{
 	case Type::PLAYER:
-		playerColliders.push_back(dynamic_cast<Plane*>(gameObject));
+		playerColliders.push_back(gameObject);
 		break;
 	case Type::ENEMY:
-		enemyColliders.push_back(dynamic_cast<Plane*>(gameObject));
+		enemyColliders.push_back(gameObject);
 		break;
 	case Type::PLAYER_BULLET:
+<<<<<<< HEAD
 		playerMissileColliders.push_back(dynamic_cast<Missile*>(gameObject));
 		break;
 	case Type::ENEMY_BULLET:
 		enemyMissileColliders.push_back(dynamic_cast<Missile*>(gameObject));
+=======
+		playerBulletColliders.push_back(gameObject);
+		break;
+	case Type::ENEMY_BULLET:
+		enemyBulletColliders.push_back(gameObject);
+>>>>>>> a392ccfcc60ffe797aa87330aead414cd2156175
 		break;
 	default:
 		break;

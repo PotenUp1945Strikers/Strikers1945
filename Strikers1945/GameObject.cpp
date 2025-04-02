@@ -28,21 +28,17 @@ bool GameObject::OutOfWindow()
     //    break;
     //
     //}
-
-
+    return false;
 }
-
-
-
 
 Type GameObject::GetType()
 {
     return type;
 }
 
-void GameObject::SetType(Type type)
+void GameObject::SetPos(FPOINT pos)
 {
-    this->type = type;
+    this->pos = pos;
 }
 
 bool GameObject::GetActive()
@@ -55,45 +51,14 @@ bool GameObject::GetRender()
     return render;
 }
 
-RECT GameObject::GetColider()
+RECT GameObject::GetCollider()
 {
    RECT rc = {
-       pos.x - size.left,
-       pos.y - size.top,
+       pos.x + size.left,
+       pos.y + size.top,
        pos.x + size.right,
        pos.y + size.bottom
    };
    return rc;
     
-}
-
-void GameObject::OnDamage()
-{
-    switch (type)
-    {
-    case Type::PLAYER:
-
-        health -= 1;
-
-        break;
-    case Type::ENEMY:
-
-        //TODO : tune value
-        // health -= ;
-
-        break;
-
-   case Type::PLAYER_BULLET: 
-   case Type::ENEMY_BULLET:
-
-       //TODO : DestroyActor, Start Effect Animation
-
-       active = false;
-       render = false;
-
-
-       break;
-
-    }
-
 }
