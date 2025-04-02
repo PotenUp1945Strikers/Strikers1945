@@ -6,6 +6,7 @@
 #include "BackgroundManager.h"
 #include <map>
 #include "config.h"
+#include "PlayerManager.h"
 
 class Plane: public GameObject
 {
@@ -13,10 +14,14 @@ private:
 	static map<const wchar_t*, PlaneType> dict;
 
 	float				location;
+	float				absTime;
+
 	vector<FPOINT>*		path;
 	size_t				currPath;
 	FPOINT				goal;
+
 	GameObjectStates	state;
+
 	MissileManager*		launcher;
 	vector<Task>		tasks;
 	float				currTaskTime;
@@ -51,6 +56,7 @@ public:
 	void OnDamage(void);
 
 
+	GameObjectStates GetState(void);
 	void SetPath(vector<FPOINT>* path);
 	void SetTask(vector<Task> tasks);
 

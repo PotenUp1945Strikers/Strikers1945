@@ -1,15 +1,17 @@
 #pragma once
 #include "config.h"
-#include <vector>
+#include <map>
 
 class Image;
 class Missile;
 class MissileManager
 {
 private:
+	static map<const wchar_t*, MissileType> missileDict;
+
 	Image* missileImage;
 	float missileSpeed;
-	float shootRate;
+	float shootRate;	
 	float reloadRate;
 	int	  missileAmount;
 	int missileDamage;
@@ -18,7 +20,10 @@ private:
 	vector<Missile*> missiles;
 	FPOINT dir;
 	float elapsedTime;
-
+	bool isReloading;
+	float reloadTime;
+	int missileCount;
+	void FillDict();
 public:
 	void Init();
 	void Init(const wchar_t* key, Type type);

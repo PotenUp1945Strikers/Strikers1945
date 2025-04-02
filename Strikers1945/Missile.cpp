@@ -43,9 +43,12 @@ void Missile::Init(FPOINT dir, float speed, Image* image, RECT size, int health)
 
 void Missile::Update()
 {
-	float velocity = TimerManager::GetInstance()->GetDeltaTime() * speed;
-	pos.x += dir.x * velocity;
-	pos.y += dir.y * velocity;
+	if (active)
+	{
+		float velocity = TimerManager::GetInstance()->GetDeltaTime() * speed;
+		pos.x += dir.x * velocity;
+		pos.y += dir.y * velocity;
+	}
 
 	if (outOfWindow())
 	{

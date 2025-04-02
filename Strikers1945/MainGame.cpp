@@ -11,13 +11,20 @@ void MainGame::Init()
 		MessageBox(g_hWnd, 
 			TEXT("Cannot Create Back Buffer"), TEXT("Warning"), MB_OK);
 	}
+
 	ImageManager::GetInstance()->Init();
+
 	CollisionManager::GetInstance()->Init();
+
 	BackgroundManager::GetInstance()->Init();
+
 	UIManager::GetInstance()->Init();
+
 	PlayerManager::GetInstance()->Init();
+
 	EnemyManager::GetInstance()->Init();
-	
+
+	EventHandler::GetInstance()->Init();
 }
 
 void MainGame::Release()
@@ -30,6 +37,8 @@ void MainGame::Release()
 	}
 
 	ReleaseDC(g_hWnd, hdc);
+	
+	EventHandler::ReleaseInstance();
 
 	PlayerManager::GetInstance()->Release();
 	PlayerManager::ReleaseInstance();
@@ -180,18 +189,18 @@ void MainGame::UpdateInGame()
 {
 	KeyManager* km = KeyManager::GetInstance();
 
-	if (km->IsOnceKeyDown(PAUSE_KEY))
-	{
-		state = GameStates::Pause;
-		return;
-	} 
-	else if (km->IsOnceKeyDown(SUICIDE_KEY))
+	if (EventHandler::GetInstance()->IsGameOver())
 	{
 		state = GameStates::GameOver;
 		gameOverTime = 10;
 		return;
 	}
-	
+	if (EventHandler::GetInstance()->IsGameClear())
+	{
+		state = GameStates::Ending;
+		return;
+	}
+
 	BackgroundManager::GetInstance()->Update();
 
 	PlayerManager::GetInstance()->Update();
@@ -200,11 +209,12 @@ void MainGame::UpdateInGame()
 
 	CollisionManager::GetInstance()->Update();
 
-	if (EventHandler::Update())
-	{
-		state = GameStates::Ending;
-		return;
-	}
+	if (km->IsOnceKeyDown(SUICIDE_KEY))
+		return EventHandler::GetInstance()->GameOver();
+	if (km->IsOnceKeyDown(CLEAR_KEY))
+		return EventHandler::GetInstance()->GameClear();
+	if (km->IsOnceKeyDown(PAUSE_KEY))
+		state = GameStates::Pause;
 }
 
 void MainGame::UpdatePause()
@@ -215,14 +225,12 @@ void MainGame::UpdatePause()
 
 void MainGame::UpdateGameOver()
 {
-	if (gameOverTime < 0)
+	if (gameOverTime < 0)		
+		return ReGame();
+	if (PressAnyKey())
 	{
-		state = GameStates::Intro;
-		BackgroundManager::GetInstance()->Init();
-		return;
-	}
-	else if (PressAnyKey())
-	{
+		EventHandler::GetInstance()->Init();
+		PlayerManager::GetInstance()->Init();
 		state = GameStates::InGame;
 		return;
 	}
@@ -234,13 +242,10 @@ void MainGame::UpdateGameOver()
 void MainGame::UpdateEnding()
 {
 	if (KeyManager::GetInstance()->IsOnceKeyDown(REGAME_KEY))
-	{
-		BackgroundManager::GetInstance()->Init();
-		state = GameStates::Intro;
-	}
+		ReGame();
 }
 
-bool MainGame::PressAnyKey()
+bool MainGame::PressAnyKey(void)
 {
 	KeyManager* km = KeyManager::GetInstance();
 
@@ -250,4 +255,13 @@ bool MainGame::PressAnyKey()
 			return true;
 	}
 	return false;
+}
+
+void MainGame::ReGame(void)
+{
+	PlayerManager::GetInstance()->Init();
+	BackgroundManager::GetInstance()->Init();
+	EnemyManager::GetInstance()->Init();
+	EventHandler::GetInstance()->Init();
+	state = GameStates::Intro;
 }

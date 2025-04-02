@@ -34,6 +34,7 @@ void Plane::Init(void)
 	}
 	path = nullptr;
 	currPath = 0;
+	absTime = 0;
 	goal = { 0, };
 	active = false;
 	render = false;
@@ -50,7 +51,6 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 	state = GameObjectStates::Wait;
 	active = false;
 	render = false;
-	path = nullptr;
 	currPath = 0;
 	goal = { 0, };
 	if (!launcher)
@@ -66,9 +66,11 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 		switch (type) {
 		case Type::PLAYER:
 			launcher->Init(var->second.missileType, Type::PLAYER_BULLET);
+			absTime = INVINCIBILITY_TIME;
 			break;
 		case Type::ENEMY:
 			launcher->Init(var->second.missileType, Type::ENEMY_BULLET);
+			absTime = 0;
 			break;
 		}
 	}
@@ -150,15 +152,19 @@ void Plane::UpdatePlayerBorn(void)
 {
 	MoveAlongPath();
 	if (!InOfWindow())
-	{
-		active = true;
 		state = GameObjectStates::Alive;
-	}
 }
 
 void Plane::UpdatePlayerAlive(void)
 {
 	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+	if (!active)
+	{
+		absTime -= deltatime;
+		if (absTime <= 0)
+			active = true;
+	}
+
 	FPOINT oldPos = pos;
 	pos.x += speed * dir.x * deltatime;
 	pos.y += speed * dir.y * deltatime;
@@ -191,13 +197,16 @@ void Plane::UpdateEnemyAlive(void)
 
 void Plane::Shoot(void)
 {
-	FPOINT missilePos = pos;
-	if (type == Type::PLAYER)
-		missilePos.y += size.top;
-	else if (type == Type::ENEMY)
-		missilePos.y += size.bottom;
-	if (launcher)
-		launcher->Shoot(missilePos);
+	if (active)
+	{
+		FPOINT missilePos = pos;
+		if (type == Type::PLAYER)
+			missilePos.y += size.top;
+		else if (type == Type::ENEMY)
+			missilePos.y += size.bottom;
+		if (launcher)
+			launcher->Shoot(missilePos);
+	}
 }
 
 void Plane::UpgradeMissile()
@@ -253,7 +262,20 @@ void Plane::OnDamage(void)
 		active = false;
 		render = false;
 		state = GameObjectStates::Die;
+		if (type == Type::PLAYER && PlayerManager::GetInstance()->Revive())
+		{
+			state = GameObjectStates::Wait;
+			currPath = 0;
+			pos = { WINSIZE_X / 2, WINSIZE_Y + 100 };
+			absTime = INVINCIBILITY_TIME;
+			SetGoal();
+		}
 	}
+}
+
+GameObjectStates Plane::GetState(void)
+{
+	return state;
 }
 
 void Plane::SetPath(vector<FPOINT>* path)
@@ -278,8 +300,7 @@ void Plane::SetTask(vector<Task> tasks)
 
 void Plane::SetGoal(void)
 {
-
-	if (this->path->size() > currPath)
+	if (path && this->path->size() > currPath)
 	{
 		currTaskTime = 0.0f;
 		FPOINT tmp = this->path->at(currPath++);
