@@ -160,6 +160,9 @@ void UIManager::SetLife(int input)
 
 void UIManager::SetBomb(int input)
 {
-	if(bomb)
+	if (bomb)
+	{
+		if (input <= 0) input = 0;
 		bomb->SetCount(input);
+	}
 }

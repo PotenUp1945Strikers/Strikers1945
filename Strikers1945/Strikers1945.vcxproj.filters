@@ -78,24 +78,33 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>TG</Filter>
     </ClInclude>
-	  <ClInclude Include="Plane.h">
-		  <Filter>BH</Filter>
-	  </ClInclude>
-	  <ClInclude Include="PlayerManager.h">
-		  <Filter>BH</Filter>
-	  </ClInclude>
-	  <ClInclude Include="MainGame.h">
-		  <Filter>BH</Filter>
-	  </ClInclude>
-	  <ClInclude Include="MissileManager.h">
-		  <Filter>SG</Filter>
-	  </ClInclude>
-	  <ClInclude Include="MissileFactory.h">
-		  <Filter>SG</Filter>
-	  </ClInclude>
-	  <ClInclude Include="Missile.h">
-		  <Filter>SG</Filter>
-	  </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>BH</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileManager.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileFactory.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>SG</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>TG</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>TG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -146,23 +155,32 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>TG</Filter>
     </ClCompile>
-	  <ClCompile Include="Plane.cpp">
-		  <Filter>BH</Filter>
-	  </ClCompile>
-	  <ClCompile Include="PlayerManager.cpp">
-		  <Filter>BH</Filter>
-	  </ClCompile>
-	  <ClCompile Include="MainGame.cpp">
-		  <Filter>BH</Filter>
-	  </ClCompile>
-	  <ClCompile Include="MissileManager.cpp">
-		  <Filter>SG</Filter>
-	  </ClCompile>
-	  <ClCompile Include="MissileFactory.cpp">
-		  <Filter>SG</Filter>
-	  </ClCompile>
-	  <ClCompile Include="Missile.cpp">
-		  <Filter>SG</Filter>
-	  </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>BH</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileManager.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileFactory.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>TG</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>TG</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

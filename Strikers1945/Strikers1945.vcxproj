@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BackgroundManager.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InGameUI.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Missile.h" />
@@ -155,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundManager.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -164,6 +167,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InGameUI.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />

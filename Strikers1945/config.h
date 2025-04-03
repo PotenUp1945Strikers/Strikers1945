@@ -37,6 +37,9 @@ using namespace std;
 #define MID_ENEMY1_PATH "Image/MidEnemy1.bmp"
 #define MID_ENEMY2_PATH "Image/MidEnemy2.bmp"
 #define BOSS_PATH "Image/StageBoss.bmp"
+#define BOMB_PLANE_PATH "Image/BombPlane.bmp"
+#define BOMB_MINIBOMB_PATH "Image/MiniBomb.bmp"
+#define BOMB_EFFECT_PATH "Image/BombEffect.bmp"
 
 #define PATTERN_ENEMY_NUM 6
 
@@ -115,6 +118,8 @@ enum class Type : UINT8
 	ENEMY,
 	PLAYER_BULLET,
 	ENEMY_BULLET,
+	PLAYER_UPGRADE_BULLET,
+	PLAYER_BOMB
 };
 
 enum class TaskType : UINT8
