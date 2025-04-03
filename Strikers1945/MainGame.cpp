@@ -241,9 +241,11 @@ void MainGame::UpdatePause()
 
 void MainGame::UpdateGameOver()
 {
+	KeyManager* km = KeyManager::GetInstance();
+
 	if (gameOverTime < 0)		
 		return ReGame();
-	if (PressAnyKey())
+	if (km->IsOnceKeyDown('1'))
 	{
 		EventHandler::GetInstance()->Init();
 		PlayerManager::GetInstance()->Init();
