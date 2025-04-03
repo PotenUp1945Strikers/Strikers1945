@@ -55,6 +55,12 @@ using namespace std;
 #define ITEM_EFFECT_PATH "Image/ItemEffect.bmp"
 
 
+#define NORMAL_MISSILE1_PATH "Image/NormalMissile1.bmp"
+#define NORMAL_MISSILE2_PATH "Image/NormalMissile2.bmp"
+#define NORMAL_MISSILE3_PATH "Image/NormalMissile3.bmp"
+#define NORMAL_MISSILE4_PATH "Image/NormalMissile4.bmp"
+
+
 
 #define PATTERN_ENEMY_NUM 6
 

@@ -22,6 +22,50 @@ void MissileManager::FillDict()
 	normalMissile.upgrade = TEXT(TARGETTING_BULLET_PATH);
 	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), normalMissile));
 
+	MissileType normalMissile1;
+	normalMissile1.key = TEXT(NORMAL_MISSILE1_PATH);
+	normalMissile1.missileKind = MissileKind::Basic;
+	normalMissile1.missileSpeed = 400.0f;
+	normalMissile1.shootRate = 0.5f;
+	normalMissile1.damage = 1;
+	normalMissile1.reloadRate = 3.0f;
+	normalMissile1.missileAmount = 10;
+	normalMissile1.upgrade = TEXT(NORMAL_MISSILE2_PATH);
+	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE1_PATH), normalMissile1));
+
+	MissileType normalMissile2;
+	normalMissile2.key = TEXT(NORMAL_MISSILE2_PATH);
+	normalMissile2.missileKind = MissileKind::Basic;
+	normalMissile2.missileSpeed = 400.0f;
+	normalMissile2.shootRate = 0.5f;
+	normalMissile2.damage = 1;
+	normalMissile2.reloadRate = 3.0f;
+	normalMissile2.missileAmount = 10;
+	normalMissile2.upgrade = TEXT(NORMAL_MISSILE3_PATH);
+	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE2_PATH), normalMissile2));
+
+	MissileType normalMissile3;
+	normalMissile3.key = TEXT(NORMAL_MISSILE3_PATH);
+	normalMissile3.missileKind = MissileKind::Basic;
+	normalMissile3.missileSpeed = 400.0f;
+	normalMissile3.shootRate = 0.5f;
+	normalMissile3.damage = 1;
+	normalMissile3.reloadRate = 3.0f;
+	normalMissile3.missileAmount = 10;
+	normalMissile3.upgrade = TEXT(NORMAL_MISSILE4_PATH);
+	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE3_PATH), normalMissile3));
+
+	MissileType normalMissile4;
+	normalMissile4.key = TEXT(NORMAL_MISSILE4_PATH);
+	normalMissile4.missileKind = MissileKind::Basic;
+	normalMissile4.missileSpeed = 400.0f;
+	normalMissile4.shootRate = 0.5f;
+	normalMissile4.damage = 1;
+	normalMissile4.reloadRate = 3.0f;
+	normalMissile4.missileAmount = 10;
+	normalMissile4.upgrade = nullptr;
+	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE4_PATH), normalMissile4));
+
 	MissileType targettingMissile;
 	targettingMissile.key = TEXT(TARGETTING_BULLET_PATH);
 	targettingMissile.missileKind = MissileKind::Targetting;
@@ -41,7 +85,7 @@ void MissileManager::FillDict()
 	aroundMissile.damage = 1;
 	aroundMissile.reloadRate = 5.0f;
 	aroundMissile.missileAmount = 100;
-	aroundMissile.upgrade = TEXT(NORMAL_BULLET_PATH);
+	aroundMissile.upgrade = nullptr; // TEXT(NORMAL_BULLET_PATH);
 	missileDict.insert(make_pair(TEXT(AROUND_BULLET_PATH), aroundMissile));
 }
 void MissileManager::Init()
@@ -211,5 +255,6 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 
 void MissileManager::Upgrade()
 {
+	if (upgradeKey == nullptr) return;
 	this->Init(upgradeKey, type);
 }
