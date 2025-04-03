@@ -11,6 +11,7 @@ void Plane::FillDict(void)
 	player.size = RECT{ -4, -20, 4, 20 };
 	player.health = 1;
 	player.missilePos = {0, -20};
+	player.centerPos = { 16, 23 };
 	player.missileType = TEXT(NORMAL_BULLET_PATH);
 	player.speed = 180;
 	dict.insert(make_pair(TEXT(PLAYER_PATH), player));
@@ -19,7 +20,8 @@ void Plane::FillDict(void)
 	enemy1.key = TEXT(ENEMY1_PATH);
 	enemy1.size = RECT{ -2, -16, 2, 16 };
 	enemy1.health = 1;
-	enemy1.missilePos = { 0, 16 };
+	enemy1.missilePos = { 0, -16 };
+	enemy1.centerPos = { 18, 16 };
 	enemy1.missileType = TEXT(NORMAL_BULLET_PATH);
 	enemy1.speed = 150;
 	dict.insert(make_pair(TEXT(ENEMY1_PATH), enemy1));
@@ -88,7 +90,7 @@ void Plane::Release(void)
 void Plane::Render(HDC hdc)
 {
 	if (image && render)
-		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
+		image->FrameRender(hdc, centerPos, pos.x, pos.y, 0, 0);
 	if (launcher)
 		launcher->Render(hdc);
 }
@@ -370,6 +372,7 @@ Plane& Plane::operator=(const PlaneType& target)
 	size = target.size;
 	health = target.health;
 	missilePos = target.missilePos;
+	centerPos = target.centerPos;
 	speed = target.speed;
 	return *this;
 }
@@ -379,8 +382,8 @@ bool Plane::OutOfWindow(void)
 	int halfWidth = image->GetWidth() / 2;
 	int halfHeight = image->GetHeight() / 2;
 
-	if (pos.x + halfWidth < 0 || pos.x - halfWidth > WINSIZE_X ||
-		pos.y + halfHeight < 0 || pos.y - halfHeight > WINSIZE_Y)
+	if (pos.x + size.left + centerPos.x < 0 || pos.x + size.right - centerPos.x > WINSIZE_X ||
+		pos.y + size.top + centerPos.y < 0 || pos.y + size.bottom - centerPos.y > WINSIZE_Y)
 		return true;
 	return false;
 }

@@ -30,11 +30,16 @@ using namespace std;
 #define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
+#define TANK_PATH "Image/Tank.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
+#define ENEMY2_PATH "Image/Enemy2.bmp"
+#define ENEMY3_PATH "Image/Enemy3.bmp"
+#define MID_ENEMY1_PATH "Image/MidEnemy1.bmp"
+#define MID_ENEMY2_PATH "Image/MidEnemy2.bmp"
+#define BOSS_PATH "Image/StageBoss.bmp"
 
 #define PATTERN_ENEMY_NUM 6
 
-#define BOSS_PATH "Image/Boss.bmp"
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
@@ -67,6 +72,7 @@ typedef struct tagPlaneType
 	int				health;
 	RECT			size;
 	FPOINT			missilePos;
+	FPOINT			centerPos;
 	const wchar_t*	missileType;
 } PlaneType;
 

@@ -15,6 +15,7 @@ private:
 
 	float				location;
 	FPOINT				missilePos;
+	FPOINT				centerPos;
 	float				absTime;
 
 	vector<Task>*		path;
