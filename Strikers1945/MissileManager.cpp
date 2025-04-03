@@ -19,6 +19,7 @@ void MissileManager::FillDict()
 	normalMissile.damage = 1;
 	normalMissile.reloadRate = 3.0f;
 	normalMissile.missileAmount = 10;
+	normalMissile.upgrade = TEXT(TARGETTING_BULLET_PATH);
 	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), normalMissile));
 
 	MissileType targettingMissile;
@@ -29,6 +30,7 @@ void MissileManager::FillDict()
 	targettingMissile.damage = 1;
 	targettingMissile.reloadRate = 3.0f;
 	targettingMissile.missileAmount = 10;
+	targettingMissile.upgrade = TEXT(AROUND_BULLET_PATH);
 	missileDict.insert(make_pair(TEXT(TARGETTING_BULLET_PATH), targettingMissile));
 
 	MissileType aroundMissile;
@@ -39,6 +41,7 @@ void MissileManager::FillDict()
 	aroundMissile.damage = 1;
 	aroundMissile.reloadRate = 5.0f;
 	aroundMissile.missileAmount = 100;
+	aroundMissile.upgrade = TEXT(NORMAL_BULLET_PATH);
 	missileDict.insert(make_pair(TEXT(AROUND_BULLET_PATH), aroundMissile));
 }
 void MissileManager::Init()
@@ -99,6 +102,7 @@ void MissileManager::Init(const wchar_t* key, Type type)
 		reloadRate = (*var).second.reloadRate;
 		missileAmount = (*var).second.missileAmount;
 		missileKind = (*var).second.missileKind;
+        upgradeKey = const_cast<wchar_t*>((*var).second.upgrade);
 
 		// size = (*var).second.size;
 		size = { -missileImage->GetWidth() / 2, -missileImage->GetHeight() / 2,
@@ -203,4 +207,9 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 	default:
 		break;
 	}
+}
+
+void MissileManager::Upgrade()
+{
+	this->Init(upgradeKey, type);
 }
