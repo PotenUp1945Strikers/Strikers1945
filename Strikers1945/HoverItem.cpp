@@ -97,12 +97,12 @@ void HoverItem::Render(HDC hdc)
 {
 	if (active && render)
 	{
-		if(type == Type::ITEM_HOVER_BOMB || type == Type::ITEM_HOVER_POWERUP)
+		//if(type == Type::ITEM_HOVER_BOMB || type == Type::ITEM_HOVER_POWERUP)
 			image->FrameRender(hdc, pos.x, pos.y, currFrameX, 0);
-		else if (type == Type::ITEM_HOVER_MEDAL)
-		{
-			image->Render(hdc, pos.x, pos.y);
-		}
+		//else if (type == Type::ITEM_HOVER_MEDAL)
+		//{
+		//	image->Render(hdc, pos.x, pos.y);
+		//}
 	}
 }
 

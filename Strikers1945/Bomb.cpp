@@ -23,7 +23,7 @@ void Bomb::Init()
 	speed = 300.0f;
 	image = nullptr;
 
-    size = { -WINSIZE_X,-bombPlaneImage->GetHeight()/2 + 40, WINSIZE_X , bombPlaneImage->GetHeight() / 2 };
+    size = { -WINSIZE_X,-bombPlaneImage->GetHeight()/2 + 80, WINSIZE_X , bombPlaneImage->GetHeight() / 2 };
 
     // struct init
 
@@ -142,7 +142,7 @@ void Bomb::Render(HDC hdc)
             {
                 if (!bombInfo.onEffect[i][j] && (bombInfo.currDropTime[i][j] >= bombInfo.miniBombDropTime))
                 {
-                    EffectManager::GetInstance()->OnEffect(TEXT(BOMB_EFFECT_PATH), { bombInfo.dropPos[i][j].x,bombInfo.dropPos[i][j].y - bombEffectImage->GetHeight()/2});
+                    EffectManager::GetInstance()->OnEffect(TEXT(BOMB_EFFECT_PATH), { bombInfo.dropPos[i][j].x, bombInfo.dropPos[i][j].y - 120});
                     bombInfo.onEffect[i][j] = true;
                 }
             }

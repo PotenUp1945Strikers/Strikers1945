@@ -7,7 +7,6 @@
 
 void UIManager::Init()
 {
-	// TODO : Init
 	if (!intro)
 	{
 		intro = new UI;
@@ -22,11 +21,17 @@ void UIManager::Init()
 		pause->SetImage(TEXT(PAUSE_PATH));
 	}
 
-	if (!gameOver)
+	if (!player1Gameover)
 	{
-		gameOver = new UI;
-		gameOver->Init();
-		gameOver->SetImage(TEXT(GAMEOVER_PATH));
+		player1Gameover = new UI;
+		player1Gameover->Init();
+		player1Gameover->SetImage(TEXT(GAMEOVER_PATH));
+	}
+	if (!player2Gameover)
+	{
+		player2Gameover = new UI;
+		player2Gameover->Init();
+		player2Gameover->SetImage(TEXT(GAMEOVER_PATH));
 	}
 	
 	if (!ending)
@@ -36,23 +41,25 @@ void UIManager::Init()
 		ending->SetImage(TEXT(ENDING_PATH));
 	}
 	
-	if (!life)
+	if (!player1Life)
 	{
-		life = new InGameUI;
-		life->Init({ 36, 50 });
-		life->SetImage(TEXT(LIFE_COUNT_PATH));
-		life->Setinterval(42);
+		player1Life = new InGameUI;
+		player1Life->SetPlayerNum(PlayerNum::PLAYER1);
+		player1Life->Init({ 36, 50 });
+		player1Life->SetImage(TEXT(LIFE_COUNT_PATH));
+		player1Life->Setinterval(42);
 	}
-	life->SetCount(3);
+	player1Life->SetCount(3);
 
-	if (!bomb)
+	if (!player1Bomb)
 	{
-		bomb = new InGameUI;
-		bomb->Init({ 38, WINSIZE_Y - 50 });
-		bomb->SetImage(TEXT(BOMB_COUNT_PATH));
-		bomb->Setinterval(38);
+		player1Bomb = new InGameUI;
+		player1Bomb->SetPlayerNum(PlayerNum::PLAYER1);
+		player1Bomb->Init({ 38, WINSIZE_Y - 50 });
+		player1Bomb->SetImage(TEXT(BOMB_COUNT_PATH));
+		player1Bomb->Setinterval(38);
 	}
-	bomb->SetCount(2);
+	player1Bomb->SetCount(2);
 
 	if (!number1)
 	{
@@ -62,6 +69,36 @@ void UIManager::Init()
 		number1->SetInterval(38);
 	}
 	number1->SetNumber(10);
+
+
+	if (!player2Life)
+	{
+		player2Life = new InGameUI;
+		player2Life->SetPlayerNum(PlayerNum::PLAYER2);
+		player2Life->Init({ WINSIZE_X - 36, 50 });
+		player2Life->SetImage(TEXT(LIFE_COUNT_PATH));
+		player2Life->Setinterval(42);
+	}		  
+	player2Life->SetCount(3);
+
+	if (!player2Bomb)
+	{
+		player2Bomb = new InGameUI;
+		player2Bomb->SetPlayerNum(PlayerNum::PLAYER2);
+		player2Bomb->Init({ WINSIZE_X - 38, WINSIZE_Y - 50 });
+		player2Bomb->SetImage(TEXT(BOMB_COUNT_PATH));
+		player2Bomb->Setinterval(38);
+	}
+	player2Bomb->SetCount(2);
+
+	if (!number2)
+	{
+		number2 = new NumberUI;
+		number2->Init({ 390, 418 });
+		number2->SetImage(TEXT(NUMBER_SET1_PATH));
+		number2->SetInterval(38);
+	}
+	number2->SetNumber(10);
 }
 
 void UIManager::Release()
@@ -76,25 +113,25 @@ void UIManager::Release()
 		delete pause;
 		pause = nullptr;
 	}
-	if (gameOver)
+	if (player1Gameover)
 	{
-		delete gameOver;
-		gameOver = nullptr;
+		delete player1Gameover;
+		player1Gameover = nullptr;
 	}
 	if (ending)
 	{
 		delete ending;
 		ending = nullptr;
 	}
-	if (life)
+	if (player1Life)
 	{
-		delete life;
-		life = nullptr;
+		delete player1Life;
+		player1Life = nullptr;
 	}
-	if (bomb)
+	if (player1Bomb)
 	{
-		delete bomb;
-		bomb = nullptr;
+		delete player1Bomb;
+		player1Bomb = nullptr;
 	}
 	if (number1)
 	{
@@ -105,16 +142,22 @@ void UIManager::Release()
 
 void UIManager::Update()
 {
-	if (life)
-		life->Update();
-	if (bomb)
-		bomb->Update();
+	if (player1Life)
+		player1Life->Update();
+	if (player1Bomb)
+		player1Bomb->Update();
+	if (player2Life)
+		player2Life->Update();
+	if (player2Bomb)
+		player2Bomb->Update();
 }
 
 void UIManager::UpdateGameOver(int count)
 {
 	if (number1)
 		number1->SetNumber(count);
+	if (number2)
+		number2->SetNumber(count);
 }
 
 
@@ -132,18 +175,27 @@ void UIManager::RenderPause(HDC hdc)
 
 void UIManager::RenderInGame(HDC hdc)
 {
-	if (life)
-		life->Render(hdc);
-	if (bomb)
-		bomb->Render(hdc);
+	if (player1Life)
+		player1Life->Render(hdc);
+	if (player1Bomb)
+		player1Bomb->Render(hdc);
+	if (player2Life)
+		player2Life->Render(hdc);
+	if (player2Bomb)
+		player2Bomb->Render(hdc);
 }
 
 void UIManager::RenderGameOver(HDC hdc)
 {
-	if (gameOver)
-		gameOver->Render(hdc);
+	if (player1Gameover)
+		player1Gameover->Render(hdc);
 	if (number1)
 		number1->Render(hdc);
+
+	if (player2Gameover)
+		player2Gameover->Render(hdc);
+	if (number2)
+		number2->Render(hdc);
 }
 
 void UIManager::RenderEnding(HDC hdc)
@@ -152,17 +204,32 @@ void UIManager::RenderEnding(HDC hdc)
 		ending->Render(hdc);
 }
 
-void UIManager::SetLife(int input)
+void UIManager::SetPlayer1Life(int input)
 {
-	if(life)
-		life->SetCount(input);
+	if(player1Life)
+		player1Life->SetCount(input);
 }
 
-void UIManager::SetBomb(int input)
+void UIManager::SetPlayer1Bomb(int input)
 {
-	if (bomb)
+	if (player1Bomb)
 	{
 		if (input <= 0) input = 0;
-		bomb->SetCount(input);
+		player1Bomb->SetCount(input);
+	}
+}
+
+void UIManager::SetPlayer2Life(int input)
+{
+	if (player2Life)
+		player2Life->SetCount(input);
+}
+
+void UIManager::SetPlayer2Bomb(int input)
+{
+	if (player2Bomb)
+	{
+		if (input <= 0) input = 0;
+		player2Bomb->SetCount(input);
 	}
 }

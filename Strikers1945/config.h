@@ -150,6 +150,13 @@ enum class Type : UINT8
 	ITEM_HOVER_MEDAL
 };
 
+enum class PlayerNum : UINT8
+{
+	NONE,
+	PLAYER1,
+	PLAYER2
+};
+
 enum class TaskType : UINT8
 {
 	NONE,

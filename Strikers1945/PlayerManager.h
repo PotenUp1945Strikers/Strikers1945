@@ -22,7 +22,7 @@ private:
 	int		player2Bomb;
 
 	void FillDict(void);
-	void LaunchBomb(int playerNum);
+	void LaunchBomb(PlayerNum playerNum);
 
 public:
 	void Init(void);
@@ -33,10 +33,14 @@ public:
 	void LaunchBombEnd();
 
 	int GetPlayer1bomb();
-
 	bool ReducePlayer1Bomb();
 	bool InCreasePlayer1Bomb();
 	
+
+	int GetPlayer2bomb();
+	bool ReducePlayer2Bomb();
+	bool InCreasePlayer2Bomb();
+
 	
 	bool Revive(void);
 };

@@ -3,8 +3,20 @@
 
 void InGameUI::Render(HDC hdc)
 {
-	for (int i = 0; i < count; i++)
+	switch (playerNum)
 	{
-		image->FrameRender(hdc, renderPos.x + (interval * i), renderPos.y, currFrameX, currFrameY, false);
+	case PlayerNum::PLAYER1:
+		for (int i = 0; i < count; i++)
+		{
+			image->FrameRender(hdc, renderPos.x + (interval * i), renderPos.y, currFrameX, currFrameY, false);
+		}
+		break;
+	case PlayerNum::PLAYER2:
+		for (int i = 0; i < count; i++)
+		{
+			image->FrameRender(hdc, renderPos.x - (interval * i), renderPos.y, currFrameX, currFrameY, false);
+		}
+		break;
 	}
+	
 }

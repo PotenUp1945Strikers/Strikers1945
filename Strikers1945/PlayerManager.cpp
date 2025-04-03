@@ -45,8 +45,25 @@ void PlayerManager::Init(void)
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player1Life = 3;
 	player1Bomb = 2;
-	UIManager::GetInstance()->SetLife(player1Life);
-	UIManager::GetInstance()->SetBomb(player1Bomb);
+	UIManager::GetInstance()->SetPlayer1Life(player1Life);
+	UIManager::GetInstance()->SetPlayer1Bomb(player1Bomb);
+
+
+	if (!player2)
+	{
+		player2 = new Plane;
+		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		CollisionManager::GetInstance()->AddCollider(player2);
+	}
+	else
+		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+
+	player2->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100 });
+	player2->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
+	player2Life = 3;
+	player2Bomb = 2;
+	UIManager::GetInstance()->SetPlayer2Life(player2Life);
+	UIManager::GetInstance()->SetPlayer2Bomb(player2Bomb);
 }
 
 void PlayerManager::Update(void)
@@ -54,27 +71,48 @@ void PlayerManager::Update(void)
 	FPOINT player1Pos = { 0, };
 	KeyManager* km = KeyManager::GetInstance();
 
-	if (km->IsStayKeyDown(VK_UP))
+	if (km->IsStayKeyDown('W'))
 		player1Pos.y += -1;
-	if (km->IsStayKeyDown(VK_DOWN))
+	if (km->IsStayKeyDown('S'))
 		player1Pos.y += 1;
-	if (km->IsStayKeyDown(VK_LEFT))
+	if (km->IsStayKeyDown('A'))
 		player1Pos.x += -1;
-	if (km->IsStayKeyDown(VK_RIGHT))
+	if (km->IsStayKeyDown('D'))
 		player1Pos.x += 1;
-	if (km->IsStayKeyDown('Z'))
+	if (km->IsStayKeyDown('B'))
 		player1->Shoot();
-	if (km->IsOnceKeyDown('X'))
-		LaunchBomb(1);
+	if (km->IsOnceKeyDown('N'))
+		LaunchBomb(PlayerNum::PLAYER1);
+
+	FPOINT player2Pos = { 0, };
+
+	if (km->IsStayKeyDown(VK_NUMPAD8))
+		player2Pos.y += -1;
+	if (km->IsStayKeyDown(VK_NUMPAD5))
+		player2Pos.y += 1;
+	if (km->IsStayKeyDown(VK_NUMPAD4))
+		player2Pos.x += -1;
+	if (km->IsStayKeyDown(VK_NUMPAD6))
+		player2Pos.x += 1;
+	if (km->IsStayKeyDown(VK_OEM_4))
+		player2->Shoot();
+	if (km->IsOnceKeyDown(VK_OEM_6))
+		LaunchBomb(PlayerNum::PLAYER2);
+
 
 	player1->Move(player1Pos);
 	player1->Update();
+
+	player2->Move(player2Pos);
+	player2->Update();
 }
 
 void PlayerManager::Render(HDC hdc)
 {
 	if (player1)
 		player1->Render(hdc);
+	if (player2)
+		player2->Render(hdc);
 }
 
 void PlayerManager::Release(void)
@@ -85,10 +123,20 @@ void PlayerManager::Release(void)
 		delete player1;
 		player1 = nullptr;
 	}
+	if (player2)
+	{
+		player2->Release();
+		delete player2;
+		player2 = nullptr;
+	}
 }
 
 
 
+int PlayerManager::GetPlayer1bomb()
+{
+	return player1Bomb;
+}
 
 bool PlayerManager::ReducePlayer1Bomb()
 {
@@ -110,6 +158,31 @@ bool PlayerManager::InCreasePlayer1Bomb()
 	return false;
 }
 
+int PlayerManager::GetPlayer2bomb()
+{
+	return player2Bomb;
+}
+
+bool PlayerManager::ReducePlayer2Bomb()
+{
+	if (this->player2Bomb > 0)
+	{
+		this->player2Bomb -= 1;
+		return true;
+	}
+	return false;
+}
+
+bool PlayerManager::InCreasePlayer2Bomb()
+{
+	if (this->player2Bomb < 2 && this->player2Bomb >= 0)
+	{
+		this->player2Bomb += 1;
+		return true;
+	}
+	return false;
+}
+
 
 
 
@@ -119,7 +192,7 @@ bool PlayerManager::Revive(void)
 	{
 		if (player1Life)
 		{
-			UIManager::GetInstance()->SetLife(--player1Life);
+			UIManager::GetInstance()->SetPlayer1Life(--player1Life);
 			return true;
 		}
 	}
@@ -128,7 +201,7 @@ bool PlayerManager::Revive(void)
 	{
 		if (player2Life)
 		{
-			UIManager::GetInstance()->SetLife(--player2Life);
+			UIManager::GetInstance()->SetPlayer2Life(--player2Life);
 			return true;
 		}
 	}
@@ -140,25 +213,25 @@ bool PlayerManager::Revive(void)
 	return false;
 }
 
-void PlayerManager::LaunchBomb(int playerNum)
+void PlayerManager::LaunchBomb(PlayerNum playerNum)
 {
 	switch (playerNum)
 	{
-	case 1:
+	case PlayerNum::PLAYER1:
 		if (!ItemManager::GetInstance()->GetBombing() && player1Bomb != 0)
 		{
 			
-			player1Bomb -= 1;
 			player1->DropBomb();
-			UIManager::GetInstance()->SetBomb(player1Bomb);
+			UIManager::GetInstance()->SetPlayer1Bomb(--player1Bomb);
 			ItemManager::GetInstance()->OnDropButton();
 		}
 		break;
-	case 2:
+	case PlayerNum::PLAYER2:
 		if (!ItemManager::GetInstance()->GetBombing() && player2Bomb != 0)
 		{
-			player2Bomb -= 1;
 			player2->DropBomb();
+			UIManager::GetInstance()->SetPlayer2Bomb(--player2Bomb);
+			ItemManager::GetInstance()->OnDropButton();
 		}
 		break;
 	}
@@ -168,10 +241,6 @@ void PlayerManager::LaunchBomb(int playerNum)
 void PlayerManager::LaunchBombEnd()
 {
 	player1->GetBombRef()->Init();
-	//player2->GetBombRef()->Init();
+	player2->GetBombRef()->Init();
 }
 
-int PlayerManager::GetPlayer1bomb()
-{
-	return player1Bomb;
-}

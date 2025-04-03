@@ -97,7 +97,7 @@ void ItemManager::OnGainItem(GameObject* object)
 	{
 	case Type::ITEM_HOVER_BOMB:
 			PlayerManager::GetInstance()->InCreasePlayer1Bomb();
-			UIManager::GetInstance()->SetBomb(PlayerManager::GetInstance()->GetPlayer1bomb());
+			UIManager::GetInstance()->SetPlayer1Bomb(PlayerManager::GetInstance()->GetPlayer1bomb());
 			break;
 	case Type::ITEM_HOVER_POWERUP:
 			// TODO : POWERUP IN PLANE
