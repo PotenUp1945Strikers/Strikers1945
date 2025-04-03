@@ -25,6 +25,7 @@ void EffectManager::FillDict()
 	dict.insert(make_pair(TEXT(EFFECT2_PATH), effects));
 	dict.insert(make_pair(TEXT(EFFECT3_PATH), effects));
 	dict.insert(make_pair(TEXT(EFFECT4_PATH), effects));
+	dict.insert(make_pair(TEXT(ITEM_EFFECT_PATH), effects));
 }
 
 void EffectManager::Init()

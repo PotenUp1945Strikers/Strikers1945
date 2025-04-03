@@ -86,6 +86,7 @@ void CollisionManager::checkCollisions()
 			if (isColliding(player, hoverItem))
 			{
 				hoverItem->OnDamage();
+				EffectManager::GetInstance()->OnEffect(TEXT(ITEM_EFFECT_PATH), hoverItem->GetPos());
 			}
 		}
 	}

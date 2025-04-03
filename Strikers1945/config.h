@@ -52,6 +52,7 @@ using namespace std;
 #define EFFECT2_PATH "Image/Effect2.bmp"
 #define EFFECT3_PATH "Image/Effect3.bmp"
 #define EFFECT4_PATH "Image/Effect4.bmp"
+#define ITEM_EFFECT_PATH "Image/ItemEffect.bmp"
 
 
 

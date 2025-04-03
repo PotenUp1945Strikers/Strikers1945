@@ -40,6 +40,9 @@ void ImageManager::Init()
     AddImage(TEXT(ITEM_HOVERMEDAL_PATH), TEXT(ITEM_HOVERMEDAL_PATH), 30, 30, 1, 1, true, RGB(255, 0, 255));
 
 
+    AddImage(TEXT(ITEM_EFFECT_PATH), TEXT(ITEM_EFFECT_PATH), 576, 288, 8, 4, true, RGB(255, 0, 255));
+
+
 }
 
 void ImageManager::Release()
