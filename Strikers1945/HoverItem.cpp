@@ -106,7 +106,7 @@ void HoverItem::Render(HDC hdc)
 	}
 }
 
-void HoverItem::OnDamage()
+void HoverItem::OnDamage(int damage)
 {
 	active = false;
 	render = false;

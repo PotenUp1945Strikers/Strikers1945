@@ -5,6 +5,8 @@
 
 class Plane;
 class Tank;
+class MiddleEnemy;
+class Boss;
 class EnemyManager: public Singleton<EnemyManager>
 {
 private:
@@ -14,6 +16,8 @@ private:
 	size_t								currLev;
 	vector<Plane*>						planes;
 	vector<Tank*>						tanks;
+	vector<MiddleEnemy*>				middles;
+	Boss*								boss;
 
 	void CreateLevel(void);
 	void FillDict(void);

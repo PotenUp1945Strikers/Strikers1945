@@ -9,11 +9,11 @@ void Plane::FillDict(void)
 	{
 		PlaneType player;
 		player.key = TEXT(PLAYER_PATH);
-		player.size = RECT{ -4, -8, 5, 6 };
+		player.size = RECT{ -8, -15, 8, 9 };
 		player.health = 1;
-		player.missilePos = { 0, -20 };
-		player.centerPos = { 16, 23 };
-		player.missileType = TEXT(NORMAL_BULLET_PATH);
+		player.missilePos = { 0, -31 };
+		player.centerPos = { 32, 31 };
+		player.missileType = TEXT(PLAYER_BULLET1_PATH);
 		player.maxFrameX = 7;
 		player.renderType = PlaneRenderType::DIR_X;
 		player.speed = 180;
@@ -23,11 +23,11 @@ void Plane::FillDict(void)
 	{
 		PlaneType tank;
 		tank.key = TEXT(TANK_PATH);
-		tank.size = RECT{ -9, -13, 9, 13 };
+		tank.size = RECT{ -18, -26, 18, 26 };
 		tank.health = 10;
-		tank.missilePos = { 16, 0 };
-		tank.centerPos = { 16, 16 };
-		tank.missileType = TEXT(NORMAL_BULLET_PATH);
+		tank.missilePos = { 32, 0 };
+		tank.centerPos = { 32, 32 };
+		tank.missileType = TEXT(TARGETTING_BULLET_PATH);
 		tank.maxFrameX = 16;
 		tank.renderType = PlaneRenderType::TANK;
 		tank.speed = 0;
@@ -37,11 +37,11 @@ void Plane::FillDict(void)
 	{
 		PlaneType enemy1;
 		enemy1.key = TEXT(ENEMY1_PATH);
-		enemy1.size = RECT{ -2, -16, 3, 16 };
-		enemy1.health = 5;
-		enemy1.missilePos = { 0, -17 };
-		enemy1.centerPos = { 19.5, 16 };
-		enemy1.missileType = TEXT(NORMAL_BULLET_PATH);
+		enemy1.size = RECT{ -4, -32, 6, 32 };
+		enemy1.health = 14;
+		enemy1.missilePos = { 0, -34 };
+		enemy1.centerPos = { 39, 32 };
+		enemy1.missileType = TEXT(TARGETTING_BULLET_PATH);
 		enemy1.maxFrameX = 3;
 		enemy1.renderType = PlaneRenderType::DIR_X;
 		enemy1.speed = 160;
@@ -51,11 +51,11 @@ void Plane::FillDict(void)
 	{
 		PlaneType enemy2;
 		enemy2.key = TEXT(ENEMY2_PATH);
-		enemy2.size = RECT{ -3, -9, 4, 3 };
-		enemy2.health = 3;
-		enemy2.missilePos = { 0, 16 };
-		enemy2.centerPos = { 10, 15 };
-		enemy2.missileType = TEXT(NORMAL_BULLET_PATH);
+		enemy2.size = RECT{ -6, -18, 8, 6 };
+		enemy2.health = 8;
+		enemy2.missilePos = { 0, 32 };
+		enemy2.centerPos = { 20, 30 };
+		enemy2.missileType = TEXT(TARGETTING_BULLET_PATH);
 		enemy2.maxFrameX = 11;
 		enemy2.renderType = PlaneRenderType::NORMAL;
 		enemy2.speed = 230;
@@ -65,134 +65,57 @@ void Plane::FillDict(void)
 	{
 		PlaneType enemy3;
 		enemy3.key = TEXT(ENEMY3_PATH);
-		enemy3.size = RECT{ -5, -12, 6, 6 };
-		enemy3.health = 4;
-		enemy3.missilePos = { 0, 16 };
-		enemy3.centerPos = { 9, 16 };
-		enemy3.missileType = TEXT(NORMAL_BULLET_PATH);
+		enemy3.size = RECT{ -10, -24, 12, 12 };
+		enemy3.health = 8;
+		enemy3.missilePos = { 0, 32 };
+		enemy3.centerPos = { 18, 32 };
+		enemy3.missileType = TEXT(TARGETTING_BULLET_PATH);
 		enemy3.maxFrameX = 11;
 		enemy3.renderType = PlaneRenderType::NORMAL;
-		enemy3.speed = 200;
+		enemy3.speed = 230;
 		dict.insert(make_pair(TEXT(ENEMY3_PATH), enemy3));
 	}
 
 	{
 		PlaneType midEnemy1;
 		midEnemy1.key = TEXT(MID_ENEMY1_PATH);
-		midEnemy1.size = RECT{ -2, -16, 2, 16 };
-		midEnemy1.health = 3;
-		midEnemy1.missilePos = { 0, -16 };
-		midEnemy1.centerPos = { 18, 16 };
-		midEnemy1.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy1.size = RECT{ -17, -96, 17, 62 };
+		midEnemy1.health = 80;
+		midEnemy1.missilePos = { 85, -15 };
+		midEnemy1.centerPos = { 115, 121 };
+		midEnemy1.missileType = TEXT(TARGETTING_BULLET_PATH);
 		midEnemy1.maxFrameX = 1;
 		midEnemy1.renderType = PlaneRenderType::NORMAL;
 		midEnemy1.speed = 150;
 		dict.insert(make_pair(TEXT(MID_ENEMY1_PATH), midEnemy1));
-
-		PlaneType midEnemy1Left;
-		midEnemy1Left.key = TEXT(MID_ENEMY1_LEFT);
-		midEnemy1Left.size = RECT{ -2, -16, 2, 16 };
-		midEnemy1Left.health = 3;
-		midEnemy1Left.missilePos = { 0, -16 };
-		midEnemy1Left.centerPos = { 18, 16 };
-		midEnemy1Left.missileType = TEXT(NORMAL_BULLET_PATH);
-		midEnemy1Left.renderType = PlaneRenderType::NORMAL;
-		midEnemy1Left.speed = 150;
-		dict.insert(make_pair(TEXT(MID_ENEMY1_LEFT), midEnemy1Left));
-
-		PlaneType midEnemy1Right;
-		midEnemy1Right.key = TEXT(MID_ENEMY1_RIGHT);
-		midEnemy1Right.size = RECT{ -2, -16, 2, 16 };
-		midEnemy1Right.health = 3;
-		midEnemy1Right.missilePos = { 0, -16 };
-		midEnemy1Right.centerPos = { 18, 16 };
-		midEnemy1Right.missileType = TEXT(NORMAL_BULLET_PATH);
-		midEnemy1Right.renderType = PlaneRenderType::NORMAL;
-		midEnemy1Right.speed = 150;
-		dict.insert(make_pair(TEXT(MID_ENEMY1_RIGHT), midEnemy1Right));
 	}
 
 	{
 		PlaneType midEnemy2;
 		midEnemy2.key = TEXT(MID_ENEMY2_PATH);
-		midEnemy2.size = RECT{ -2, -16, 2, 16 };
-		midEnemy2.health = 3;
-		midEnemy2.missilePos = { 0, -16 };
-		midEnemy2.centerPos = { 18, 16 };
-		midEnemy2.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy2.size = RECT{ -27, -16, 27, 73 };
+		midEnemy2.health = 80;
+		midEnemy2.missilePos = { 105, 30 };
+		midEnemy2.centerPos = { 122, 133 };
+		midEnemy2.missileType = TEXT(TARGETTING_BULLET_PATH);
 		midEnemy2.maxFrameX = 2;
 		midEnemy2.renderType = PlaneRenderType::DIR;
 		midEnemy2.speed = 150;
 		dict.insert(make_pair(TEXT(MID_ENEMY2_PATH), midEnemy2));
-
-		PlaneType midEnemy2Left;
-		midEnemy2Left.key = TEXT(MID_ENEMY2_LEFT);
-		midEnemy2Left.size = RECT{ -2, -16, 2, 16 };
-		midEnemy2Left.health = 3;
-		midEnemy2Left.missilePos = { 0, -16 };
-		midEnemy2Left.centerPos = { 18, 16 };
-		midEnemy2Left.missileType = TEXT(NORMAL_BULLET_PATH);
-		midEnemy2Left.renderType = PlaneRenderType::NONE;
-		midEnemy2Left.speed = 150;
-		dict.insert(make_pair(TEXT(MID_ENEMY2_LEFT), midEnemy2Left));
-
-		PlaneType midEnemy2Right;
-		midEnemy2Right.key = TEXT(MID_ENEMY2_RIGHT);
-		midEnemy2Right.size = RECT{ -2, -16, 2, 16 };
-		midEnemy2Right.health = 3;
-		midEnemy2Right.missilePos = { 0, -16 };
-		midEnemy2Right.centerPos = { 18, 16 };
-		midEnemy2Right.missileType = TEXT(NORMAL_BULLET_PATH);
-		midEnemy2Right.renderType = PlaneRenderType::NONE;
-		midEnemy2Right.speed = 150;
-		dict.insert(make_pair(TEXT(MID_ENEMY2_RIGHT), midEnemy2Right));
 	}
 
 	{
 		PlaneType boss;
 		boss.key = TEXT(BOSS_PATH);
-		boss.size = RECT{ -2, -16, 2, 16 };
-		boss.health = 3;
-		boss.missilePos = { 0, -16 };
-		boss.centerPos = { 18, 16 };
-		boss.missileType = TEXT(NORMAL_BULLET_PATH);
+		boss.size = RECT{ -88, -123, 70, 98 };
+		boss.health = 500;
+		boss.missilePos = { -17, 24 };
+		boss.centerPos = { 232, 232 };
+		boss.missileType = TEXT(TARGETTING_BULLET_PATH);
 		boss.maxFrameX = 30;
 		boss.renderType = PlaneRenderType::NORMAL;
 		boss.speed = 150;
 		dict.insert(make_pair(TEXT(BOSS_PATH), boss));
-
-		PlaneType bossLeft;
-		bossLeft.key = TEXT(BOSS_LEFT);
-		bossLeft.size = RECT{ -2, -16, 2, 16 };
-		bossLeft.health = 3;
-		bossLeft.missilePos = { 0, -16 };
-		bossLeft.centerPos = { 18, 16 };
-		bossLeft.missileType = TEXT(NORMAL_BULLET_PATH);
-		bossLeft.renderType = PlaneRenderType::NONE;
-		bossLeft.speed = 150;
-		dict.insert(make_pair(TEXT(BOSS_LEFT), bossLeft));
-
-		PlaneType bossCenter;
-		bossCenter.key = TEXT(MID_ENEMY2_RIGHT);
-		bossCenter.size = RECT{ -2, -16, 2, 16 };
-		bossCenter.health = 3;
-		bossCenter.missilePos = { 0, -16 };
-		bossCenter.centerPos = { 18, 16 };
-		bossCenter.missileType = TEXT(NORMAL_BULLET_PATH);
-		bossCenter.renderType = PlaneRenderType::NONE;
-		bossCenter.speed = 150;
-		dict.insert(make_pair(TEXT(MID_ENEMY2_RIGHT), bossCenter));
-
-		PlaneType bossRight;
-		bossRight.key = TEXT(MID_ENEMY2_RIGHT);
-		bossRight.size = RECT{ -2, -16, 2, 16 };
-		bossRight.health = 3;
-		bossRight.missilePos = { 0, -16 };
-		bossRight.centerPos = { 18, 16 };
-		bossRight.missileType = TEXT(NORMAL_BULLET_PATH);
-		bossRight.renderType = PlaneRenderType::NONE;
-		bossRight.speed = 150;
-		dict.insert(make_pair(TEXT(MID_ENEMY2_RIGHT), bossRight));
 	}
 }
 
@@ -203,17 +126,19 @@ void Plane::Init(void)
 
 	if (!launcher)
 		launcher = new MissileManager;
-	if (!bomb)
-	{
-		bomb = new Bomb;
-		bomb->Init();
-	}
+	launcher->Init();
+
 	state = GameObjectStates::Die;
+	use = true;
 	path = nullptr;
 	active = false;
 	render = false;
 	currPath = 0;
 	goal = { 0, };
+	currFrameX = 0;
+	currFrameY = 0;
+	hitRenderTime = HIT_RENDER_TIME;
+	frameTime = ANIMATION_FRAME_TIME;
 }
 
 
@@ -223,14 +148,19 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 		FillDict();
 
 	state = GameObjectStates::Wait;
+	use = false;
 	path = nullptr;
 	active = false;
 	render = false;
 	currPath = 0;
 	goal = { 0, };
+	currFrameX = 0;
+	currFrameY = 0;
+	hitRenderTime = HIT_RENDER_TIME;
+	frameTime = ANIMATION_FRAME_TIME;
 	if (!launcher)
 		launcher = new MissileManager;
-
+	launcher->Init();
 
 	auto var = dict.find(key);
 	if (var != dict.end())
@@ -273,8 +203,56 @@ void Plane::Release(void)
 
 void Plane::Render(HDC hdc)
 {
+	float deltatime = TimerManager::GetInstance()->GetDeltaTime();
+	if (currFrameY == 1 && type == Type::ENEMY)
+	{
+		hitRenderTime -= deltatime;
+		if (hitRenderTime < 0.0f)
+		{
+			currFrameY = 0;
+			hitRenderTime = HIT_RENDER_TIME;
+		}
+	}
+
 	if (image && render)
-		image->FrameRender(hdc, centerPos, pos.x, pos.y, 0, 0);
+	{
+		switch (renderType)
+		{
+		case PlaneRenderType::NORMAL:
+			frameTime -= deltatime;
+			if (frameTime < 0.0f)
+			{
+				currFrameX = ++currFrameX % maxFrameX;
+				frameTime = ANIMATION_FRAME_TIME;
+			}
+			break;
+		case PlaneRenderType::DIR:
+			if (dir.x + dir.y != 0.0f)
+				currFrameX = 1;
+			else
+				currFrameX = 0;
+			break;
+		case PlaneRenderType::DIR_X:
+			int frame = 0;
+			if (dir.x < 0.0f && currFrameX > 0)
+				--frame;
+			else if (dir.x > 0.0f && currFrameX < maxFrameX - 1)
+				++frame;
+			else if (dir.x == 0.0f && currFrameX < maxFrameX / 2)
+				++frame;
+			else if (dir.x == 0.0f && currFrameX > maxFrameX / 2)
+				--frame;
+			frameTime -= deltatime;
+			if (frameTime < 0.0f)
+			{
+				currFrameX += frame;
+				frameTime = ANIMATION_FRAME_TIME;
+			}
+			break;
+		}
+		image->FrameRender(hdc, centerPos, pos.x, pos.y, currFrameX, currFrameY);
+	}
+
 	if (launcher)
 		launcher->Render(hdc);
 	if (bomb)
@@ -380,6 +358,7 @@ void Plane::UpdateEnemyAlive(void)
 	{
 		active = false;
 		render = false;
+		use = true;
 		state = GameObjectStates::Die;
 	}
 }
@@ -392,8 +371,8 @@ void Plane::Shoot(void)
 
 void Plane::UpgradeMissile()
 {
-	//if (launcher)
-	//	launcher->Upgrade();
+	if (launcher)
+		launcher->Upgrade();
 }
 
 void Plane::Move(FPOINT dir)
@@ -481,6 +460,7 @@ void Plane::MoveAlongPathMoveCurve()
 		tmpVar += 1e-5f;
 		FPOINT nextPos = getBezierPoint(tmpVar, startPos, curveContolPos, goal);
 		if (GetDistance(pos, nextPos) >= step) {
+			dir = GetUnitVector(pos, nextPos);
 			pos = nextPos;
 			break;
 		}
@@ -488,13 +468,16 @@ void Plane::MoveAlongPathMoveCurve()
 	curveVar = tmpVar;
 }
 
-void Plane::OnDamage(void)
+void Plane::OnDamage(int damage)
 {
-	--health;
+	health -= damage;
+	if (type == Type::ENEMY)
+		currFrameY = 1;
 	if (health <= 0)
 	{
 		active = false;
 		render = false;
+		use = true;
 		state = GameObjectStates::Die;
 		if (type == Type::PLAYER && PlayerManager::GetInstance()->Revive())
 		{
@@ -535,6 +518,11 @@ void Plane::SetPath(vector<Task>* path)
 		currPath = 0;
 		SetGoal();
 	}
+}
+
+bool Plane::CanIUseIt(void)
+{
+	return use;
 }
 
 void Plane::SetGoal(void)
@@ -578,6 +566,10 @@ Plane& Plane::operator=(const PlaneType& target)
 	missilePos = target.missilePos;
 	centerPos = target.centerPos;
 	speed = target.speed;
+	renderType = target.renderType;
+	maxFrameX = target.maxFrameX;
+	if (renderType == PlaneRenderType::DIR_X)
+		currFrameX = maxFrameX / 2;
 	return *this;
 }
 
@@ -586,8 +578,8 @@ bool Plane::OutOfWindow(void)
 	int halfWidth = image->GetWidth() / 2;
 	int halfHeight = image->GetHeight() / 2;
 
-	if (pos.x + size.left + centerPos.x < 0 || pos.x + size.right - centerPos.x > WINSIZE_X ||
-		pos.y + size.top + centerPos.y < 0 || pos.y + size.bottom - centerPos.y > WINSIZE_Y)
+	if (pos.x + halfWidth < 0 || pos.x - halfWidth > WINSIZE_X ||
+		pos.y + halfHeight < 0 || pos.y - halfHeight > WINSIZE_Y)
 		return true;
 	return false;
 }

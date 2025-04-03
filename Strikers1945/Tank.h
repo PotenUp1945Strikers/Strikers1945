@@ -17,6 +17,6 @@ public:
 	void Shoot(void);
 	void Stay(void);
 
-	void OnDamage(void);
+	void OnDamage(int damage);
 };
 

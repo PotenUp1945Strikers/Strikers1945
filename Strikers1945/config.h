@@ -37,15 +37,8 @@ using namespace std;
 #define ENEMY2_PATH "Image/Enemy2.bmp"
 #define ENEMY3_PATH "Image/Enemy3.bmp"
 #define MID_ENEMY1_PATH "Image/MidEnemy1.bmp"
-#define MID_ENEMY1_LEFT "MidEnemy1LEFT"
-#define MID_ENEMY1_RIGHT "MidEnemy1Right"
 #define MID_ENEMY2_PATH "Image/MidEnemy2.bmp"
-#define MID_ENEMY2_LEFT "MidEnemy2LEFT"
-#define MID_ENEMY2_RIGHT "MidEnemy2RIGHT"
 #define BOSS_PATH "Image/StageBoss.bmp"
-#define BOSS_LEFT "BossLeft"
-#define BOSS_CENTER "BossCenter"
-#define BOSS_RIGHT "BossRight"
 #define BOMB_PLANE_PATH "Image/BombPlane.bmp"
 #define BOMB_MINIBOMB_PATH "Image/MiniBomb.bmp"
 #define BOMB_EFFECT_PATH "Image/playerBomb.bmp"
@@ -58,10 +51,17 @@ using namespace std;
 #define EFFECT2_PATH "Image/Effect2.bmp"
 #define EFFECT3_PATH "Image/Effect3.bmp"
 
+#define PLAYER_BULLET1_PATH "Image/PlayerBullet1.bmp"
+#define PLAYER_BULLET2_PATH "Image/PlayerBullet2.bmp"
+#define PLAYER_BULLET3_PATH "Image/PlayerBullet3.bmp"
+#define PLAYER_BULLET4_PATH "Image/PlayerBullet4.bmp"
+
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
 
-#define INVINCIBILITY_TIME 1.2f
+#define INVINCIBILITY_TIME 0.8f
+#define HIT_RENDER_TIME 0.15f
+#define ANIMATION_FRAME_TIME 0.1f
 
 #define PLAYER_START_MOVE "PlayerMoveIn"
 #define PLAYER_END_MOVE "PlayerMoveOut"
@@ -120,8 +120,9 @@ typedef struct tagMissileType
 	int				damage;
 	float			reloadRate;
 	int				missileAmount;
-	// RECT			size;
+	RECT			size;
 	const wchar_t*	upgrade;
+	int				maxFrameX;
 	MissileKind		missileKind;
 
 } MissileType;
@@ -178,12 +179,15 @@ struct Task
 	FPOINT		control;
 	float		taskTime;
 	float		destRadian;
+	bool		loop;
+	size_t		loopIndex;
 };
 
 enum class EnemyType : UINT8
 {
 	NONE,
 	PLANE,
+	MIDDLE,
 	TANK,
 	BOSS
 };
@@ -195,4 +199,6 @@ typedef struct tagStageScript
 	vector<Task>*	path;
 	FPOINT			pos;
 	float			appeared;
+	bool			bomb;
+	bool			item;
 }StageScript;

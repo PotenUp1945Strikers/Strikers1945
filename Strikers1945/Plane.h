@@ -15,6 +15,10 @@ class Plane: public GameObject
 protected:
 	static map<const wchar_t*, PlaneType> dict;
 
+	bool				use;
+	float				hitRenderTime;
+	float				frameTime;
+
 	float				location;
 	FPOINT				missilePos;
 	FPOINT				centerPos;
@@ -70,23 +74,21 @@ protected:
 	void MoveAlongPathMoveCurve();
 	
 public:
-	void Init(void) override;
-	void Release(void) override;
-	void Update(void) override;
-	void Render(HDC hdc) override;
+	void Init(void);
+	void Release(void);
+	void Update(void);
+	void Render(HDC hdc);
 
-	void Init(const wchar_t* key, float startPos, Type type);
-	void Shoot(void);
+	virtual void Init(const wchar_t* key, float startPos, Type type);
+	virtual void Shoot(void);
 	void UpgradeMissile();
 	void Move(FPOINT dir);
-	void OnDamage(void) override;
+	void OnDamage(int damage);
 	void DropBomb();
 	
 	Bomb* GetBombRef(void);
-
-
 	GameObjectStates GetState(void);
 	void SetPath(vector<Task>* path);
-
+	bool CanIUseIt(void);
 	Plane& operator=(const PlaneType& target);
 };

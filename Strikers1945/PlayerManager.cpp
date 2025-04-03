@@ -2,7 +2,6 @@
 #include "ItemManager.h"
 #include "UIManager.h"
 
-map<const wchar_t*, vector<Task>*> PlayerManager::dict;
 
 void PlayerManager::FillDict(void)
 {
@@ -10,9 +9,7 @@ void PlayerManager::FillDict(void)
 
 	Task task;
 	task.type = TaskType::MOVE;
-	task.dest = { 0 , -(WINSIZE_Y / 3) };
-	task.taskTime = 0.0f;
-	task.destRadian = 0.0f;
+	task.dest = { 0 , -(WINSIZE_Y / 5) };
 	start->push_back(task);
 
 	dict.insert(make_pair(TEXT(PLAYER_START_MOVE), start));
@@ -20,9 +17,7 @@ void PlayerManager::FillDict(void)
 	vector<Task>* end = new vector<Task>;
 
 	task.type = TaskType::MOVE;
-	task.dest = { 0 , -WINSIZE_Y };
-	task.taskTime = 0.0f;
-	task.destRadian = 0.0f;
+	task.dest = { 0 , -WINSIZE_Y * 2 };
 	end->push_back(task);
 
 	dict.insert(make_pair(TEXT(PLAYER_START_MOVE), end));
@@ -87,9 +82,6 @@ void PlayerManager::Release(void)
 	}
 }
 
-
-
-
 bool PlayerManager::ReducePlayer1Bomb()
 {
 	if (this->player1Bomb > 0)
@@ -147,6 +139,12 @@ FPOINT PlayerManager::GetPlayer1Pos(void)
 	return { 0, 0 };
 }
 
+void PlayerManager::UpgradePlayer1(void)
+{
+	if (player1)
+		player1->UpgradeMissile();
+}
+
 void PlayerManager::LaunchBomb(int playerNum)
 {
 	switch (playerNum)
@@ -154,7 +152,6 @@ void PlayerManager::LaunchBomb(int playerNum)
 	case 1:
 		if (!ItemManager::GetInstance()->GetBombing() && player1Bomb != 0)
 		{
-			
 			player1Bomb -= 1;
 			player1->DropBomb();
 			UIManager::GetInstance()->SetBomb(player1Bomb);
@@ -169,7 +166,6 @@ void PlayerManager::LaunchBomb(int playerNum)
 		}
 		break;
 	}
-	
 }
 
 void PlayerManager::LaunchBombEnd()

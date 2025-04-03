@@ -27,6 +27,8 @@ void MainGame::Init()
 	ItemManager::GetInstance()->Init();
 
 	EventHandler::GetInstance()->Init();
+
+	EffectManager::GetInstance()->Init();
 }
 
 void MainGame::Release()
@@ -161,17 +163,11 @@ void MainGame::RenderIntro(HDC hdc)
 void MainGame::RenderInGame(HDC hdc)
 {
 	BackgroundManager::GetInstance()->Render(hdc);
-
 	ItemManager::GetInstance()->Render(hdc);
-
-	PlayerManager::GetInstance()->Render(hdc);
-
 	EnemyManager::GetInstance()->Render(hdc);
-
+	PlayerManager::GetInstance()->Render(hdc);
 	//CollisionManager::GetInstance()->Render(hdc);
-
 	UIManager::GetInstance()->RenderInGame(hdc);
-
 	EffectManager::GetInstance()->Render(hdc);
 }
 
@@ -217,11 +213,8 @@ void MainGame::UpdateInGame()
 	BackgroundManager::GetInstance()->Update();
 	ItemManager::GetInstance()->Update();
 	PlayerManager::GetInstance()->Update();
-
 	EnemyManager::GetInstance()->Update();
-
 	CollisionManager::GetInstance()->Update();
-
 	EffectManager::GetInstance()->Update();
 
 	if (km->IsOnceKeyDown(SUICIDE_KEY))
@@ -280,5 +273,6 @@ void MainGame::ReGame(void)
 	EnemyManager::GetInstance()->Init();
 	ItemManager::GetInstance()->Init();
 	EventHandler::GetInstance()->Init();
+	EffectManager::GetInstance()->Init();
 	state = GameStates::Intro;
 }

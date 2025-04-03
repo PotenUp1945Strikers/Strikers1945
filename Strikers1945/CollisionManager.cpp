@@ -51,8 +51,8 @@ void CollisionManager::checkCollisions()
 			if (isColliding(player, enemyBullet))
 			{
 				EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), player->GetPos());
-				player->OnDamage();
-				enemyBullet->OnDamage();
+				//player->OnDamage(enemyBullet->GetDamage());
+				enemyBullet->OnDamage(0);
 			}
 		}
 	}
@@ -67,8 +67,8 @@ void CollisionManager::checkCollisions()
 			if (isColliding(enemy, playerBullet))
 			{
 				// 적 데미지
-				//enemy->OnDamage();
-				playerBullet->OnDamage();
+				enemy->OnDamage(playerBullet->GetDamage());
+				playerBullet->OnDamage(0);
 				ItemManager::GetInstance()->CreateItem(playerBullet->GetPos());
 				
 			}
@@ -84,7 +84,17 @@ void CollisionManager::checkCollisions()
 			if (hoverItem->GetActive() == false) continue;
 			if (isColliding(player, hoverItem))
 			{
-				hoverItem->OnDamage();
+				switch (hoverItem->GetType())
+				{
+				case Type::ITEM_HOVER_BOMB:
+					break;
+				case Type::ITEM_HOVER_POWERUP:
+					PlayerManager::GetInstance()->UpgradePlayer1();
+					break;
+				case Type::ITEM_HOVER_MEDAL:
+					break;
+				}
+				hoverItem->OnDamage(0);
 			}
 		}
 	}
@@ -115,6 +125,7 @@ void CollisionManager::AddCollider(GameObject* gameObject)
 		break;
 	case Type::ENEMY_BULLET:
 		enemyBulletColliders.push_back(gameObject);
+		break;
 	case Type::ITEM_HOVER_BOMB:
 	case Type::ITEM_HOVER_POWERUP:
 	case Type::ITEM_HOVER_MEDAL:

@@ -64,3 +64,8 @@ RECT GameObject::GetCollider()
    return rc;
     
 }
+
+int GameObject::GetDamage()
+{
+    return damage;
+}

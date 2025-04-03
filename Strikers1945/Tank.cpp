@@ -10,7 +10,10 @@ void Tank::Update(void)
 		{
 			Stay();
 			if (OutOfWindow())
+			{
 				render = false;
+				use = true;
+			}
 		}
 		break;
 	case GameObjectStates::Wait:
@@ -30,7 +33,7 @@ void Tank::Update(void)
 		}
 		break;
 	case GameObjectStates::Alive:
-		//Stay();
+		Stay();
 		Shoot();
 		if (OutOfWindow())
 		{
@@ -52,13 +55,14 @@ void Tank::Stay(void)
 	pos.y += moveLength;
 }
 
-void Tank::OnDamage(void)
+void Tank::OnDamage(int damage)
 {
-	--health;
+	health -= damage;
 	currFrameY = 1;
 	if (health <= 0)
 	{
 		active = false;
+		currFrameY = 2;
 		state = GameObjectStates::Die;
 	}
 }
@@ -67,6 +71,16 @@ void Tank::Render(HDC hdc)
 {
 	if (image && render)
 	{
+		if (currFrameY == 1)
+		{
+			hitRenderTime -= TimerManager::GetInstance()->GetDeltaTime();
+			if (hitRenderTime < 0.0f)
+			{
+				currFrameY = 0;
+				hitRenderTime = HIT_RENDER_TIME;
+			}
+		}
+
 		switch (state)
 		{
 		case GameObjectStates::Die:
@@ -81,7 +95,6 @@ void Tank::Render(HDC hdc)
 			image->FrameRender(hdc, pos.x, pos.y, currFrameX, currFrameY);
 			break;
 		}
-		currFrameY = 0;
 	}
 
 	if (launcher)
@@ -98,7 +111,7 @@ void Tank::Shoot(void)
 void Tank::rotateBarrel(void)
 {
 	FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer1Pos();
-	barrelRadian = atan2f(pos.y - playerPos.y, pos.x - playerPos.x);
-	float degree = fmod(RAD_TO_DEG(barrelRadian) + 270, 360);
+	barrelRadian = atan2f(playerPos.y - pos.y, playerPos.x - pos.x);
+	float degree = fmod(RAD_TO_DEG(barrelRadian) + 450, 360);
 	currFrameX = degree / 22.5;
 }

@@ -40,8 +40,8 @@ void UIManager::Init()
 	{
 		life = new InGameUI;
 		life->SetImage(TEXT(LIFE_COUNT_PATH));
-		life->Init({ 50 - 8 , 50 });
-		life->Setinterval(20);
+		life->Init({ 40 , 50 });
+		life->Setinterval(41);
 		life->SetCount(3);
 	}
 
