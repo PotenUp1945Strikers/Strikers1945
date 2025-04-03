@@ -8,11 +8,10 @@ class HoverItem;
 class ItemManager : public Singleton<ItemManager>
 {
 private:
-	//vector<GameObject>* items;
-
 	bool bombing;
-
 	HoverItem* tmp;
+	
+	vector<HoverItem*> hoverItems;
 
 
 public:
@@ -21,6 +20,9 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
+	void CreateItem(FPOINT pos);
+	//void RemoveItem(HoverItem* item);
+	
 	void OnDropButton();
 	void OnDropEnd();
 

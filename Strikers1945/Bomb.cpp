@@ -20,18 +20,18 @@ void Bomb::Init()
 	speed = 300.0f;
 	image = nullptr;
 
-	miniBombDropTime = 2.0f;
+    bombInfo.miniBombDropTime = 2.0f;
 
     for (int i = 0; i < 3; i++)
     {
-        planePos[i] = { 20.0f + 200.f * i, WINSIZE_Y };
+        bombInfo.planePos[i] = { 20.0f + 200.f * i, WINSIZE_Y };
 
         for (int j = 0; j < 6; j++)
         {
-            currDropTime[i][j] = 0;
-            hasDropped[i][j] = false;
-            randDropFrameX[i][j] = rand() % 32;
-            dropPos[i][j] = { 0.0f,0.0f };
+            bombInfo.currDropTime[i][j] = 0;
+            bombInfo.hasDropped[i][j] = false;
+            bombInfo.randDropFrameX[i][j] = rand() % 32;
+            bombInfo.dropPos[i][j] = { 0.0f,0.0f };
         }
     }
 
@@ -63,32 +63,32 @@ void Bomb::Update()
 
         currTime += deltaTime;
 
-        int newDropInd = static_cast<int>(((WINSIZE_Y - planePos[0].y) / 150));
+        int newDropInd = static_cast<int>(((WINSIZE_Y - bombInfo.planePos[0].y) / 150));
 
         for (int i = 0; i < 3; i++)
         {
-            planePos[i].y += speed * dir.y * deltaTime;
+            bombInfo.planePos[i].y += speed * dir.y * deltaTime;
 
             for (int j = 0; j < 6; j++)
             {
-                if (newDropInd < 6 && hasDropped[i][newDropInd] == false)
+                if (newDropInd < 6 && bombInfo.hasDropped[i][newDropInd] == false)
                 {
-                    hasDropped[i][newDropInd] = true;
+                    bombInfo.hasDropped[i][newDropInd] = true;
                     
-                    dropPos[i][newDropInd] = { 
-                        planePos[i].x + bombPlaneImage->GetWidth() / 2  + (rand() % 60 - 60),
-                        planePos[i].y + bombPlaneImage->GetHeight() / 2 + (rand() % 60 - 60)
+                    bombInfo.dropPos[i][newDropInd] = {
+                        bombInfo.planePos[i].x + bombPlaneImage->GetWidth() / 2  + (rand() % 60 - 60),
+                        bombInfo.planePos[i].y + bombPlaneImage->GetHeight() / 2 + (rand() % 60 - 60)
                     };
                 }
 
-                if (hasDropped[i][j])
+                if (bombInfo.hasDropped[i][j])
                 { 
-                    currDropTime[i][j] += deltaTime;
+                    bombInfo.currDropTime[i][j] += deltaTime;
                 }
             }
         }
 
-        if (currDropTime[2][5] > miniBombDropTime) ItemManager::GetInstance()->OnDropEnd();
+        if (bombInfo.currDropTime[2][5] > bombInfo.miniBombDropTime) ItemManager::GetInstance()->OnDropEnd();
     }
 
     
@@ -105,16 +105,22 @@ void Bomb::Render(HDC hdc)
         {
             for (int j = 0; j < 6; j++)
             {
-               if (hasDropped[i][j] && currDropTime[i][j] <= miniBombDropTime)
+               if (bombInfo.hasDropped[i][j] && bombInfo.currDropTime[i][j] <= bombInfo.miniBombDropTime)
                {
-                    miniBombImage->FrameRender(hdc, dropPos[i][j].x, dropPos[i][j].y, (randDropFrameX[i][j] + currDropFrameX) % maxDropFrameX, 0, false);
+                    miniBombImage->FrameRender(hdc, bombInfo.dropPos[i][j].x, bombInfo.dropPos[i][j].y, (bombInfo.randDropFrameX[i][j] + currDropFrameX) % maxDropFrameX, 0, false);
                }
+               
+               if (bombInfo.currDropTime[i][j] >= bombInfo.miniBombDropTime)
+               {
+                  // EffectManager::GetInstance()->OnEffect(TEXT(BOMB_EFFECT_PATH), bombInfo.dropPos[i][j]);
+               }
+
             }
         }
 
         for (int i = 0; i < 3; i++)
         {
-            bombPlaneImage->Render(hdc, planePos[i].x, planePos[i].y);
+            bombPlaneImage->Render(hdc, bombInfo.planePos[i].x, bombInfo.planePos[i].y);
         }
     }
 

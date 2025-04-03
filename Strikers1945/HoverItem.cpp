@@ -1,6 +1,7 @@
 #include "HoverItem.h"
 #include "ImageManager.h"
 #include "TimerManager.h"
+#include "ItemManager.h"
 
 void HoverItem::Init()
 {
@@ -24,8 +25,8 @@ void HoverItem::Init(Type type, const wchar_t* key, FPOINT onDamagePos)
 	this->image = ImageManager::GetInstance()->GetImage(key);
 	size = { -image->GetWidth()/2,-image->GetHeight()/2,image->GetWidth()/2,image->GetHeight()/2};
 
-	active = false;
-	render = false;
+	active = true;
+	render = true;
 	
 	if(type == Type::ITEM_HOVER_MEDAL)
 	{
@@ -44,7 +45,7 @@ void HoverItem::Init(Type type, const wchar_t* key, FPOINT onDamagePos)
 	maxFrameX = image->GetMaxFrameX();
 	currTime = 0.0f;
 	itemFrameTime = 8.0f;
-	speed = 70.0f;
+	speed = 90.0f;
 	frameDuration = 0.2f;
 }
 
@@ -96,14 +97,19 @@ void HoverItem::Render(HDC hdc)
 {
 	if (active && render)
 	{
-		//if(type == Type::ITEM_HOVER_BOMB || type == Type::ITEM_HOVER_POWERUP)
-		//image->Render(hdc, pos.x, pos.y);
-		image->FrameRender(hdc, pos.x, pos.y, currFrameX, 0);
-		//else if (type == Type::)
+		if(type == Type::ITEM_HOVER_BOMB || type == Type::ITEM_HOVER_POWERUP)
+			image->FrameRender(hdc, pos.x, pos.y, currFrameX, 0);
+		else if (type == Type::ITEM_HOVER_MEDAL)
+		{
+			image->Render(hdc, pos.x, pos.y);
+		}
 	}
 }
 
 void HoverItem::OnDamage()
 {
+	active = false;
+	render = false;
 	
+	//ItemManager::GetInstance()->RemoveItem(this);
 }

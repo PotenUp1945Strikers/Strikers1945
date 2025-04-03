@@ -33,8 +33,12 @@ using namespace std;
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 #define BOMB_PLANE_PATH "Image/BombPlane.bmp"
 #define BOMB_MINIBOMB_PATH "Image/MiniBomb.bmp"
-#define BOMB_EFFECT_PATH "Image/BombEffect.bmp"
+#define BOMB_EFFECT_PATH "Image/playerBomb.bmp"
 #define ITEM_HOVERBOMB_PATH "Image/HoverBomb.bmp"
+#define ITEM_HOVERPOWERUP_PATH "Image/powerUp.bmp"
+#define ITEM_HOVERMEDAL_PATH "Image/medal.bmp"
+
+
 
 #define PATTERN_ENEMY_NUM 6
 
