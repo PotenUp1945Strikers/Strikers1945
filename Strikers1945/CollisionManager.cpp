@@ -6,6 +6,7 @@
 #include "Missile.h"
 #include "Plane.h"
 #include "EffectManager.h"
+#include "ScoreManager.h"
 
 void CollisionManager::Init()
 {

@@ -46,7 +46,7 @@ using namespace std;
 #define ITEM_HOVERPOWERUP_PATH "Image/powerUp.bmp"
 #define ITEM_HOVERMEDAL_PATH "Image/medal.bmp"
 #define HIT_EFFECT_PATH "Image/hitEffect.bmp"
-#define BOMB_EFFECT_PATH "Image/bombEffect.bmp"
+//#define BOMB_EFFECT_PATH "Image/bombEffect.bmp"
 #define BOMB_EFFECT2_PATH "Image/bombEffect2.bmp"
 #define EFFECT1_PATH "Image/Effect1.bmp"
 #define EFFECT2_PATH "Image/Effect2.bmp"
