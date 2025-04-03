@@ -23,6 +23,8 @@ private:
 	bool isReloading;
 	float reloadTime;
 	int missileCount;
+	MissileKind missileKind;
+
 	void FillDict();
 public:
 	void Init();
@@ -32,5 +34,5 @@ public:
 	void Release();
 
 	void Shoot(FPOINT pos);
-
+	void MissileDirSetting(FPOINT pos);
 };

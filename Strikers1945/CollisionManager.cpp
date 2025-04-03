@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Missile.h"
 #include "Plane.h"
+#include "EffectManager.h"
 
 void CollisionManager::Init()
 {
@@ -49,6 +50,7 @@ void CollisionManager::checkCollisions()
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(player, enemyBullet))
 			{
+				EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), player->GetPos());
 				player->OnDamage();
 				enemyBullet->OnDamage();
 			}

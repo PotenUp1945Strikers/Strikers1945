@@ -134,6 +134,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameObject.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />

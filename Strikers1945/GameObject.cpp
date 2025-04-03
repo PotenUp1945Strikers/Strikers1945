@@ -64,3 +64,8 @@ RECT GameObject::GetCollider()
    return rc;
     
 }
+
+FPOINT GameObject::GetPos()
+{
+    return pos;
+}

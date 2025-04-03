@@ -96,6 +96,9 @@
     <ClInclude Include="Missile.h">
       <Filter>SG</Filter>
     </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>SG</Filter>
+    </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -181,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
       <Filter>TG</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>SG</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

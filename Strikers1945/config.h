@@ -30,6 +30,8 @@ using namespace std;
 #define BOMB_COUNT_PATH "Image/PlayerBombCount.bmp"
 #define NUMBER_SET1_PATH "Image/NumberSet1.bmp"
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
+#define TARGETTING_BULLET_PATH "Image/TargettingBullet.bmp"
+#define AROUND_BULLET_PATH "Image/AroundBullet.bmp"
 #define TANK_PATH "Image/Tank.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 #define ENEMY2_PATH "Image/Enemy2.bmp"
@@ -43,6 +45,11 @@ using namespace std;
 #define ITEM_HOVERBOMB_PATH "Image/HoverBomb.bmp"
 #define ITEM_HOVERPOWERUP_PATH "Image/powerUp.bmp"
 #define ITEM_HOVERMEDAL_PATH "Image/medal.bmp"
+#define HIT_EFFECT_PATH "Image/hitEffect.bmp"
+#define BOMB_EFFECT_PATH "Image/bombEffect.bmp"
+#define EFFECT1_PATH "Image/Effect1.bmp"
+#define EFFECT2_PATH "Image/Effect2.bmp"
+#define EFFECT3_PATH "Image/Effect3.bmp"
 
 
 
@@ -84,6 +91,14 @@ typedef struct tagPlaneType
 	const wchar_t*	missileType;
 } PlaneType;
 
+enum class MissileKind
+{
+	None,
+	Basic,
+	Targetting,
+	Around
+};
+
 typedef struct tagMissileType
 {
 	const wchar_t*	key;
@@ -94,7 +109,11 @@ typedef struct tagMissileType
 	int				missileAmount;
 	// RECT			size;
 	const wchar_t*	upgrade;
+	MissileKind		missileKind;
+
 } MissileType;
+
+
 
 enum class GameStates: UINT8
 {

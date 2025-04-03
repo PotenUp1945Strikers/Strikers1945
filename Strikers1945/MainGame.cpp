@@ -66,6 +66,9 @@ void MainGame::Release()
 
 	ImageManager::GetInstance()->Release();
 	ImageManager::ReleaseInstance();
+
+	EffectManager::GetInstance()->Release();
+	EffectManager::ReleaseInstance();
 }
 
 void MainGame::Update()
@@ -168,6 +171,8 @@ void MainGame::RenderInGame(HDC hdc)
 	//CollisionManager::GetInstance()->Render(hdc);
 
 	UIManager::GetInstance()->RenderInGame(hdc);
+
+	EffectManager::GetInstance()->Render(hdc);
 }
 
 void MainGame::RenderPause(HDC hdc)
@@ -216,6 +221,8 @@ void MainGame::UpdateInGame()
 	EnemyManager::GetInstance()->Update();
 
 	CollisionManager::GetInstance()->Update();
+
+	EffectManager::GetInstance()->Update();
 
 	if (km->IsOnceKeyDown(SUICIDE_KEY))
 		return EventHandler::GetInstance()->GameOver();
