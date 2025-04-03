@@ -21,7 +21,6 @@ void MissileManager::FillDict()
 	normalMissile.missileAmount = 10;
 	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), normalMissile));
 
-
 	MissileType targettingMissile;
 	targettingMissile.key = TEXT(TARGETTING_BULLET_PATH);
 	targettingMissile.missileKind = MissileKind::Targetting;
@@ -155,20 +154,20 @@ void MissileManager::Shoot(FPOINT pos)
 	if (elapsedTime < shootRate || isReloading)
 		return;
 
-
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		if (missiles[i]->GetActive() == false)
 		{
-			missileCount++;
 			MissileDirSetting(pos);
-			missiles[i]->Shoot(pos, dir);
-			if (missileCount >= missileAmount)
+			if (missiles[i]->Shoot(pos, dir))
 			{
-				isReloading = true;
-				missileCount = 0;
+				if (++missileCount >= missileAmount)
+				{
+					isReloading = true;
+					missileCount = 0;
+				}
+				break;
 			}
-			break;
 		}
 	}
 	elapsedTime = 0;

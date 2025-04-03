@@ -33,7 +33,6 @@ public:
 	void SetActive(bool active);
 	void SetRender(bool render);
 	RECT GetCollider();
-	FPOINT GetPos();
 	virtual void OnDamage() = 0;
 
 

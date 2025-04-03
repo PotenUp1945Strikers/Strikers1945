@@ -243,9 +243,9 @@ void EnemyManager::CreateLevel(void)
 	if (!level.empty() || dict.empty())
 		return;
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 100, -50 }, 300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 150, -50 }, 300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 200, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("Pattern_Movearound")], { 100, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("Pattern_Movearound")], { 150, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("Pattern_Movearound")], { 200, -50 }, 300 });
 
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 100, -50 }, 600 });
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 150, -50 }, 600 });
