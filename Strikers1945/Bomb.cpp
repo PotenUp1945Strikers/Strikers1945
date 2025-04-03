@@ -114,9 +114,9 @@ void Bomb::Render(HDC hdc)
 {
     float deltaTime = TimerManager::GetInstance()->GetDeltaTime();
 
-    wchar_t szText[128];
-    swprintf(szText, 128, L"y pos = %.2f  active = %d   render %d", pos.y, active, render); // 소수점 둘째 자리까지 출력
-    TextOut(hdc, 20, 60, szText, wcslen(szText));
+    //wchar_t szText[128];
+    //swprintf(szText, 128, L"y pos = %.2f  active = %d   render %d", pos.y, active, render); // 소수점 둘째 자리까지 출력
+    //TextOut(hdc, 20, 60, szText, wcslen(szText));
   
     if (active && render)
     {

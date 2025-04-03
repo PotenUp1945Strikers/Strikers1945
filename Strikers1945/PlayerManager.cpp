@@ -36,6 +36,7 @@ void PlayerManager::Init(void)
 	{
 		player1 = new Plane;
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		player1->SetPlayerNum(PlayerNum::PLAYER1);
 		CollisionManager::GetInstance()->AddCollider(player1);
 	}
 	else 
@@ -52,7 +53,9 @@ void PlayerManager::Init(void)
 	if (!player2)
 	{
 		player2 = new Plane;
+
 		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		player2->SetPlayerNum(PlayerNum::PLAYER2);
 		CollisionManager::GetInstance()->AddCollider(player2);
 	}
 	else
@@ -188,12 +191,13 @@ bool PlayerManager::InCreasePlayer2Bomb()
 
 bool PlayerManager::Revive(void)
 {
-	if (player1 && player1->GetState() == GameObjectStates::Die)
+	if (player1 && player1->GetState() == GameObjectStates::Die )
 	{
 		if (player1Life)
 		{
 			UIManager::GetInstance()->SetPlayer1Life(--player1Life);
-			return true;
+
+			if (player1Life > 0) return true;
 		}
 	}
 
@@ -202,7 +206,8 @@ bool PlayerManager::Revive(void)
 		if (player2Life)
 		{
 			UIManager::GetInstance()->SetPlayer2Life(--player2Life);
-			return true;
+			
+			if (player2Life > 0) return true;
 		}
 	}
 
@@ -210,6 +215,7 @@ bool PlayerManager::Revive(void)
 		((player2 && !player1) && !player2Life) ||
 		((player1 && player2) && !player1Life && !player2Life))
 		EventHandler::GetInstance()->GameOver();
+
 	return false;
 }
 

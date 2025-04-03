@@ -168,7 +168,7 @@ void MainGame::RenderInGame(HDC hdc)
 
 	EnemyManager::GetInstance()->Render(hdc);
 
-	CollisionManager::GetInstance()->Render(hdc);
+	//CollisionManager::GetInstance()->Render(hdc);
 
 	UIManager::GetInstance()->RenderInGame(hdc);
 

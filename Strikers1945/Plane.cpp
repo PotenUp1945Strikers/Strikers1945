@@ -46,6 +46,7 @@ void Plane::Init(void)
 	render = false;
 	currPath = 0;
 	goal = { 0, };
+	playerNum = PlayerNum::NONE;
 }
 
 
@@ -60,6 +61,9 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 	render = false;
 	currPath = 0;
 	goal = { 0, };
+
+	playerNum = PlayerNum::NONE;
+
 	if (!launcher)
 		launcher = new MissileManager;
 	if (!bomb)
@@ -357,6 +361,11 @@ Bomb* Plane::GetBombRef(void)
 	return bomb;
 }
 
+PlayerNum Plane::GetPlayerNum()
+{
+	return playerNum;
+}
+
 GameObjectStates Plane::GetState(void)
 {
 	return state;
@@ -370,6 +379,11 @@ void Plane::SetPath(vector<Task>* path)
 		currPath = 0;
 		SetGoal();
 	}
+}
+
+void Plane::SetPlayerNum(PlayerNum playerNum)
+{
+	this->playerNum = playerNum;
 }
 
 void Plane::SetGoal(void)

@@ -16,6 +16,8 @@ class Plane: public GameObject
 private:
 	static map<const wchar_t*, PlaneType> dict;
 
+	PlayerNum			playerNum;
+
 	float				location;
 	FPOINT				missilePos;
 	FPOINT				centerPos;
@@ -80,10 +82,12 @@ public:
 	void DropBomb();
 	
 	Bomb* GetBombRef(void);
+	PlayerNum GetPlayerNum();
 
 
 	GameObjectStates GetState(void);
 	void SetPath(vector<Task>* path);
+	void SetPlayerNum(PlayerNum playerNum);
 
 	Plane& operator=(const PlaneType& target);
 };

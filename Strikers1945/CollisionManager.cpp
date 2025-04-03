@@ -88,6 +88,7 @@ void CollisionManager::checkCollisions()
 			if (isColliding(player, hoverItem))
 			{
 				hoverItem->OnDamage();
+				ItemManager::GetInstance()->OnGainItem(hoverItem, player);
 			}
 		}
 	}
@@ -105,7 +106,6 @@ void CollisionManager::checkCollisions()
 				enemyBullet->OnDamage();
 			}
 		}
-
 
 		for (auto& enemy : enemyColliders)
 		{

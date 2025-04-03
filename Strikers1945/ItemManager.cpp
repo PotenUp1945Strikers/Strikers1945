@@ -9,7 +9,6 @@ void ItemManager::Init()
 {
 	bombing = false;
 
-	//hoverItems.reserve(30);
 	hoverItems.resize(30);
 	for (int i = 0; i < 30; i++)
 	{
@@ -26,8 +25,6 @@ void ItemManager::Release()
 
 void ItemManager::Update()
 {
-	//if (tmp && tmp->GetActive() && tmp->GetRender())
-	//	tmp->Update();
 	for (auto& i : hoverItems)
 	{
 		if (i->GetActive() && i->GetRender())
@@ -41,8 +38,6 @@ void ItemManager::Update()
 
 void ItemManager::Render(HDC hdc)
 {
-	/*if (tmp && tmp->GetActive() && tmp->GetRender())
-		tmp->Render(hdc);*/
 	for (auto& i : hoverItems)
 	{
 		if (i->GetActive() && i->GetRender())
@@ -90,14 +85,24 @@ void ItemManager::CreateItem(FPOINT pos)
 
 }
 
-void ItemManager::OnGainItem(GameObject* object)
+void ItemManager::OnGainItem(GameObject* gainedobject, GameObject* owner)
 {
 
-	switch (object->GetType())
+	switch (gainedobject->GetType())
 	{
 	case Type::ITEM_HOVER_BOMB:
+
+		if (static_cast<Plane*>(owner)->GetPlayerNum() == PlayerNum::PLAYER1)
+		{
 			PlayerManager::GetInstance()->InCreasePlayer1Bomb();
 			UIManager::GetInstance()->SetPlayer1Bomb(PlayerManager::GetInstance()->GetPlayer1bomb());
+		}
+		else if (static_cast<Plane*>(owner)->GetPlayerNum() == PlayerNum::PLAYER2)
+		{
+			PlayerManager::GetInstance()->InCreasePlayer2Bomb();
+			UIManager::GetInstance()->SetPlayer2Bomb(PlayerManager::GetInstance()->GetPlayer2bomb());
+		}
+			
 			break;
 	case Type::ITEM_HOVER_POWERUP:
 			// TODO : POWERUP IN PLANE
@@ -108,19 +113,6 @@ void ItemManager::OnGainItem(GameObject* object)
 	}
 
 }
-
-//void ItemManager::RemoveItem(HoverItem* item)
-//{
-//	if (!item->GetActive() && !item->GetRender())
-//	{
-//		hoverItems.erase(
-//			std::remove(hoverItems.begin(), hoverItems.end(), item),
-//			hoverItems.end()
-//		);
-//		delete item;
-//	}
-//}
-
 
 void ItemManager::OnDropButton()
 {
