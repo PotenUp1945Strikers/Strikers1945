@@ -3,10 +3,12 @@
 #include "MissileManager.h"
 #include "ImageManager.h"
 #include "TimerManager.h"
+#include "ItemManager.h"
 #include "BackgroundManager.h"
 #include <map>
 #include "config.h"
 #include "PlayerManager.h"
+#include "Bomb.h"
 
 class Plane: public GameObject
 {
@@ -14,15 +16,31 @@ private:
 	static map<const wchar_t*, PlaneType> dict;
 
 	float				location;
+	FPOINT				missilePos;
+	FPOINT				centerPos;
 	float				absTime;
 
-	vector<FPOINT>*		path;
+	vector<Task>*		path;
+	TaskType			pathType;
+
+	float				pathRadian;
+	float				pathComplex;
+	float				startRadian;
+	float				goalRadian;
+	float				pathRadius;
+
+	FPOINT				curveContolPos;
+	FPOINT				startPos;
+	float				curveVar;
+
 	size_t				currPath;
+	float				taskTime;
 	FPOINT				goal;
 
 	GameObjectStates	state;
 
 	MissileManager*		launcher;
+	Bomb*				bomb;
 
 	
 	void FillDict(void);
@@ -40,7 +58,12 @@ private:
 	bool InOfWindow(void);
 
 	void SetGoal(void);
-	void MoveAlongPath(void);
+
+	bool MoveAlongPath(void);
+	void MoveAlongPathStop();
+	void MoveAlongPathMove();
+	void MoveAlongPathMoveAround();
+	void MoveAlongPathMoveCurve();
 	
 public:
 	void Init(void);
@@ -53,9 +76,13 @@ public:
 	void UpgradeMissile();
 	void Move(FPOINT dir);
 	void OnDamage(void);
+	void DropBomb();
+	
+	Bomb* GetBombRef(void);
+
 
 	GameObjectStates GetState(void);
-	void SetPath(vector<FPOINT>* path);
+	void SetPath(vector<Task>* path);
 
 	Plane& operator=(const PlaneType& target);
 };

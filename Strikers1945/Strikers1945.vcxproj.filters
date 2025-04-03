@@ -99,6 +99,15 @@
     <ClInclude Include="EffectManager.h">
       <Filter>SG</Filter>
     </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>TG</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>TG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -166,6 +175,15 @@
     </ClCompile>
     <ClCompile Include="Missile.cpp">
       <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>TG</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>TG</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>SG</Filter>

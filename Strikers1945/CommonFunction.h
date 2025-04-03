@@ -110,12 +110,12 @@ inline float GetDistance(FPOINT p1, FPOINT p2)
 	 return sqrtf(x * x + y * y);
 }
 
-inline bool IsAlmostEqual(float a, float b, float epsilon = 1e-5f)
+inline bool IsAlmostEqual(float a, float b, float epsilon)
 {
 	if (a > b)
-		return fabs(a - b) < epsilon;
+		return fabs(a - b) <= epsilon;
 	else
-		return fabs(b - a) < epsilon;
+		return fabs(b - a) <= epsilon;
 }
 
 inline bool IsAlmostEqual(int a, int b, int epsilon = 3)
@@ -135,4 +135,10 @@ inline FPOINT GetUnitVector(FPOINT src, FPOINT dest)
 		return { result.x / length, result.y / length };
 	else
 		return { 0, 0 };
+}
+
+inline FPOINT getBezierPoint(float t, FPOINT start, FPOINT control, FPOINT end) {
+	float x = (1 - t) * (1 - t) * start.x + 2 * (1 - t) * t * control.x + t * t * end.x;
+	float y = (1 - t) * (1 - t) * start.y + 2 * (1 - t) * t * control.y + t * t * end.y;
+	return { x, y };
 }

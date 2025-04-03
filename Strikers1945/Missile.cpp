@@ -91,12 +91,17 @@ void Missile::OnDamage()
 
 }
 
-void Missile::Shoot(FPOINT pos, FPOINT dir)
+bool Missile::Shoot(FPOINT pos, FPOINT dir)
 {
-	this->pos = pos;
-	this->dir = dir;
-	active = true;
-	render = true;
+	if (!active)
+	{
+		this->pos = pos;
+		this->dir = dir;
+		active = true;
+		render = true;
+		return true;
+	}
+	return false;
 }
 
 bool Missile::outOfWindow()

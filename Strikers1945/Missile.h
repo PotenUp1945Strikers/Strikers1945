@@ -15,7 +15,7 @@ public:
 	void OnDamage() override;
 	//RECT GetCollider();
 
-	void Shoot(FPOINT pos, FPOINT dir);
+	bool Shoot(FPOINT pos, FPOINT dir);
 	
 private:
 	bool outOfWindow();

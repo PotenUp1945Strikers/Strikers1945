@@ -3,31 +3,12 @@
 
 bool GameObject::OutOfWindow()
 {
+    int halfWidth = image->GetWidth() / 2;
+    int halfHeight = image->GetHeight() / 2;
 
-    //switch (type)
-    //{
-    //case Type::PLAYER:
-    //    // TODO : player offset
-    //    if (pos.x >= 0 && pos.x <= WINSIZE_X
-    //        && pos.y >= 0 && pos.y <= WINSIZE_Y)
-    //    {
-    //        return false;
-    //    }
-    //    else return true;
-
-    //    break;
-
-    //case Type::PLAYER_BULLET: 
-    //case Type::ENEMY: 
-    //case Type::ENEMY_BULLET:
-    //    if (pos.x < 0 || pos.x > WINSIZE_X || pos.y < 0 || pos.y > WINSIZE_Y)
-    //    {
-    //        return true;
-    //    }
-    //    else return false;
-    //    break;
-    //
-    //}
+    if (pos.x - halfWidth < 0 || pos.x + halfWidth > WINSIZE_X ||
+        pos.y - halfHeight < 0 || pos.y + halfHeight > WINSIZE_Y)
+        return true;
     return false;
 }
 
@@ -36,9 +17,19 @@ Type GameObject::GetType()
     return type;
 }
 
+void GameObject::SetType(Type type)
+{
+    this->type = type;
+}
+
 void GameObject::SetPos(FPOINT pos)
 {
     this->pos = pos;
+}
+
+FPOINT GameObject::GetPos()
+{
+    return pos;
 }
 
 bool GameObject::GetActive()
@@ -51,6 +42,17 @@ bool GameObject::GetRender()
     return render;
 }
 
+void GameObject::SetActive(bool active)
+{
+    this->active = active;
+}
+
+void GameObject::SetRender(bool render)
+{
+    this->render = render;
+}
+
+
 RECT GameObject::GetCollider()
 {
    RECT rc = {
@@ -61,9 +63,4 @@ RECT GameObject::GetCollider()
    };
    return rc;
     
-}
-
-FPOINT GameObject::GetPos()
-{
-    return pos;
 }

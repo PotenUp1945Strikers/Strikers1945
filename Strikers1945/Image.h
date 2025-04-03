@@ -70,6 +70,7 @@ public:
 	void RenderBackground(HDC hdc, int destY, int srcY);
 	void Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip = false);
 	void FrameRender(HDC hdc, int destX, int destY, int frameX, int frameY, bool isFlip = false);
+	void FrameRender(HDC hdc, FPOINT pos, int destX, int destY, int frameX, int frameY, bool isFlip = false);
 
 	void Release();
 

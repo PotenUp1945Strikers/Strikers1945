@@ -21,7 +21,6 @@ void MissileManager::FillDict()
 	normalMissile.missileAmount = 10;
 	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), normalMissile));
 
-
 	MissileType targettingMissile;
 	targettingMissile.key = TEXT(TARGETTING_BULLET_PATH);
 	targettingMissile.missileKind = MissileKind::Targetting;
@@ -55,7 +54,7 @@ void MissileManager::Init()
 	size = { 0,0,0,0 };
 	reloadRate = 0.0f;
 	missileAmount = 0;
-	missiles.resize(30);
+	missiles.resize(MAX_MISSILE);
 	missileKind = MissileKind::None;
 	if (missileDict.empty())
 		FillDict();
@@ -80,8 +79,8 @@ void MissileManager::Init(const wchar_t* key, Type type)
 
 	if (missiles.empty())
 	{
-		missiles.resize(30);
-		for (int i = 0; i < 30; ++i)
+		missiles.resize(MAX_MISSILE);
+		for (int i = 0; i < MAX_MISSILE; ++i)
 		{
 			missiles[i] = new Missile();
 			missiles[i]->Init(type);
@@ -155,20 +154,20 @@ void MissileManager::Shoot(FPOINT pos)
 	if (elapsedTime < shootRate || isReloading)
 		return;
 
-
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		if (missiles[i]->GetActive() == false)
 		{
-			missileCount++;
 			MissileDirSetting(pos);
-			missiles[i]->Shoot(pos, dir);
-			if (missileCount >= missileAmount)
+			if (missiles[i]->Shoot(pos, dir))
 			{
-				isReloading = true;
-				missileCount = 0;
+				if (++missileCount >= missileAmount)
+				{
+					isReloading = true;
+					missileCount = 0;
+				}
+				break;
 			}
-			break;
 		}
 	}
 	elapsedTime = 0;

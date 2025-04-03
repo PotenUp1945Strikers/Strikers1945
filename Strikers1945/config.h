@@ -11,8 +11,9 @@ using namespace std;
 
 #define WINSIZE_X	600
 #define WINSIZE_Y	800
-#define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
-#define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
+#define PI 3.141592
+#define DEG_TO_RAD(degree) ((PI / 180.0) * degree)
+#define RAD_TO_DEG(radian) ((180.0 / PI) * radian)
 
 #define PAUSE_KEY 'P'
 #define SUICIDE_KEY 'K'
@@ -31,7 +32,19 @@ using namespace std;
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 #define TARGETTING_BULLET_PATH "Image/TargettingBullet.bmp"
 #define AROUND_BULLET_PATH "Image/AroundBullet.bmp"
+#define TANK_PATH "Image/Tank.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
+#define ENEMY2_PATH "Image/Enemy2.bmp"
+#define ENEMY3_PATH "Image/Enemy3.bmp"
+#define MID_ENEMY1_PATH "Image/MidEnemy1.bmp"
+#define MID_ENEMY2_PATH "Image/MidEnemy2.bmp"
+#define BOSS_PATH "Image/StageBoss.bmp"
+#define BOMB_PLANE_PATH "Image/BombPlane.bmp"
+#define BOMB_MINIBOMB_PATH "Image/MiniBomb.bmp"
+#define BOMB_EFFECT_PATH "Image/playerBomb.bmp"
+#define ITEM_HOVERBOMB_PATH "Image/HoverBomb.bmp"
+#define ITEM_HOVERPOWERUP_PATH "Image/powerUp.bmp"
+#define ITEM_HOVERMEDAL_PATH "Image/medal.bmp"
 #define HIT_EFFECT_PATH "Image/hitEffect.bmp"
 #define BOMB_EFFECT_PATH "Image/bombEffect.bmp"
 #define BOMB_EFFECT2_PATH "Image/bombEffect2.bmp"
@@ -40,12 +53,22 @@ using namespace std;
 #define EFFECT3_PATH "Image/Effect3.bmp"
 #define EFFECT4_PATH "Image/Effect4.bmp"
 
+
+
+#define PATTERN_ENEMY_NUM 6
+
+
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
 
 #define INVINCIBILITY_TIME 1.2f
 
+#define PLAYER_START_MOVE "PlayerMoveIn"
+#define PLAYER_END_MOVE "PlayerMoveOut"
+
 #define MAX_GAME_LENGTH 30000
+#define MAX_MISSILE	30
+#define MAX_ENEMY_PLANE 10
 
 typedef struct tagFPOINT
 {
@@ -65,6 +88,8 @@ typedef struct tagPlaneType
 	float			speed;
 	int				health;
 	RECT			size;
+	FPOINT			missilePos;
+	FPOINT			centerPos;
 	const wchar_t*	missileType;
 } PlaneType;
 
@@ -112,11 +137,51 @@ enum class GameObjectStates : UINT8
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 
-enum class Type
+enum class Type : UINT8
 {
 	NONE,
 	PLAYER,
 	ENEMY,
 	PLAYER_BULLET,
 	ENEMY_BULLET,
+	PLAYER_UPGRADE_BULLET,
+	PLAYER_BOMB,
+	ITEM_HOVER_BOMB,
+	ITEM_HOVER_POWERUP,
+	ITEM_HOVER_MEDAL
 };
+
+enum class TaskType : UINT8
+{
+	NONE,
+	STOP,
+	MOVE,
+	MOVEAROUND,
+	MOVECURVE
+};
+
+struct Task
+{
+	TaskType	type;
+	FPOINT		dest;
+	FPOINT		control;
+	float		taskTime;
+	float		destRadian;
+};
+
+enum class EnemyType : UINT8
+{
+	NONE,
+	PLANE,
+	TANK,
+	BOSS
+};
+
+typedef struct tagStageScript
+{
+	EnemyType		type;
+	const wchar_t*	key;
+	vector<Task>*	path;
+	FPOINT			pos;
+	float			appeared;
+}StageScript;

@@ -13,6 +13,7 @@ private:
     vector<GameObject*> playerBulletColliders;
     vector<GameObject*> enemyColliders;
     vector<GameObject*> enemyBulletColliders;
+    vector<GameObject*> itemColliders;
 
 public:
     void Init();

@@ -1,6 +1,7 @@
 #include "CollisionManager.h"
 #include "Collider.h"
 #include "CommonFunction.h"
+#include "ItemManager.h"
 #include "GameObject.h"
 #include "Missile.h"
 #include "Plane.h"
@@ -12,6 +13,7 @@ void CollisionManager::Init()
 	playerBulletColliders = {};
 	enemyColliders = {};
 	enemyBulletColliders = {};
+	itemColliders = {};
 }
 
 void CollisionManager::Update()
@@ -25,6 +27,7 @@ void CollisionManager::Render(HDC hdc)
 	renderColliders(hdc, enemyColliders);
 	renderColliders(hdc, playerBulletColliders);
 	renderColliders(hdc, enemyBulletColliders);
+	renderColliders(hdc, itemColliders);
 }
 
 void CollisionManager::Release()
@@ -33,6 +36,7 @@ void CollisionManager::Release()
 	playerBulletColliders.clear();
 	enemyColliders.clear();
 	enemyBulletColliders.clear();
+	itemColliders.clear();
 }
 
 void CollisionManager::checkCollisions()
@@ -65,9 +69,26 @@ void CollisionManager::checkCollisions()
 				// 적 데미지
 				//enemy->OnDamage();
 				playerBullet->OnDamage();
+				ItemManager::GetInstance()->CreateItem(playerBullet->GetPos());
+				
 			}
 		}
 	}
+
+	// 플레이어 - 아이템
+	for (auto& player : playerColliders)
+	{
+		if (player->GetActive() == false) continue;
+		for (auto& hoverItem : itemColliders)
+		{
+			if (hoverItem->GetActive() == false) continue;
+			if (isColliding(player, hoverItem))
+			{
+				hoverItem->OnDamage();
+			}
+		}
+	}
+
 }
 
 void CollisionManager::renderColliders(HDC hdc, vector<GameObject*>& gameObjects)
@@ -94,6 +115,10 @@ void CollisionManager::AddCollider(GameObject* gameObject)
 		break;
 	case Type::ENEMY_BULLET:
 		enemyBulletColliders.push_back(gameObject);
+	case Type::ITEM_HOVER_BOMB:
+	case Type::ITEM_HOVER_POWERUP:
+	case Type::ITEM_HOVER_MEDAL:
+		itemColliders.push_back(gameObject);
 		break;
 	default:
 		break;

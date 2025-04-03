@@ -25,11 +25,14 @@ public:
 	virtual void Render(HDC hdc) = 0;
 
 	Type GetType();
+	void SetType(Type type);
 	void SetPos(FPOINT pos);
+	FPOINT GetPos();
 	bool GetActive();
 	bool GetRender();
+	void SetActive(bool active);
+	void SetRender(bool render);
 	RECT GetCollider();
-	FPOINT GetPos();
 	virtual void OnDamage() = 0;
 
 
