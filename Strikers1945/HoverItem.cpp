@@ -111,5 +111,7 @@ void HoverItem::OnDamage()
 	active = false;
 	render = false;
 	
+	ItemManager::GetInstance()->OnGainItem(this);
+	
 	//ItemManager::GetInstance()->RemoveItem(this);
 }

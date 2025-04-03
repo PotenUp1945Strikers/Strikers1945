@@ -23,6 +23,9 @@ public:
 	void CreateItem(FPOINT pos);
 	//void RemoveItem(HoverItem* item);
 	
+	void OnGainItem(GameObject* object);
+
+
 	void OnDropButton();
 	void OnDropEnd();
 

@@ -26,6 +26,7 @@ public:
 
 	Type GetType();
 	void SetPos(FPOINT pos);
+	FPOINT GetPos();
 	bool GetActive();
 	bool GetRender();
 	void SetActive(bool active);

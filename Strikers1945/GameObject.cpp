@@ -22,6 +22,11 @@ void GameObject::SetPos(FPOINT pos)
     this->pos = pos;
 }
 
+FPOINT GameObject::GetPos()
+{
+    return pos;
+}
+
 bool GameObject::GetActive()
 {
     return active;

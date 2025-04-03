@@ -1,6 +1,7 @@
 #include "ItemManager.h"
 #include "PlayerManager.h"
-
+#include "CollisionManager.h"
+#include "UIManager.h"
 #include "Bomb.h"
 #include "HoverItem.h"
 
@@ -35,7 +36,7 @@ void ItemManager::Update()
 		}
 	}
 
-	CreateItem({ (float)(rand() % 600) , (float)(rand() % 800)});
+	//CreateItem({ (float)(rand() % 600) , (float)(rand() % 800)});
 }
 
 void ItemManager::Render(HDC hdc)
@@ -61,19 +62,24 @@ void ItemManager::CreateItem(FPOINT pos)
 	{
 		if (!hoverItems[i]->GetActive())
 		{
-			if (randNum < 10)
+			if (randNum > 0)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_BOMB, TEXT(ITEM_HOVERBOMB_PATH), pos);
+				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
 				break;
 			}
-			else if (randNum < 40 && randNum >= 10)
+			else if (randNum < 25 )
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_POWERUP, TEXT(ITEM_HOVERPOWERUP_PATH),pos);
+				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
+
 				break;
 			}
-			else
+			else if (randNum < 60)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_MEDAL, TEXT(ITEM_HOVERMEDAL_PATH),pos);
+				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
+
 				break;
 			}
 
@@ -81,6 +87,25 @@ void ItemManager::CreateItem(FPOINT pos)
 		}
 	}
 
+
+}
+
+void ItemManager::OnGainItem(GameObject* object)
+{
+
+	switch (object->GetType())
+	{
+	case Type::ITEM_HOVER_BOMB:
+			PlayerManager::GetInstance()->InCreasePlayer1Bomb();
+			UIManager::GetInstance()->SetBomb(PlayerManager::GetInstance()->GetPlayer1bomb());
+			break;
+	case Type::ITEM_HOVER_POWERUP:
+			// TODO : POWERUP IN PLANE
+		break;
+	case Type::ITEM_HOVER_MEDAL:
+		// TODO : Score ++
+		break;
+	}
 
 }
 

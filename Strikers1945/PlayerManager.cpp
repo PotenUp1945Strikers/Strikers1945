@@ -100,6 +100,16 @@ bool PlayerManager::ReducePlayer1Bomb()
 	return false;
 }
 
+bool PlayerManager::InCreasePlayer1Bomb()
+{
+	if (this->player1Bomb < 2 && this->player1Bomb >= 0)
+	{
+		this->player1Bomb += 1;
+		return true;
+	}
+	return false;
+}
+
 
 
 
@@ -159,4 +169,9 @@ void PlayerManager::LaunchBombEnd()
 {
 	player1->GetBombRef()->Init();
 	//player2->GetBombRef()->Init();
+}
+
+int PlayerManager::GetPlayer1bomb()
+{
+	return player1Bomb;
 }

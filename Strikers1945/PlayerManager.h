@@ -30,9 +30,14 @@ public:
 	void Render(HDC hdc);
 	void Release(void);
 	
-	bool ReducePlayer1Bomb();
 	void LaunchBombEnd();
 
+	int GetPlayer1bomb();
+
+	bool ReducePlayer1Bomb();
+	bool InCreasePlayer1Bomb();
+	
+	
 	bool Revive(void);
 };
 
