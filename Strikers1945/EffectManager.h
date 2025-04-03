@@ -16,7 +16,8 @@ struct Effect
 class EffectManager : public Singleton<EffectManager>
 {
 private:
-	map<const wchar_t*, Effect> dict;
+	//map<const wchar_t*, Effect> dict;
+	map<const wchar_t*, vector<Effect>> dict;
 	void FillDict();
 public:
 	void Init();

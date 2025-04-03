@@ -21,6 +21,7 @@ using namespace std;
 #define CLEAR_KEY 'O'
 
 #define BACKGROUND_PATH "Image/Background.bmp"
+#define BACKGROUND_CLOUD_PATH "Image/cloud.bmp"
 #define OPENING_PATH "Image/Opening.bmp"
 #define PAUSE_PATH "Image/Pause.bmp"
 #define GAMEOVER_PATH "Image/GameOver.bmp"
@@ -46,7 +47,6 @@ using namespace std;
 #define ITEM_HOVERPOWERUP_PATH "Image/powerUp.bmp"
 #define ITEM_HOVERMEDAL_PATH "Image/medal.bmp"
 #define HIT_EFFECT_PATH "Image/hitEffect.bmp"
-#define BOMB_EFFECT_PATH "Image/bombEffect.bmp"
 #define EFFECT1_PATH "Image/Effect1.bmp"
 #define EFFECT2_PATH "Image/Effect2.bmp"
 #define EFFECT3_PATH "Image/Effect3.bmp"
@@ -58,6 +58,7 @@ using namespace std;
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
+#define BACKGROUND_CLOUD_SIZE 3370
 
 #define INVINCIBILITY_TIME 1.2f
 
@@ -143,7 +144,7 @@ enum class Type : UINT8
 	PLAYER_BULLET,
 	ENEMY_BULLET,
 	PLAYER_UPGRADE_BULLET,
-	PLAYER_BOMB,
+	BOMB_PLANE,
 	ITEM_HOVER_BOMB,
 	ITEM_HOVER_POWERUP,
 	ITEM_HOVER_MEDAL

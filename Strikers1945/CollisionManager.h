@@ -14,6 +14,7 @@ private:
     vector<GameObject*> enemyColliders;
     vector<GameObject*> enemyBulletColliders;
     vector<GameObject*> itemColliders;
+    vector<GameObject*> bombPlaneColliders;
 
 public:
     void Init();

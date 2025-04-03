@@ -108,6 +108,9 @@
     <ClInclude Include="Bomb.h">
       <Filter>TG</Filter>
     </ClInclude>
+    <ClInclude Include="HoverItem.h">
+      <Filter>TG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>SG</Filter>
+    </ClCompile>
+    <ClCompile Include="HoverItem.cpp">
+      <Filter>TG</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

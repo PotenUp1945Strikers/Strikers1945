@@ -31,9 +31,6 @@ void EnemyManager::Init()
 
 void EnemyManager::Release()
 {
-	//scripts.clear();
-	//scripts.shrink_to_fit();
-
 	if (!planes.empty())
 	{
 		for (auto& plane : planes)
@@ -48,12 +45,6 @@ void EnemyManager::Release()
 
 void EnemyManager::Update()
 {
-	// depends on struct
-	//if (BackgroundManager::GetInstance()->GetCurrPosY() >= scripts[scriptIndex].second)
-	//{
-	//	if (DeployEnemy()) scriptIndex += 1;
-	//}
-
 	PutEnemy();
 
 	for (auto i : planes)
@@ -97,31 +88,6 @@ void EnemyManager::Render(HDC hdc)
 			i->Render(hdc);
 		}
 	}
-
-}
-
-bool EnemyManager::DeployEnemy()
-{
-	//TODO : DeployEnemy logic
-
-	//switch (scripts[scriptIndex].first) // depends on struct
-	//{
-	//	// Init and addEnemy
-	//	case NormalEnemy:
-	//		
-	//		return true;
-	//		break;
-	//	case HeliEnemy:
-
-	//		return true;
-	//		break;
-	//	case BossEnemy:
-
-	//		return true;
-	//		break;
-	//}
-
-	return false;
 
 }
 
@@ -252,31 +218,4 @@ void EnemyManager::CreateLevel(void)
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, -50 }, 600 });
 }
 
-void EnemyManager::MakePatternEnemy(const wchar_t* key)
-{
-	/*auto it = dict.find(key);
-	if (it == dict.end()) return;
 
-	vector<Task>*& pattern = it->second;
-
-	for (int i = 0; i < PATTERN_ENEMY_NUM; i++)
-	{
-
-		planes.push_back(new Plane);
-		planes.back()->Init(TEXT(ENEMY1_PATH), 300, Type::ENEMY);
-		planes.back()->SetPos({ WINSIZE_X / 2, -(WINSIZE_Y / 3) });
-		CollisionManager::GetInstance()->AddCollider(planes.back());
-
-		vector<Task> tmp;
-		if (i < pattern->size()) {
-
-			for (auto& task : *pattern) {
-				tmp.push_back(task);
-			}
-
-			planes.back()->SetPath(tmp);
-		}
-
-	}*/
-
-}

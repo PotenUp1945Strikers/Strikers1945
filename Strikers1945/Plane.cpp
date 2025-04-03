@@ -38,6 +38,7 @@ void Plane::Init(void)
 	{
 		bomb = new Bomb;
 		bomb->Init();
+		CollisionManager::GetInstance()->AddCollider(bomb);
 	}
 	state = GameObjectStates::Die;
 	path = nullptr;
@@ -62,7 +63,11 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 	if (!launcher)
 		launcher = new MissileManager;
 	if (!bomb)
+	{
 		bomb = new Bomb;
+		bomb->Init();
+		CollisionManager::GetInstance()->AddCollider(bomb);
+	}
 
 
 	auto var = dict.find(key);

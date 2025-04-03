@@ -14,6 +14,14 @@ private:
 	float	speed;
 	float	currPosY;
 
+
+	Image* image_cloud;
+
+	float	tileY_cloud[2];
+	float	screenY_cloud[2];
+	float	speed_cloud;
+	float	currPosY_cloud;
+
 public:
 
 	void Init();

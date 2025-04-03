@@ -24,10 +24,8 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
-	bool DeployEnemy();
 
 
-	void MakePatternEnemy(const wchar_t* key);
 
 
 };

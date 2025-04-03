@@ -4,6 +4,7 @@
 #include "ImageManager.h"
 #include "TimerManager.h"
 #include "ItemManager.h"
+#include "CollisionManager.h"
 #include "BackgroundManager.h"
 #include <map>
 #include "config.h"

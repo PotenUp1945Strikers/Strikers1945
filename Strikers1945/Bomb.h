@@ -9,6 +9,7 @@ struct BombInfo {
 	float currDropTime[3][6];
 	int randDropFrameX[3][6];
 	bool hasDropped[3][6];
+	bool onEffect[3][6];
 };
 
 class Image;
@@ -37,6 +38,7 @@ public:
 	virtual void Render(HDC hdc) override;
 	virtual void OnDamage() override;
 
+	float GetBombPlanePosY();
 
 
 };

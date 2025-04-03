@@ -14,6 +14,7 @@ void CollisionManager::Init()
 	enemyColliders = {};
 	enemyBulletColliders = {};
 	itemColliders = {};
+	bombPlaneColliders = {};
 }
 
 void CollisionManager::Update()
@@ -28,6 +29,7 @@ void CollisionManager::Render(HDC hdc)
 	renderColliders(hdc, playerBulletColliders);
 	renderColliders(hdc, enemyBulletColliders);
 	renderColliders(hdc, itemColliders);
+	renderColliders(hdc, bombPlaneColliders);
 }
 
 void CollisionManager::Release()
@@ -37,6 +39,7 @@ void CollisionManager::Release()
 	enemyColliders.clear();
 	enemyBulletColliders.clear();
 	itemColliders.clear();
+	bombPlaneColliders.clear();
 }
 
 void CollisionManager::checkCollisions()
@@ -89,6 +92,32 @@ void CollisionManager::checkCollisions()
 		}
 	}
 
+	// ÆøÅº ºñÇà±â - (¹Ì»çÀÏ, Àû ÃÑ¾Ë)
+	for (auto& bombPlane : bombPlaneColliders)
+	{
+		if (bombPlane->GetActive() == false) continue;
+		
+		for (auto& enemyBullet : enemyBulletColliders)
+		{
+			if (enemyBullet->GetActive() == false) continue;
+			if (isColliding(bombPlane, enemyBullet))
+			{
+				enemyBullet->OnDamage();
+			}
+		}
+
+
+		for (auto& enemy : enemyColliders)
+		{
+			if (enemy->GetActive() == false) continue;
+			if (isColliding(bombPlane, enemy))
+			{
+				enemy->OnDamage();
+			}
+		}
+	}
+
+
 }
 
 void CollisionManager::renderColliders(HDC hdc, vector<GameObject*>& gameObjects)
@@ -119,6 +148,9 @@ void CollisionManager::AddCollider(GameObject* gameObject)
 	case Type::ITEM_HOVER_POWERUP:
 	case Type::ITEM_HOVER_MEDAL:
 		itemColliders.push_back(gameObject);
+		break;
+	case Type::BOMB_PLANE:
+		bombPlaneColliders.push_back(gameObject);
 		break;
 	default:
 		break;

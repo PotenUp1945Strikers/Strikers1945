@@ -23,7 +23,7 @@ void HoverItem::Init(Type type, const wchar_t* key, FPOINT onDamagePos)
 	srand(time(NULL));
 	this->type = type;
 	this->image = ImageManager::GetInstance()->GetImage(key);
-	size = { -image->GetWidth()/2,-image->GetHeight()/2,image->GetWidth()/2,image->GetHeight()/2};
+	size = { -image->GetWidth()/2 -5,-image->GetHeight()/2 -5 ,image->GetWidth()/2 -5 ,image->GetHeight()/2 -5 };
 
 	active = true;
 	render = true;
