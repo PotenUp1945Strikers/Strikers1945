@@ -56,7 +56,7 @@ void BackgroundManager::Update()
     }
 }
 
-int BackgroundManager::GetCurrPosY()
+float BackgroundManager::GetCurrPosY()
 {
     return currPosY;
 }

@@ -1,0 +1,104 @@
+#include "Tank.h"
+#include "CommonFunction.h"
+
+void Tank::Update(void)
+{
+	switch (state)
+	{
+	case GameObjectStates::Die:
+		if (render)
+		{
+			Stay();
+			if (OutOfWindow())
+				render = false;
+		}
+		break;
+	case GameObjectStates::Wait:
+		if (BackgroundManager::GetInstance()->GetCurrPosY() >= location)
+		{
+			oldLocation = location;
+			render = true;
+			state = GameObjectStates::Born;
+		}
+		break;
+	case GameObjectStates::Born:
+		Stay();
+		if (!OutOfWindow())
+		{
+			active = true;
+			state = GameObjectStates::Alive;
+		}
+		break;
+	case GameObjectStates::Alive:
+		//Stay();
+		Shoot();
+		if (OutOfWindow())
+		{
+			active = false;
+			state = GameObjectStates::Die;
+		}
+		break;
+	}
+	
+	if (launcher)
+		launcher->Update();
+}
+
+void Tank::Stay(void)
+{
+	float currLocation = BackgroundManager::GetInstance()->GetCurrPosY();
+	float moveLength = currLocation - oldLocation;
+	oldLocation = currLocation;
+	pos.y += moveLength;
+}
+
+void Tank::OnDamage(void)
+{
+	--health;
+	currFrameY = 1;
+	if (health <= 0)
+	{
+		active = false;
+		state = GameObjectStates::Die;
+	}
+}
+
+void Tank::Render(HDC hdc)
+{
+	if (image && render)
+	{
+		switch (state)
+		{
+		case GameObjectStates::Die:
+			image->FrameRender(hdc, pos.x, pos.y, currFrameX, currFrameY);
+			break;
+		case GameObjectStates::Wait:
+			image->FrameRender(hdc, pos.x, pos.y, currFrameX, currFrameY);
+			break;
+		case GameObjectStates::Born:
+		case GameObjectStates::Alive:
+			rotateBarrel();
+			image->FrameRender(hdc, pos.x, pos.y, currFrameX, currFrameY);
+			break;
+		}
+		currFrameY = 0;
+	}
+
+	if (launcher)
+		launcher->Render(hdc);
+}
+
+void Tank::Shoot(void)
+{
+	if (active && launcher)
+		launcher->Shoot({ pos.x + (missilePos.x * cosf(barrelRadian)),
+			pos.y + (missilePos.x * sinf(barrelRadian))});
+}
+
+void Tank::rotateBarrel(void)
+{
+	FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer1Pos();
+	barrelRadian = atan2f(pos.y - playerPos.y, pos.x - playerPos.x);
+	float degree = fmod(RAD_TO_DEG(barrelRadian) + 270, 360);
+	currFrameX = degree / 22.5;
+}

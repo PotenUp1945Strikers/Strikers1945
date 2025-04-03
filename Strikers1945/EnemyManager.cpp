@@ -3,6 +3,7 @@
 #include "BackgroundManager.h"
 #include "CollisionManager.h"
 #include "Plane.h"
+#include "Tank.h"
 
 
 void EnemyManager::Init()
@@ -26,6 +27,18 @@ void EnemyManager::Init()
 		}
 	}
 
+	if (tanks.empty())
+	{
+		tanks.resize(MAX_ENEMY_PLANE);
+		for (auto& tank : tanks)
+		{
+			tank = new Tank;
+			tank->Init();
+			tank->SetType(Type::ENEMY);
+			CollisionManager::GetInstance()->AddCollider(tank);
+		}
+	}
+
 	PutEnemy();
 }
 
@@ -44,6 +57,17 @@ void EnemyManager::Release()
 	}
 	planes.clear();
 	planes.shrink_to_fit();
+
+	if (!tanks.empty())
+	{
+		for (auto& tank : tanks)
+		{
+			tank->Release();
+			delete tank;
+		}
+	}
+	tanks.clear();
+	tanks.shrink_to_fit();
 }
 
 void EnemyManager::Update()
@@ -56,11 +80,11 @@ void EnemyManager::Update()
 
 	PutEnemy();
 
-	for (auto i : planes)
-	{
-		i->Update();
-	}
+	for (auto& plane : planes)
+		plane->Update();
 
+	for (auto& tank : tanks)
+		tank->Update();
 }
 
 void EnemyManager::PutEnemy(void)
@@ -68,34 +92,55 @@ void EnemyManager::PutEnemy(void)
 	if (currLev >= level.size())
 		return;
 
-	for (auto& plane : planes)
+	bool busy = false;
+
+	while (!busy && currLev < level.size())
 	{
-		if (plane->GetActive() == false)
+		StageScript& script = level[currLev++];
+		busy = true;
+		switch (script.type)
 		{
-			StageScript& script = level[currLev++];
-			switch (script.type)
+		case EnemyType::PLANE:
+			for (auto& plane : planes)
 			{
-			case EnemyType::PLANE:
-				plane->Init(script.key, script.appeared, Type::ENEMY);
-				plane->SetPos(script.pos);
-				plane->SetPath(script.path);
-				break;
+				if (plane->GetActive() == false)
+				{
+					plane->Init(script.key, script.appeared, Type::ENEMY);
+					plane->SetPos(script.pos);
+					plane->SetPath(script.path);
+					busy = false;
+					break;
+				}
 			}
-			if (currLev >= level.size())
-				break;
+			break;
+		case EnemyType::TANK:
+			for (auto& tank : tanks)
+			{
+				if (tank->GetActive() == false)
+				{
+					tank->Init(script.key, script.appeared, Type::ENEMY);
+					tank->SetPos(script.pos);
+					busy = false;
+					break;
+				}
+			}
+			break;
 		}
-	}
+	}	
 }
 
 void EnemyManager::Render(HDC hdc)
 {
-
-	for (auto i : planes)
+	for (auto& plane : planes)
 	{
-		if (i->GetRender())
-		{
-			i->Render(hdc);
-		}
+		if (plane->GetRender())
+			plane->Render(hdc);
+	}
+
+	for (auto& tank : tanks)
+	{
+		if (tank->GetRender())
+			tank->Render(hdc);
 	}
 
 }
@@ -243,13 +288,15 @@ void EnemyManager::CreateLevel(void)
 	if (!level.empty() || dict.empty())
 		return;
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("Pattern_Movearound")], { 100, -50 }, 300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("Pattern_Movearound")], { 150, -50 }, 300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("Pattern_Movearound")], { 200, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 100, 100 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 150, 100 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 200, 100 }, 300 });
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 100, -50 }, 600 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 150, -50 }, 600 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, -50 }, 600 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { WINSIZE_X / 2, 300 }, 300 });
+
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 100, 100 }, 600 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 150, 100 }, 600 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, 100 }, 600 });
 }
 
 void EnemyManager::MakePatternEnemy(const wchar_t* key)

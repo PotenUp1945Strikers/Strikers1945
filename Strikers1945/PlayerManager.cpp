@@ -140,6 +140,13 @@ bool PlayerManager::Revive(void)
 	return false;
 }
 
+FPOINT PlayerManager::GetPlayer1Pos(void)
+{
+	if (player1)
+		return player1->GetPos();
+	return { 0, 0 };
+}
+
 void PlayerManager::LaunchBomb(int playerNum)
 {
 	switch (playerNum)

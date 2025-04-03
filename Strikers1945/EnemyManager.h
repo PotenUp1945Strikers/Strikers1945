@@ -4,6 +4,7 @@
 #include <map>
 
 class Plane;
+class Tank;
 class EnemyManager: public Singleton<EnemyManager>
 {
 private:
@@ -12,6 +13,7 @@ private:
 	vector<Task>						tasks;
 	size_t								currLev;
 	vector<Plane*>						planes;
+	vector<Tank*>						tanks;
 
 	void CreateLevel(void);
 	void FillDict(void);

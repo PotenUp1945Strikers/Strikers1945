@@ -31,13 +31,12 @@ public:
 	void Release(void);
 	
 	void LaunchBombEnd();
-
 	int GetPlayer1bomb();
-
 	bool ReducePlayer1Bomb();
 	bool InCreasePlayer1Bomb();
 	
-	
 	bool Revive(void);
+
+	FPOINT GetPlayer1Pos(void);
 };
 

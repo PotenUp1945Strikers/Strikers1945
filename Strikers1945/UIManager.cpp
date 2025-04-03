@@ -39,11 +39,11 @@ void UIManager::Init()
 	if (!life)
 	{
 		life = new InGameUI;
-		life->Init({ 36, 50 });
 		life->SetImage(TEXT(LIFE_COUNT_PATH));
-		life->Setinterval(42);
+		life->Init({ 50 - 8 , 50 });
+		life->Setinterval(20);
+		life->SetCount(3);
 	}
-	life->SetCount(3);
 
 	if (!bomb)
 	{
@@ -51,8 +51,9 @@ void UIManager::Init()
 		bomb->Init({ 38, WINSIZE_Y - 50 });
 		bomb->SetImage(TEXT(BOMB_COUNT_PATH));
 		bomb->Setinterval(38);
+		bomb->SetCount(2);
 	}
-	bomb->SetCount(2);
+
 
 	if (!number1)
 	{
@@ -60,8 +61,8 @@ void UIManager::Init()
 		number1->Init({ 390, 418 });
 		number1->SetImage(TEXT(NUMBER_SET1_PATH));
 		number1->SetInterval(38);
+		number1->SetNumber(10);
 	}
-	number1->SetNumber(10);
 }
 
 void UIManager::Release()

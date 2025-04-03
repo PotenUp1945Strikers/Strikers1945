@@ -12,13 +12,17 @@
 
 class Plane: public GameObject
 {
-private:
+protected:
 	static map<const wchar_t*, PlaneType> dict;
 
 	float				location;
 	FPOINT				missilePos;
 	FPOINT				centerPos;
 	float				absTime;
+	PlaneRenderType		renderType;
+	int					maxFrameX;
+	int					currFrameX;
+	int					currFrameY;
 
 	vector<Task>*		path;
 	TaskType			pathType;
@@ -66,16 +70,16 @@ private:
 	void MoveAlongPathMoveCurve();
 	
 public:
-	void Init(void);
-	void Release(void);
-	void Update(void);
-	void Render(HDC hdc);
+	void Init(void) override;
+	void Release(void) override;
+	void Update(void) override;
+	void Render(HDC hdc) override;
 
 	void Init(const wchar_t* key, float startPos, Type type);
 	void Shoot(void);
 	void UpgradeMissile();
 	void Move(FPOINT dir);
-	void OnDamage(void);
+	void OnDamage(void) override;
 	void DropBomb();
 	
 	Bomb* GetBombRef(void);

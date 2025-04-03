@@ -37,8 +37,15 @@ using namespace std;
 #define ENEMY2_PATH "Image/Enemy2.bmp"
 #define ENEMY3_PATH "Image/Enemy3.bmp"
 #define MID_ENEMY1_PATH "Image/MidEnemy1.bmp"
+#define MID_ENEMY1_LEFT "MidEnemy1LEFT"
+#define MID_ENEMY1_RIGHT "MidEnemy1Right"
 #define MID_ENEMY2_PATH "Image/MidEnemy2.bmp"
+#define MID_ENEMY2_LEFT "MidEnemy2LEFT"
+#define MID_ENEMY2_RIGHT "MidEnemy2RIGHT"
 #define BOSS_PATH "Image/StageBoss.bmp"
+#define BOSS_LEFT "BossLeft"
+#define BOSS_CENTER "BossCenter"
+#define BOSS_RIGHT "BossRight"
 #define BOMB_PLANE_PATH "Image/BombPlane.bmp"
 #define BOMB_MINIBOMB_PATH "Image/MiniBomb.bmp"
 #define BOMB_EFFECT_PATH "Image/playerBomb.bmp"
@@ -50,11 +57,6 @@ using namespace std;
 #define EFFECT1_PATH "Image/Effect1.bmp"
 #define EFFECT2_PATH "Image/Effect2.bmp"
 #define EFFECT3_PATH "Image/Effect3.bmp"
-
-
-
-#define PATTERN_ENEMY_NUM 6
-
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
@@ -80,6 +82,15 @@ typedef struct tagColider
 	RECT Wing;
 } Colider;
 
+enum class PlaneRenderType : UINT8
+{
+	NONE,
+	NORMAL,
+	DIR,
+	DIR_X,
+	TANK
+};
+
 typedef struct tagPlaneType
 {
 	const wchar_t*	key;
@@ -88,6 +99,8 @@ typedef struct tagPlaneType
 	RECT			size;
 	FPOINT			missilePos;
 	FPOINT			centerPos;
+	int				maxFrameX;
+	PlaneRenderType	renderType;
 	const wchar_t*	missileType;
 } PlaneType;
 

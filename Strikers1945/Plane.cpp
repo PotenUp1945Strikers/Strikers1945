@@ -6,25 +6,194 @@ map<const wchar_t*, PlaneType> Plane::dict;
 
 void Plane::FillDict(void)
 {
-	PlaneType player;
-	player.key = TEXT(PLAYER_PATH);
-	player.size = RECT{ -4, -20, 4, 20 };
-	player.health = 1;
-	player.missilePos = {0, -20};
-	player.centerPos = { 16, 23 };
-	player.missileType = TEXT(NORMAL_BULLET_PATH);
-	player.speed = 180;
-	dict.insert(make_pair(TEXT(PLAYER_PATH), player));
+	{
+		PlaneType player;
+		player.key = TEXT(PLAYER_PATH);
+		player.size = RECT{ -4, -8, 5, 6 };
+		player.health = 1;
+		player.missilePos = { 0, -20 };
+		player.centerPos = { 16, 23 };
+		player.missileType = TEXT(NORMAL_BULLET_PATH);
+		player.maxFrameX = 7;
+		player.renderType = PlaneRenderType::DIR_X;
+		player.speed = 180;
+		dict.insert(make_pair(TEXT(PLAYER_PATH), player));
+	}
 
-	PlaneType enemy1;
-	enemy1.key = TEXT(ENEMY1_PATH);
-	enemy1.size = RECT{ -2, -16, 2, 16 };
-	enemy1.health = 1;
-	enemy1.missilePos = { 0, -16 };
-	enemy1.centerPos = { 18, 16 };
-	enemy1.missileType = TEXT(NORMAL_BULLET_PATH);
-	enemy1.speed = 150;
-	dict.insert(make_pair(TEXT(ENEMY1_PATH), enemy1));
+	{
+		PlaneType tank;
+		tank.key = TEXT(TANK_PATH);
+		tank.size = RECT{ -9, -13, 9, 13 };
+		tank.health = 10;
+		tank.missilePos = { 16, 0 };
+		tank.centerPos = { 16, 16 };
+		tank.missileType = TEXT(NORMAL_BULLET_PATH);
+		tank.maxFrameX = 16;
+		tank.renderType = PlaneRenderType::TANK;
+		tank.speed = 0;
+		dict.insert(make_pair(TEXT(TANK_PATH), tank));
+	}
+
+	{
+		PlaneType enemy1;
+		enemy1.key = TEXT(ENEMY1_PATH);
+		enemy1.size = RECT{ -2, -16, 3, 16 };
+		enemy1.health = 5;
+		enemy1.missilePos = { 0, -17 };
+		enemy1.centerPos = { 19.5, 16 };
+		enemy1.missileType = TEXT(NORMAL_BULLET_PATH);
+		enemy1.maxFrameX = 3;
+		enemy1.renderType = PlaneRenderType::DIR_X;
+		enemy1.speed = 160;
+		dict.insert(make_pair(TEXT(ENEMY1_PATH), enemy1));
+	}
+
+	{
+		PlaneType enemy2;
+		enemy2.key = TEXT(ENEMY2_PATH);
+		enemy2.size = RECT{ -3, -9, 4, 3 };
+		enemy2.health = 3;
+		enemy2.missilePos = { 0, 16 };
+		enemy2.centerPos = { 10, 15 };
+		enemy2.missileType = TEXT(NORMAL_BULLET_PATH);
+		enemy2.maxFrameX = 11;
+		enemy2.renderType = PlaneRenderType::NORMAL;
+		enemy2.speed = 230;
+		dict.insert(make_pair(TEXT(ENEMY2_PATH), enemy2));
+	}
+
+	{
+		PlaneType enemy3;
+		enemy3.key = TEXT(ENEMY3_PATH);
+		enemy3.size = RECT{ -5, -12, 6, 6 };
+		enemy3.health = 4;
+		enemy3.missilePos = { 0, 16 };
+		enemy3.centerPos = { 9, 16 };
+		enemy3.missileType = TEXT(NORMAL_BULLET_PATH);
+		enemy3.maxFrameX = 11;
+		enemy3.renderType = PlaneRenderType::NORMAL;
+		enemy3.speed = 200;
+		dict.insert(make_pair(TEXT(ENEMY3_PATH), enemy3));
+	}
+
+	{
+		PlaneType midEnemy1;
+		midEnemy1.key = TEXT(MID_ENEMY1_PATH);
+		midEnemy1.size = RECT{ -2, -16, 2, 16 };
+		midEnemy1.health = 3;
+		midEnemy1.missilePos = { 0, -16 };
+		midEnemy1.centerPos = { 18, 16 };
+		midEnemy1.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy1.maxFrameX = 1;
+		midEnemy1.renderType = PlaneRenderType::NORMAL;
+		midEnemy1.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY1_PATH), midEnemy1));
+
+		PlaneType midEnemy1Left;
+		midEnemy1Left.key = TEXT(MID_ENEMY1_LEFT);
+		midEnemy1Left.size = RECT{ -2, -16, 2, 16 };
+		midEnemy1Left.health = 3;
+		midEnemy1Left.missilePos = { 0, -16 };
+		midEnemy1Left.centerPos = { 18, 16 };
+		midEnemy1Left.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy1Left.renderType = PlaneRenderType::NORMAL;
+		midEnemy1Left.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY1_LEFT), midEnemy1Left));
+
+		PlaneType midEnemy1Right;
+		midEnemy1Right.key = TEXT(MID_ENEMY1_RIGHT);
+		midEnemy1Right.size = RECT{ -2, -16, 2, 16 };
+		midEnemy1Right.health = 3;
+		midEnemy1Right.missilePos = { 0, -16 };
+		midEnemy1Right.centerPos = { 18, 16 };
+		midEnemy1Right.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy1Right.renderType = PlaneRenderType::NORMAL;
+		midEnemy1Right.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY1_RIGHT), midEnemy1Right));
+	}
+
+	{
+		PlaneType midEnemy2;
+		midEnemy2.key = TEXT(MID_ENEMY2_PATH);
+		midEnemy2.size = RECT{ -2, -16, 2, 16 };
+		midEnemy2.health = 3;
+		midEnemy2.missilePos = { 0, -16 };
+		midEnemy2.centerPos = { 18, 16 };
+		midEnemy2.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy2.maxFrameX = 2;
+		midEnemy2.renderType = PlaneRenderType::DIR;
+		midEnemy2.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY2_PATH), midEnemy2));
+
+		PlaneType midEnemy2Left;
+		midEnemy2Left.key = TEXT(MID_ENEMY2_LEFT);
+		midEnemy2Left.size = RECT{ -2, -16, 2, 16 };
+		midEnemy2Left.health = 3;
+		midEnemy2Left.missilePos = { 0, -16 };
+		midEnemy2Left.centerPos = { 18, 16 };
+		midEnemy2Left.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy2Left.renderType = PlaneRenderType::NONE;
+		midEnemy2Left.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY2_LEFT), midEnemy2Left));
+
+		PlaneType midEnemy2Right;
+		midEnemy2Right.key = TEXT(MID_ENEMY2_RIGHT);
+		midEnemy2Right.size = RECT{ -2, -16, 2, 16 };
+		midEnemy2Right.health = 3;
+		midEnemy2Right.missilePos = { 0, -16 };
+		midEnemy2Right.centerPos = { 18, 16 };
+		midEnemy2Right.missileType = TEXT(NORMAL_BULLET_PATH);
+		midEnemy2Right.renderType = PlaneRenderType::NONE;
+		midEnemy2Right.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY2_RIGHT), midEnemy2Right));
+	}
+
+	{
+		PlaneType boss;
+		boss.key = TEXT(BOSS_PATH);
+		boss.size = RECT{ -2, -16, 2, 16 };
+		boss.health = 3;
+		boss.missilePos = { 0, -16 };
+		boss.centerPos = { 18, 16 };
+		boss.missileType = TEXT(NORMAL_BULLET_PATH);
+		boss.maxFrameX = 30;
+		boss.renderType = PlaneRenderType::NORMAL;
+		boss.speed = 150;
+		dict.insert(make_pair(TEXT(BOSS_PATH), boss));
+
+		PlaneType bossLeft;
+		bossLeft.key = TEXT(BOSS_LEFT);
+		bossLeft.size = RECT{ -2, -16, 2, 16 };
+		bossLeft.health = 3;
+		bossLeft.missilePos = { 0, -16 };
+		bossLeft.centerPos = { 18, 16 };
+		bossLeft.missileType = TEXT(NORMAL_BULLET_PATH);
+		bossLeft.renderType = PlaneRenderType::NONE;
+		bossLeft.speed = 150;
+		dict.insert(make_pair(TEXT(BOSS_LEFT), bossLeft));
+
+		PlaneType bossCenter;
+		bossCenter.key = TEXT(MID_ENEMY2_RIGHT);
+		bossCenter.size = RECT{ -2, -16, 2, 16 };
+		bossCenter.health = 3;
+		bossCenter.missilePos = { 0, -16 };
+		bossCenter.centerPos = { 18, 16 };
+		bossCenter.missileType = TEXT(NORMAL_BULLET_PATH);
+		bossCenter.renderType = PlaneRenderType::NONE;
+		bossCenter.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY2_RIGHT), bossCenter));
+
+		PlaneType bossRight;
+		bossRight.key = TEXT(MID_ENEMY2_RIGHT);
+		bossRight.size = RECT{ -2, -16, 2, 16 };
+		bossRight.health = 3;
+		bossRight.missilePos = { 0, -16 };
+		bossRight.centerPos = { 18, 16 };
+		bossRight.missileType = TEXT(NORMAL_BULLET_PATH);
+		bossRight.renderType = PlaneRenderType::NONE;
+		bossRight.speed = 150;
+		dict.insert(make_pair(TEXT(MID_ENEMY2_RIGHT), bossRight));
+	}
 }
 
 void Plane::Init(void)
@@ -61,8 +230,6 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 	goal = { 0, };
 	if (!launcher)
 		launcher = new MissileManager;
-	if (!bomb)
-		bomb = new Bomb;
 
 
 	auto var = dict.find(key);
@@ -75,8 +242,10 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 		switch (type) {
 		case Type::PLAYER:
 			launcher->Init(var->second.missileType, Type::PLAYER_BULLET);
-			bomb->Init();
 			absTime = INVINCIBILITY_TIME;
+			if (!bomb)
+				bomb = new Bomb;
+			bomb->Init();
 			break;
 		case Type::ENEMY:
 			launcher->Init(var->second.missileType, Type::ENEMY_BULLET);
@@ -125,8 +294,6 @@ void Plane::Update(void)
 	
 	if (launcher)
 		launcher->Update();
-	if (bomb)
-		bomb->Update();
 }
 
 void Plane::UpdatePlayer(void)
@@ -142,6 +309,9 @@ void Plane::UpdatePlayer(void)
 		UpdatePlayerAlive();
 		break;
 	}
+
+	if (bomb)
+		bomb->Update();
 }
 
 void Plane::UpdateEnemy(void)
