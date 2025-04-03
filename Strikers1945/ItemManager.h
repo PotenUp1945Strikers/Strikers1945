@@ -10,7 +10,6 @@ class ItemManager : public Singleton<ItemManager>
 private:
 	//vector<GameObject>* items;
 
-	Bomb* bomb;
 	bool bombing;
 
 	HoverItem* tmp;

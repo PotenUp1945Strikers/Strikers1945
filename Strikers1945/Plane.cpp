@@ -32,6 +32,11 @@ void Plane::Init(void)
 		launcher = new MissileManager;
 		launcher->Init();
 	}
+	if (!bomb)
+	{
+		bomb = new Bomb;
+		bomb->Init();
+	}
 	path = nullptr;
 	currPath = 0;
 	absTime = 0;
@@ -40,6 +45,7 @@ void Plane::Init(void)
 	render = false;
 	state = GameObjectStates::Wait;
 	taskTime = 0.0f;
+	
 }
 
 
@@ -55,6 +61,9 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 	goal = { 0, };
 	if (!launcher)
 		launcher = new MissileManager;
+	if (!bomb)
+		bomb = new Bomb;
+
 
 	auto var = dict.find(key);
 	if (var != dict.end())
@@ -66,6 +75,7 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 		switch (type) {
 		case Type::PLAYER:
 			launcher->Init(var->second.missileType, Type::PLAYER_BULLET);
+			bomb->Init();
 			absTime = INVINCIBILITY_TIME;
 			break;
 		case Type::ENEMY:
@@ -84,6 +94,12 @@ void Plane::Release(void)
 		delete launcher;
 		launcher = nullptr;
 	}
+	if (bomb)
+	{
+		bomb->Release();
+		delete bomb;
+		bomb = nullptr;
+	}
 }
 
 void Plane::Render(HDC hdc)
@@ -92,6 +108,8 @@ void Plane::Render(HDC hdc)
 		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
 	if (launcher)
 		launcher->Render(hdc);
+	if (bomb)
+		bomb->Render(hdc);
 }
 
 void Plane::Update(void)
@@ -107,6 +125,8 @@ void Plane::Update(void)
 	
 	if (launcher)
 		launcher->Update();
+	if (bomb)
+		bomb->Update();
 }
 
 void Plane::UpdatePlayer(void)
@@ -303,6 +323,21 @@ void Plane::OnDamage(void)
 			SetGoal();
 		}
 	}
+}
+
+void Plane::DropBomb()
+{
+	if (!ItemManager::GetInstance()->GetBombing())
+	{
+		bomb->SetActive(true);
+		bomb->SetRender(true);
+	}
+}
+
+
+Bomb* Plane::GetBombRef(void)
+{
+	return bomb;
 }
 
 GameObjectStates Plane::GetState(void)

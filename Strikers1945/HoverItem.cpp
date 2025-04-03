@@ -105,4 +105,5 @@ void HoverItem::Render(HDC hdc)
 
 void HoverItem::OnDamage()
 {
+	
 }

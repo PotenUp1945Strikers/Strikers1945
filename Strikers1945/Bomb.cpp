@@ -111,12 +111,13 @@ void Bomb::Render(HDC hdc)
                }
             }
         }
+
+        for (int i = 0; i < 3; i++)
+        {
+            bombPlaneImage->Render(hdc, planePos[i].x, planePos[i].y);
+        }
     }
 
-    for (int i = 0; i < 3; i++)
-    {
-        bombPlaneImage->Render(hdc, planePos[i].x, planePos[i].y);
-    }
 }
 
 void Bomb::OnDamage()

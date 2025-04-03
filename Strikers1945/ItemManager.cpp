@@ -6,9 +6,6 @@
 
 void ItemManager::Init()
 {
-	bomb = new Bomb;
-	bomb->Init();
-
 	bombing = false;
 
 	tmp = new HoverItem;
@@ -20,13 +17,13 @@ void ItemManager::Init()
 
 void ItemManager::Release()
 {
-	delete bomb;
+	
 }
 
 void ItemManager::Update()
 {
-	if (bomb && bomb->GetActive() && bomb->GetRender())
-		bomb->Update();
+	//if (bomb && bomb->GetActive() && bomb->GetRender())
+	//	bomb->Update();
 
 	if (tmp && tmp->GetActive() && tmp->GetRender())
 		tmp->Update();
@@ -34,8 +31,8 @@ void ItemManager::Update()
 
 void ItemManager::Render(HDC hdc)
 {
-	if (bomb && bomb->GetActive() && bomb->GetRender())
-		bomb->Render(hdc);
+	//if (bomb && bomb->GetActive() && bomb->GetRender())
+	//	bomb->Render(hdc);
 	if (tmp && tmp->GetActive() && tmp->GetRender())
 		tmp->Render(hdc);
 
@@ -43,23 +40,24 @@ void ItemManager::Render(HDC hdc)
 
 void ItemManager::OnDropButton()
 {
-	if (!bombing) 
+	if (!bombing)
 	{
-
-		UIManager::GetInstance()->SetBomb(PlayerManager::GetInstance()->GetPlayer1Bomb()-1);
 		bombing = true;
-		bomb->SetActive(true);
-		bomb->SetRender(true);
 	}
+	//if (!bombing) 
+	//{
+
+	//	UIManager::GetInstance()->SetBomb(PlayerManager::GetInstance()->GetPlayer1Bomb()-1);
+	//	bombing = true;
+	//	bomb->SetActive(true);
+	//	bomb->SetRender(true);
+	//}
 }
 
 void ItemManager::OnDropEnd()
 {
-
 	bombing = false;
-	
-	PlayerManager::GetInstance()->Onplayer1Bomb();
-	bomb->Init();
+	PlayerManager::GetInstance()->LaunchBombEnd();
 }
 
 bool ItemManager::GetBombing()
