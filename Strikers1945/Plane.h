@@ -3,10 +3,12 @@
 #include "MissileManager.h"
 #include "ImageManager.h"
 #include "TimerManager.h"
+#include "ItemManager.h"
 #include "BackgroundManager.h"
 #include <map>
 #include "config.h"
 #include "PlayerManager.h"
+#include "Bomb.h"
 
 class Plane: public GameObject
 {
@@ -38,6 +40,7 @@ private:
 	GameObjectStates	state;
 
 	MissileManager*		launcher;
+	Bomb*				bomb;
 
 	
 	void FillDict(void);
@@ -73,6 +76,9 @@ public:
 	void UpgradeMissile();
 	void Move(FPOINT dir);
 	void OnDamage(void);
+	void DropBomb();
+	
+	Bomb* GetBombRef(void);
 
 
 	GameObjectStates GetState(void);

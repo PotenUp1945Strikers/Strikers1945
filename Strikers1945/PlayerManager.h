@@ -22,7 +22,7 @@ private:
 	int		player2Bomb;
 
 	void FillDict(void);
-	void LaunchBomb(void);
+	void LaunchBomb(int playerNum);
 
 public:
 	void Init(void);
@@ -30,11 +30,14 @@ public:
 	void Render(HDC hdc);
 	void Release(void);
 	
-	void Onplayer1Bomb();
+	void LaunchBombEnd();
 
-	int GetPlayer1Bomb();
+	int GetPlayer1bomb();
 
-
+	bool ReducePlayer1Bomb();
+	bool InCreasePlayer1Bomb();
+	
+	
 	bool Revive(void);
 };
 

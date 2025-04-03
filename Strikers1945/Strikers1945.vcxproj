@@ -137,6 +137,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HoverItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InGameUI.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HoverItem.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InGameUI.cpp" />

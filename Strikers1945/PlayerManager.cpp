@@ -64,6 +64,8 @@ void PlayerManager::Update(void)
 		player1Pos.x += 1;
 	if (km->IsStayKeyDown('Z'))
 		player1->Shoot();
+	if (km->IsOnceKeyDown('X'))
+		LaunchBomb(1);
 
 	player1->Move(player1Pos);
 	player1->Update();
@@ -85,18 +87,30 @@ void PlayerManager::Release(void)
 	}
 }
 
-void PlayerManager::Onplayer1Bomb()
+
+
+
+bool PlayerManager::ReducePlayer1Bomb()
 {
-	if (!ItemManager::GetInstance()->GetBombing() && player1Bomb != 0)
+	if (this->player1Bomb > 0)
 	{
-		player1Bomb -= 1;
+		this->player1Bomb -= 1;
+		return true;
 	}
+	return false;
 }
 
-int PlayerManager::GetPlayer1Bomb()
+bool PlayerManager::InCreasePlayer1Bomb()
 {
-	return player1Bomb;
+	if (this->player1Bomb < 2 && this->player1Bomb >= 0)
+	{
+		this->player1Bomb += 1;
+		return true;
+	}
+	return false;
 }
+
+
 
 
 bool PlayerManager::Revive(void)
@@ -126,6 +140,38 @@ bool PlayerManager::Revive(void)
 	return false;
 }
 
-void PlayerManager::LaunchBomb(void)
+void PlayerManager::LaunchBomb(int playerNum)
 {
+	switch (playerNum)
+	{
+	case 1:
+		if (!ItemManager::GetInstance()->GetBombing() && player1Bomb != 0)
+		{
+			
+			player1Bomb -= 1;
+			player1->DropBomb();
+			UIManager::GetInstance()->SetBomb(player1Bomb);
+			ItemManager::GetInstance()->OnDropButton();
+		}
+		break;
+	case 2:
+		if (!ItemManager::GetInstance()->GetBombing() && player2Bomb != 0)
+		{
+			player2Bomb -= 1;
+			player2->DropBomb();
+		}
+		break;
+	}
+	
+}
+
+void PlayerManager::LaunchBombEnd()
+{
+	player1->GetBombRef()->Init();
+	//player2->GetBombRef()->Init();
+}
+
+int PlayerManager::GetPlayer1bomb()
+{
+	return player1Bomb;
 }

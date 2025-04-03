@@ -223,8 +223,7 @@ void MainGame::UpdateInGame()
 		return EventHandler::GetInstance()->GameClear();
 	if (km->IsOnceKeyDown(PAUSE_KEY))
 		state = GameStates::Pause;
-	if (km->IsOnceKeyDown('X'))
-		return ItemManager::GetInstance()->OnDropButton();
+	
 }
 
 void MainGame::UpdatePause()
