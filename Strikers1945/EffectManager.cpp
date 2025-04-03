@@ -15,9 +15,11 @@ void EffectManager::FillDict()
 
 	dict.insert(make_pair(TEXT(HIT_EFFECT_PATH), effect));
 	dict.insert(make_pair(TEXT(BOMB_EFFECT_PATH), effect));
+	dict.insert(make_pair(TEXT(BOMB_EFFECT2_PATH), effect));
 	dict.insert(make_pair(TEXT(EFFECT1_PATH), effect));
 	dict.insert(make_pair(TEXT(EFFECT2_PATH), effect));
 	dict.insert(make_pair(TEXT(EFFECT3_PATH), effect));
+	dict.insert(make_pair(TEXT(EFFECT4_PATH), effect));
 
 
 }

@@ -34,9 +34,11 @@ using namespace std;
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 #define HIT_EFFECT_PATH "Image/hitEffect.bmp"
 #define BOMB_EFFECT_PATH "Image/bombEffect.bmp"
+#define BOMB_EFFECT2_PATH "Image/bombEffect2.bmp"
 #define EFFECT1_PATH "Image/Effect1.bmp"
 #define EFFECT2_PATH "Image/Effect2.bmp"
 #define EFFECT3_PATH "Image/Effect3.bmp"
+#define EFFECT4_PATH "Image/Effect4.bmp"
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
