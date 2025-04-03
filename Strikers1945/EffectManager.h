@@ -6,9 +6,8 @@ class GameObject;
 
 struct Effect
 {
-	const wchar_t* key;
 	bool active;
-	GameObject* owner;
+	FPOINT pos;
 	int frameX;
 	int frameY;
 	float elapsedTime;
@@ -17,11 +16,12 @@ struct Effect
 class EffectManager : public Singleton<EffectManager>
 {
 private:
-	map<GameObject*, Effect> dict;
+	map<const wchar_t*, Effect> dict;
+	void FillDict();
 public:
+	void Init();
 	void Update();
 	void Render(HDC hdc);
 	void Release();
-	void AddEffect(GameObject* owner);
-	void OnEffect(GameObject* owner);
+	void OnEffect(const wchar_t* key, FPOINT pos);
 };

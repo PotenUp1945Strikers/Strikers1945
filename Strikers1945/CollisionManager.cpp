@@ -46,8 +46,7 @@ void CollisionManager::checkCollisions()
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(player, enemyBullet))
 			{
-				EffectManager::GetInstance()->OnEffect(player);
-				EffectManager::GetInstance()->OnEffect(enemyBullet);
+				EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), player->GetPos());
 				player->OnDamage();
 				enemyBullet->OnDamage();
 			}
@@ -64,8 +63,6 @@ void CollisionManager::checkCollisions()
 			if (isColliding(enemy, playerBullet))
 			{
 				// 적 데미지
-				EffectManager::GetInstance()->OnEffect(enemy);
-				EffectManager::GetInstance()->OnEffect(playerBullet);
 				//enemy->OnDamage();
 				playerBullet->OnDamage();
 			}
@@ -84,7 +81,6 @@ void CollisionManager::renderColliders(HDC hdc, vector<GameObject*>& gameObjects
 }
 void CollisionManager::AddCollider(GameObject* gameObject)
 {
-	EffectManager::GetInstance()->AddEffect(gameObject);
 	switch (gameObject->GetType())
 	{
 	case Type::PLAYER:
