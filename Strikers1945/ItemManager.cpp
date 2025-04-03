@@ -62,7 +62,7 @@ void ItemManager::CreateItem(FPOINT pos)
 	{
 		if (!hoverItems[i]->GetActive())
 		{
-			if (randNum > 0)
+			if (randNum < 10)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_BOMB, TEXT(ITEM_HOVERBOMB_PATH), pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
