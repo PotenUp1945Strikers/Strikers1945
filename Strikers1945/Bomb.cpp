@@ -38,9 +38,8 @@ void Bomb::Init()
 	currDropInd = 0;
     currDropFrameX = 0;
     currTime = 0.0f;
-
     maxDropFrameX = miniBombImage->GetMaxFrameX();
-
+    frameDuration = 0.1f;
 }
 
 void Bomb::Release()
@@ -56,11 +55,13 @@ void Bomb::Update()
     {
 
     
-        if (currTime >= miniBombDropTime / maxDropFrameX)
+        if (currTime >= frameDuration)
         {
             currDropFrameX = (currDropFrameX + 1) % maxDropFrameX;
             currTime = 0.0f;
         }
+
+        currTime += deltaTime;
 
         int newDropInd = static_cast<int>(((WINSIZE_Y - planePos[0].y) / 150));
 
@@ -97,8 +98,7 @@ void Bomb::Update()
 void Bomb::Render(HDC hdc)
 {
     float deltaTime = TimerManager::GetInstance()->GetDeltaTime();
-    currTime += deltaTime;
-
+   
     if (active && render)
     {
         for (int i = 0; i < 3; i++)

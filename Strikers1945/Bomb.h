@@ -34,6 +34,7 @@ private:
 
 	int maxDropFrameX;
 	float currTime;
+	float frameDuration;
 
 public:
 	virtual void Init() override;

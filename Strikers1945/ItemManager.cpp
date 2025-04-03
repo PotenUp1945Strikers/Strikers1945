@@ -2,13 +2,19 @@
 #include "PlayerManager.h"
 
 #include "Bomb.h"
+#include "HoverItem.h"
 
 void ItemManager::Init()
 {
 	bomb = new Bomb;
 	bomb->Init();
-	
+
 	bombing = false;
+
+	tmp = new HoverItem;
+	tmp->Init(Type::ITEM_HOVER_BOMB, TEXT(ITEM_HOVERBOMB_PATH), {300, 400});
+	tmp->SetActive(true);
+	tmp->SetRender(true);
 
 }
 
@@ -21,12 +27,17 @@ void ItemManager::Update()
 {
 	if (bomb && bomb->GetActive() && bomb->GetRender())
 		bomb->Update();
+
+	if (tmp && tmp->GetActive() && tmp->GetRender())
+		tmp->Update();
 }
 
 void ItemManager::Render(HDC hdc)
 {
 	if (bomb && bomb->GetActive() && bomb->GetRender())
 		bomb->Render(hdc);
+	if (tmp && tmp->GetActive() && tmp->GetRender())
+		tmp->Render(hdc);
 
 }
 

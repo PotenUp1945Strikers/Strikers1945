@@ -4,6 +4,7 @@
 #include "GameObject.h"
 
 class Bomb;
+class HoverItem;
 class ItemManager : public Singleton<ItemManager>
 {
 private:
@@ -11,6 +12,8 @@ private:
 
 	Bomb* bomb;
 	bool bombing;
+
+	HoverItem* tmp;
 
 
 public:
