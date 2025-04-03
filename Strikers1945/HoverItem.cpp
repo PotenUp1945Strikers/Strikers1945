@@ -33,7 +33,9 @@ void HoverItem::Init(Type type, const wchar_t* key, FPOINT onDamagePos)
 	}
 	else
 	{
-		dir = { 1.0f, 1.0f };
+		int randX = (rand() % 2 == 0) ? 1 : -1;
+		int randY = (rand() % 2 == 0) ? 1 : -1;
+		dir = { static_cast<float>(randX), static_cast<float>(randY) };
 	}
 	
 	pos = { onDamagePos.x, onDamagePos.y };
