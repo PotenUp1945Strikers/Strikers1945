@@ -13,19 +13,17 @@ void Boss::Init(void)
 
 void Boss::Init(const wchar_t* key, float startPos, Type type)
 {
+	if (dict.find(key) == dict.end())
+		return;
 	this->Plane::Init(key, startPos, type);
-	auto var = dict.find(TEXT(TARGETTING_BULLET_PATH));
 	if (!left)
 		left = new MissileManager;
 	if (!right)
-		right = new MissileManager;
-	if (var != dict.end())
-	{
-		left->Init(var->second.missileType, Type::ENEMY_BULLET);
-		right->Init(var->second.missileType, Type::ENEMY_BULLET);
-		leftPos = { -169, 182 };
-		rightPos = { 138, 182 };
-	}
+	right = new MissileManager;
+	left->Init(TEXT(AROUND_BULLET_PATH), Type::ENEMY_BULLET);
+	right->Init(TEXT(AROUND_BULLET_PATH), Type::ENEMY_BULLET);
+	leftPos = { -169, 182 };
+	rightPos = { 138, 182 };
 }
 
 void Boss::Release(void)

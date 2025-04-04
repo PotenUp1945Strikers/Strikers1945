@@ -19,7 +19,7 @@ void EnemyManager::Init()
 
 	if (planes.empty())
 	{
-		planes.resize(MAX_ENEMY_PLANE);
+		planes.resize(MAX_MISSILE);
 		for (auto& plane : planes)
 		{
 			plane = new Plane;
@@ -36,7 +36,7 @@ void EnemyManager::Init()
 
 	if (tanks.empty())
 	{
-		tanks.resize(MAX_ENEMY_PLANE);
+		tanks.resize(MAX_MISSILE);
 		for (auto& tank : tanks)
 		{
 			tank = new Tank;
@@ -232,28 +232,78 @@ void EnemyManager::FillDict(void)
 		vector<Task>* tmpVec = new vector<Task>;
 
 		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0 , 200.0f };
-		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { WINSIZE_X + 100 , WINSIZE_Y / 2 };
+		tmpVec->back().control = { WINSIZE_X + 100, 0 };
 		tmpVec->back().taskTime = 0.0f;
 		tmpVec->back().destRadian = 0.0f;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
 		
-		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0 , 200.0f };
-		tmpVec->back().control = { 0, 0 };
-		tmpVec->back().taskTime = 0.0f;
-		tmpVec->back().destRadian = 0.0f;
+		dict.insert(make_pair(TEXT("LEFT_TOP_TO_RIGHT_BOTTOM"), tmpVec));
+	}
 
-	
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
 		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0 , WINSIZE_Y + 100.0f };
-		tmpVec->back().control = { 0, 0 };
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -(WINSIZE_X + 100) , WINSIZE_Y / 2 };
+		tmpVec->back().control = { -(WINSIZE_X + 100), 0 };
 		tmpVec->back().taskTime = 0.0f;
 		tmpVec->back().destRadian = 0.0f;
-		
-		dict.insert(make_pair(TEXT("Pattern_Straight"), tmpVec));
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		dict.insert(make_pair(TEXT("RIGHT_TOP_TO_LEFT_BOTTOM"), tmpVec));
+	}
+
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { WINSIZE_X / 2 , - WINSIZE_Y / 4 };
+		tmpVec->back().control = { WINSIZE_X / 3, 0 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = 5.0f;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::NONE;
+		tmpVec->back().loop = true;
+		tmpVec->back().loopIndex = 1;
+
+		dict.insert(make_pair(TEXT("LEFT_UP_AND_STOP"), tmpVec));
+	}
+
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -WINSIZE_X / 2 , -WINSIZE_Y / 4 };
+		tmpVec->back().control = { -WINSIZE_X / 3, 0 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = 5.0f;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::NONE;
+		tmpVec->back().loop = true;
+		tmpVec->back().loopIndex = 1;
+
+		dict.insert(make_pair(TEXT("RIGHT_UP_AND_STOP"), tmpVec));
 	}
 
 	{
@@ -261,48 +311,19 @@ void EnemyManager::FillDict(void)
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0, 200.0f };
-		tmpVec->back().control = { 0, 0 };
-		tmpVec->back().taskTime = 0.0f;
-		tmpVec->back().destRadian = 0.0f;
-
+		tmpVec->back().dest = { 0, WINSIZE_Y / 3 };
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::MOVEAROUND;
-		tmpVec->back().dest = { 0, 200.0f };
-		tmpVec->back().control = { 0, 0 };
-		tmpVec->back().taskTime = 0.0f;
-		tmpVec->back().destRadian = DEG_TO_RAD(360);
+		tmpVec->back().dest = { WINSIZE_X / 3, 0 };
+		tmpVec->back().destRadian = DEG_TO_RAD(180);
 
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0, WINSIZE_Y + 100.0f };
-		tmpVec->back().control = { 0, 0 };
-		tmpVec->back().taskTime = 0.0f;
-		tmpVec->back().destRadian = 0.0f;
+		tmpVec->back().dest = { 0, -WINSIZE_Y / 3 };
 
-		dict.insert(make_pair(TEXT("Pattern_Movearound"), tmpVec));
-	}
-
-	{
-		vector<Task>* tmpVec = new vector<Task>;
-
-		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::MOVECURVE;
-		tmpVec->back().dest = { 0, WINSIZE_Y - WINSIZE_Y / 3 };
-		tmpVec->back().control = { 200, WINSIZE_Y / 4 };
-		tmpVec->back().taskTime = 0.0f;
-		tmpVec->back().destRadian = 0.0f;
-
-		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::MOVECURVE;
-		tmpVec->back().dest = { 0, WINSIZE_Y / 3 };
-		tmpVec->back().control = { -200,  WINSIZE_Y / 6};
-		tmpVec->back().taskTime = 0.0f;
-		tmpVec->back().destRadian = 0.0f;
-
-		dict.insert(make_pair(TEXT("Pattern_Sin"), tmpVec));
+		dict.insert(make_pair(TEXT("MOVEAROUND"), tmpVec));
 	}
 
 	{
@@ -334,6 +355,160 @@ void EnemyManager::FillDict(void)
 
 		dict.insert(make_pair(TEXT("FOWARD_AND_TURN_RIGHT"), tmpVec));
 	}
+
+
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { WINSIZE_X / 2, -WINSIZE_Y / 5 };
+		tmpVec->back().control = { 0,  -WINSIZE_Y / 5 };
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, -WINSIZE_Y };
+
+		dict.insert(make_pair(TEXT("LEFT_TO_FOWARD"), tmpVec));
+	}
+
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -WINSIZE_X / 2, -WINSIZE_Y / 5 };
+		tmpVec->back().control = { 0,  -WINSIZE_Y / 5 };
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, -WINSIZE_Y };
+
+		dict.insert(make_pair(TEXT("RIGHT_TO_FOWARD"), tmpVec));
+	}
+
+	{
+		vector<Task>* tmpVec = new vector<Task>;
+
+		float stopTime = 0.3f;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0, WINSIZE_Y / 2 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { 120, -120 };
+		tmpVec->back().control = { 0,  -120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -120, 0 };
+		tmpVec->back().control = { 0,  120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -120, 0 };
+		tmpVec->back().control = { 0,  -120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { 120, 120 };
+		tmpVec->back().control = { 0,  120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { 120, 0 };
+		tmpVec->back().control = { 0,  -120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -120, -120 };
+		tmpVec->back().control = { -120,  0 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { -120, 120 };
+		tmpVec->back().control = { 0,  120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::STOP;
+		tmpVec->back().taskTime = stopTime;
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::MOVECURVE;
+		tmpVec->back().dest = { 120, 0 };
+		tmpVec->back().control = { 0,  -120 };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
+
+		tmpVec->push_back(Task{});
+		tmpVec->back().type = TaskType::NONE;
+		tmpVec->back().loop = true;
+		tmpVec->back().loopIndex = 1;
+
+		dict.insert(make_pair(TEXT("BOSS"), tmpVec));
+	}
 }
 
 void EnemyManager::CreateLevel(void)
@@ -341,28 +516,39 @@ void EnemyManager::CreateLevel(void)
 	if (!level.empty() || dict.empty())
 		return;
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 100, -50 }, 300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 150, -50 }, 300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 200, -50 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 200 }, 300 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 200 }, 340 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 200 }, 380 });
+	level.push_back({ EnemyType::MIDDLE, TEXT(MID_ENEMY1_PATH), dict[TEXT("RIGHT_UP_AND_STOP")], { WINSIZE_X + 150, 600 }, 390 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 200 }, 420 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 200 }, 460 });
 
-	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { WINSIZE_X / 2, -50 }, 500 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 500, -50 }, 500 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 560, -50 }, 560 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 460, -50 }, 620 });
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 100, -50 }, 800 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 150, -50 }, 800 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, -50 }, 800 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TO_FOWARD")], { WINSIZE_X + 50, 700 }, 500 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TO_FOWARD")], { WINSIZE_X + 150, 700 }, 500 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TO_FOWARD")], { WINSIZE_X + 250, 700 }, 500 });
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 100, -50 }, 1500 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 150, -50 }, 1500 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 200, -50 }, 1500 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 50, 100 }, 800 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 50, 100 }, 840 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 50, 100 }, 880 });
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 100, -50 }, 2300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 150, -50 }, 2300 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY3_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, -50 }, 2300 });
-	
-	level.push_back({ EnemyType::MIDDLE, TEXT(MID_ENEMY1_PATH), dict[TEXT("FOWARD_AND_TURN_LEFT")], { 200, -50 }, 2600 });
-	level.push_back({ EnemyType::MIDDLE, TEXT(MID_ENEMY2_PATH), dict[TEXT("FOWARD_AND_TURN_RIGHT")], { WINSIZE_X - 200, -50 }, 2600 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 300, -50 }, 900 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 250, -50 }, 970 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 320, -50 }, 1020 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 200, -50 }, 1030 });
 
-	level.push_back({ EnemyType::BOSS, TEXT(BOSS_PATH), dict[TEXT("Pattern_Straight")], { WINSIZE_X / 2, -100 }, 3000 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 300 }, 1100 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 300 }, 1180 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 300 }, 1260 });
+
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 50, 300 }, 1400 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 120, 370 }, 1400 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 190, 440 }, 1400 });
+
+	level.push_back({ EnemyType::BOSS, TEXT(BOSS_PATH), dict[TEXT("BOSS")], { WINSIZE_X / 2, -160 }, 3000 });
 }
 
 

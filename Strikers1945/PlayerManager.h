@@ -44,6 +44,7 @@ public:
 	bool Revive(void);
 
 	FPOINT GetPlayer1Pos(void);
+	FPOINT GetPlayer2Pos(void);
 	void UpgradePlayer1(void);
 };
 

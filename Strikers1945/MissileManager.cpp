@@ -222,7 +222,11 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 {
 	static float angle = 0.0f;
 	static bool isAngleUp = true;
-	FPOINT dest  = PlayerManager::GetInstance()->GetPlayer1Pos();
+	FPOINT dest = PlayerManager::GetInstance()->GetPlayer1Pos();
+	if (GetDistance(dest, pos) >
+		GetDistance(PlayerManager::GetInstance()->GetPlayer2Pos(), pos))
+		dest = PlayerManager::GetInstance()->GetPlayer2Pos();
+
 	switch (missileKind)
 	{
 	case MissileKind::None:

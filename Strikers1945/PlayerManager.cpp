@@ -5,22 +5,18 @@
 
 void PlayerManager::FillDict(void)
 {
-	vector<Task>* start = new vector<Task>;
+	{
+		vector<Task>* start = new vector<Task>;
 
-	Task task;
-	task.type = TaskType::MOVE;
-	task.dest = { 0 , -(WINSIZE_Y / 5) };
-	start->push_back(task);
+		Task task;
+		task.type = TaskType::MOVE;
+		task.dest = { 0 , -(WINSIZE_Y / 5) };
+		task.loop = false;
+		task.loopIndex = 0;
+		start->push_back(task);
 
-	dict.insert(make_pair(TEXT(PLAYER_START_MOVE), start));
-
-	vector<Task>* end = new vector<Task>;
-
-	task.type = TaskType::MOVE;
-	task.dest = { 0 , -WINSIZE_Y * 2 };
-	end->push_back(task);
-
-	dict.insert(make_pair(TEXT(PLAYER_START_MOVE), end));
+		dict.insert(make_pair(TEXT(PLAYER_START_MOVE), start));
+	}
 }
 
 void PlayerManager::Init(void)
@@ -37,7 +33,7 @@ void PlayerManager::Init(void)
 	else 
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
 
-	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100});
+	player1->SetPos({ 150, WINSIZE_Y + 100});
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player1Life = 1;
 	player1Bomb = 2;
@@ -56,7 +52,7 @@ void PlayerManager::Init(void)
 	else
 		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
 
-	player2->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100 });
+	player2->SetPos({ 450, WINSIZE_Y + 100 });
 	player2->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player2Life = 1;
 	player2Bomb = 2;
@@ -218,6 +214,13 @@ FPOINT PlayerManager::GetPlayer1Pos(void)
 {
 	if (player1)
 		return player1->GetPos();
+	return { 0, 0 };
+}
+
+FPOINT PlayerManager::GetPlayer2Pos(void)
+{
+	if (player2)
+		return player2->GetPos();
 	return { 0, 0 };
 }
 

@@ -114,7 +114,7 @@ void Plane::FillDict(void)
 		boss.missileType = TEXT(TARGETTING_BULLET_PATH);
 		boss.maxFrameX = 30;
 		boss.renderType = PlaneRenderType::NORMAL;
-		boss.speed = 150;
+		boss.speed = 120;
 		dict.insert(make_pair(TEXT(BOSS_PATH), boss));
 	}
 }
@@ -555,6 +555,8 @@ void Plane::SetGoal(void)
 {
 	if (path && this->path->size() > currPath)
 	{
+		if (this->path->at(currPath).loop)
+			currPath = this->path->at(currPath).loopIndex;
 		Task& target = this->path->at(currPath++);
 		pathType = target.type;
 		taskTime = target.taskTime;
