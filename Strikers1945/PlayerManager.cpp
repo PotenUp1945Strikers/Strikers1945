@@ -33,9 +33,9 @@ void PlayerManager::Init(void)
 	else 
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
 
-	player1->SetPos({ 150, WINSIZE_Y + 100});
+	player1->SetPos({ WINSIZE_X / 2 - 150, WINSIZE_Y + 100});
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
-	player1Life = 1;
+	player1Life = 3;
 	player1Bomb = 2;
 	UIManager::GetInstance()->SetPlayer1Life(player1Life);
 	UIManager::GetInstance()->SetPlayer1Bomb(player1Bomb);
@@ -45,16 +45,16 @@ void PlayerManager::Init(void)
 	{
 		player2 = new Plane;
 
-		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		player2->Init(TEXT(PLAYER2_PATH), 0, Type::PLAYER);
 		player2->SetPlayerNum(PlayerNum::PLAYER2);
 		CollisionManager::GetInstance()->AddCollider(player2);
 	}
 	else
-		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		player2->Init(TEXT(PLAYER2_PATH), 0, Type::PLAYER);
 
-	player2->SetPos({ 450, WINSIZE_Y + 100 });
+	player2->SetPos({ WINSIZE_X / 2 + 150, WINSIZE_Y + 100 });
 	player2->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
-	player2Life = 1;
+	player2Life = 3;
 	player2Bomb = 2;
 	UIManager::GetInstance()->SetPlayer2Life(player2Life);
 	UIManager::GetInstance()->SetPlayer2Bomb(player2Bomb);
@@ -217,6 +217,12 @@ FPOINT PlayerManager::GetPlayer1Pos(void)
 	return { 0, 0 };
 }
 
+void PlayerManager::UpgradePlayer1(void)
+{
+	if (player1)
+		player1->UpgradeMissile();
+}
+
 FPOINT PlayerManager::GetPlayer2Pos(void)
 {
 	if (player2)
@@ -224,10 +230,10 @@ FPOINT PlayerManager::GetPlayer2Pos(void)
 	return { 0, 0 };
 }
 
-void PlayerManager::UpgradePlayer1(void)
+void PlayerManager::UpgradePlayer2(void)
 {
-	if (player1)
-		player1->UpgradeMissile();
+	if (player2)
+		player2->UpgradeMissile();
 }
 
 void PlayerManager::LaunchBomb(PlayerNum playerNum)

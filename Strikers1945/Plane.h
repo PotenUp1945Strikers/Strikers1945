@@ -6,6 +6,7 @@
 #include "ItemManager.h"
 #include "CollisionManager.h"
 #include "BackgroundManager.h"
+#include "EffectManager.h"
 #include <map>
 #include "config.h"
 #include "PlayerManager.h"

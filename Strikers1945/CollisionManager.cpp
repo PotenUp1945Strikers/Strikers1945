@@ -73,7 +73,6 @@ void CollisionManager::checkCollisions()
 				// 적 데미지
 				enemy->OnDamage(playerBullet->GetDamage());
 				playerBullet->OnDamage(0);
-				ItemManager::GetInstance()->CreateItem(playerBullet->GetPos());
 				
 			}
 		}
@@ -92,9 +91,12 @@ void CollisionManager::checkCollisions()
 				switch (hoverItem->GetType())
 				{
 				case Type::ITEM_HOVER_BOMB:
+					PlayerManager::GetInstance()->InCreasePlayer1Bomb();
+					PlayerManager::GetInstance()->InCreasePlayer2Bomb();
 					break;
 				case Type::ITEM_HOVER_POWERUP:
 					PlayerManager::GetInstance()->UpgradePlayer1();
+					PlayerManager::GetInstance()->UpgradePlayer2();
 					break;
 				case Type::ITEM_HOVER_MEDAL:
 					break;
@@ -115,7 +117,7 @@ void CollisionManager::checkCollisions()
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(bombPlane, enemyBullet))
 			{
-				enemyBullet->OnDamage(0);
+				enemyBullet->OnDamage(1);
 			}
 		}
 
@@ -123,8 +125,9 @@ void CollisionManager::checkCollisions()
 		{
 			if (enemy->GetActive() == false) continue;
 			if (isColliding(bombPlane, enemy))
-			{
-				enemy->OnDamage(0);
+			{ 
+				enemy->OnDamage(1);
+					
 			}
 		}
 	}

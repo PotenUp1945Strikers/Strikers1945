@@ -67,11 +67,18 @@ void Boss::OnDamage(int damage)
 	currFrameY = 1;
 	if (health <= 0)
 	{
+		for (int i = 0; i < 10; i++)
+		{
+
+			ItemManager::GetInstance()->CreateItem(pos);
+			EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), { (rand() % 500 - 250) + pos.x, (rand() % 500 - 250) + pos.y });
+			EffectManager::GetInstance()->OnEffect(TEXT(EFFECT4_PATH), { (rand() % 500 - 250) + pos.x, (rand() % 500 - 250) + pos.y });
+		}
 		active = false;
 		render = false;
 		use = true;
 		state = GameObjectStates::Die;
-		EventHandler::GetInstance()->GameClear();
+		//EventHandler::GetInstance()->GameClear();
 	}
 }
 

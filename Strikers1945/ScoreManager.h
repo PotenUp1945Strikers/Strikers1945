@@ -1,4 +1,5 @@
 #pragma once
+#include "config.h"
 #include "Singleton.h"
 
 class ScoreManager : public Singleton<ScoreManager>
@@ -9,7 +10,7 @@ private:
 
 public:
     void Init();
-    void AddScore(int player, int score);
-    int GetScore(int player);
+    void AddScore(PlayerNum player, int score);
+    int GetScore(PlayerNum player);
 };
 

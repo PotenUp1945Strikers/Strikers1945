@@ -6,25 +6,25 @@ void ScoreManager::Init()
     player2Score = 0;
 }
 
-void ScoreManager::AddScore(int player, int score)
+void ScoreManager::AddScore(PlayerNum player, int score)
 {
-    if (player == 1)
+    if (player == PlayerNum::PLAYER1)
     {
         player1Score += score;
     }
-    else if (player == 2)
+    else if (player == PlayerNum::PLAYER2)
     {
         player2Score += score;
     }
 }
 
-int ScoreManager::GetScore(int player)
+int ScoreManager::GetScore(PlayerNum player)
 {
-    if (player == 1)
+    if (player == PlayerNum::PLAYER1)
     {
         return player1Score;
     }
-    else if (player == 2)
+    else if (player == PlayerNum::PLAYER2)
     {
         return player2Score;
     }

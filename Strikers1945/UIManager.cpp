@@ -77,7 +77,7 @@ void UIManager::Init()
 		player2Life = new InGameUI;
 		player2Life->SetPlayerNum(PlayerNum::PLAYER2);
 		player2Life->Init({ WINSIZE_X - 36, 50 });
-		player2Life->SetImage(TEXT(LIFE_COUNT_PATH));
+		player2Life->SetImage(TEXT(PlAYER2_LIFE_COUNT_PATH));
 		player2Life->Setinterval(42);
 	}		  
 	player2Life->SetCount(3);

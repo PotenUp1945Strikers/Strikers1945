@@ -2,6 +2,7 @@
 #include "PlayerManager.h"
 #include "CollisionManager.h"
 #include "UIManager.h"
+#include "ScoreManager.h"
 #include "Bomb.h"
 #include "HoverItem.h"
 
@@ -12,8 +13,8 @@ void ItemManager::Init()
 	//hoverItems.reserve(30);
 	if (hoverItems.empty())
 	{
-		hoverItems.resize(30);
-		for (int i = 0; i < 30; i++)
+		hoverItems.resize(50);
+		for (int i = 0; i < 50; i++)
 		{
 			hoverItems[i] = new HoverItem;
 			hoverItems[i]->Init();
@@ -22,7 +23,7 @@ void ItemManager::Init()
 	}
 	else
 	{
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 50; i++)
 			hoverItems[i]->Init();
 	}
 }
@@ -60,26 +61,25 @@ void ItemManager::Render(HDC hdc)
 void ItemManager::CreateItem(FPOINT pos)
 {
 	// 랜덤으로 파워업, 폭탄, 메달 소환할 예정
-	int randNum = rand() % 100;
-	
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 50; i++)
 	{
+		int randNum = rand() % 100;
 		if (!hoverItems[i]->GetActive())
 		{
-			if (randNum < 10)
+			if (randNum < 7)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_BOMB, TEXT(ITEM_HOVERBOMB_PATH), pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
 				break;
 			}
-			else if (randNum < 25 )
+			else if (randNum < 37 )
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_POWERUP, TEXT(ITEM_HOVERPOWERUP_PATH),pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
 
 				break;
 			}
-			else if (randNum < 60)
+			else if (randNum < 77)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_MEDAL, TEXT(ITEM_HOVERMEDAL_PATH),pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
@@ -111,12 +111,12 @@ void ItemManager::OnGainItem(GameObject* gainedobject, GameObject* owner)
 			PlayerManager::GetInstance()->InCreasePlayer2Bomb();
 			UIManager::GetInstance()->SetPlayer2Bomb(PlayerManager::GetInstance()->GetPlayer2bomb());
 		}
-			
 			break;
 	case Type::ITEM_HOVER_POWERUP:
 			// TODO : POWERUP IN PLANE
 		break;
 	case Type::ITEM_HOVER_MEDAL:
+		ScoreManager::GetInstance()->AddScore(static_cast<Plane*>(owner)->GetPlayerNum(),10);
 		// TODO : Score ++
 		break;
 	}
