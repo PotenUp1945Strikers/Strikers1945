@@ -39,7 +39,7 @@ void PlayerManager::Init(void)
 
 	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100});
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
-	player1Life = 1;
+	player1Life = 3;
 	player1Bomb = 2;
 	UIManager::GetInstance()->SetPlayer1Life(player1Life);
 	UIManager::GetInstance()->SetPlayer1Bomb(player1Bomb);
@@ -58,7 +58,7 @@ void PlayerManager::Init(void)
 
 	player2->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100 });
 	player2->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
-	player2Life = 1;
+	player2Life = 3;
 	player2Bomb = 2;
 	UIManager::GetInstance()->SetPlayer2Life(player2Life);
 	UIManager::GetInstance()->SetPlayer2Bomb(player2Bomb);
@@ -225,6 +225,19 @@ void PlayerManager::UpgradePlayer1(void)
 {
 	if (player1)
 		player1->UpgradeMissile();
+}
+
+FPOINT PlayerManager::GetPlayer2Pos(void)
+{
+	if (player2)
+		return player2->GetPos();
+	return { 0, 0 };
+}
+
+void PlayerManager::UpgradePlayer2(void)
+{
+	if (player2)
+		player2->UpgradeMissile();
 }
 
 void PlayerManager::LaunchBomb(PlayerNum playerNum)

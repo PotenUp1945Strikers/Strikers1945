@@ -2,6 +2,7 @@
 #include "PlayerManager.h"
 #include "CollisionManager.h"
 #include "UIManager.h"
+#include "ScoreManager.h"
 #include "Bomb.h"
 #include "HoverItem.h"
 
@@ -66,20 +67,20 @@ void ItemManager::CreateItem(FPOINT pos)
 	{
 		if (!hoverItems[i]->GetActive())
 		{
-			if (randNum < 10)
+			if (randNum < 5)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_BOMB, TEXT(ITEM_HOVERBOMB_PATH), pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
 				break;
 			}
-			else if (randNum < 25 )
+			else if (randNum < 10 )
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_POWERUP, TEXT(ITEM_HOVERPOWERUP_PATH),pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
 
 				break;
 			}
-			else if (randNum < 60)
+			else if (randNum < 40)
 			{
 				hoverItems[i]->Init(Type::ITEM_HOVER_MEDAL, TEXT(ITEM_HOVERMEDAL_PATH),pos);
 				CollisionManager::GetInstance()->AddCollider(hoverItems[i]);
@@ -111,12 +112,12 @@ void ItemManager::OnGainItem(GameObject* gainedobject, GameObject* owner)
 			PlayerManager::GetInstance()->InCreasePlayer2Bomb();
 			UIManager::GetInstance()->SetPlayer2Bomb(PlayerManager::GetInstance()->GetPlayer2bomb());
 		}
-			
 			break;
 	case Type::ITEM_HOVER_POWERUP:
 			// TODO : POWERUP IN PLANE
 		break;
 	case Type::ITEM_HOVER_MEDAL:
+		ScoreManager::GetInstance()->AddScore(static_cast<Plane*>(owner)->GetPlayerNum(),10);
 		// TODO : Score ++
 		break;
 	}

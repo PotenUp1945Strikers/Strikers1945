@@ -23,11 +23,11 @@ void Bomb::Init()
 	speed = 300.0f;
 	image = nullptr;
 
-    size = { -WINSIZE_X,-bombPlaneImage->GetHeight()/2 + 80, WINSIZE_X , bombPlaneImage->GetHeight() / 2 };
+    size = { -WINSIZE_X,-bombPlaneImage->GetHeight()/2 + 80, WINSIZE_X , bombPlaneImage->GetHeight() };
 
     // struct init
 
-    bombInfo.miniBombDropTime = 2.0f;
+    bombInfo.miniBombDropTime = 1.2f;
 
     for (int i = 0; i < 3; i++)
     {
