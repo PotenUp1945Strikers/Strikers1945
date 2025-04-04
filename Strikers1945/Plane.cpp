@@ -21,6 +21,20 @@ void Plane::FillDict(void)
 	}
 
 	{
+		PlaneType player;
+		player.key = TEXT(PLAYER2_PATH);
+		player.size = RECT{ -8, -15, 8, 9 };
+		player.health = 1;
+		player.missilePos = { 0, -31 };
+		player.centerPos = { 32, 31 };
+		player.missileType = TEXT(PLAYER_BULLET1_PATH);
+		player.maxFrameX = 7;
+		player.renderType = PlaneRenderType::DIR_X;
+		player.speed = 180;
+		dict.insert(make_pair(TEXT(PLAYER2_PATH), player));
+	}
+
+	{
 		PlaneType tank;
 		tank.key = TEXT(TANK_PATH);
 		tank.size = RECT{ -18, -26, 18, 26 };
@@ -489,6 +503,11 @@ void Plane::OnDamage(int damage)
 	health -= damage;
 	if (type == Type::ENEMY)
 		currFrameY = 1;
+	if (type == Type::ENEMY && health <= 0)
+	{
+		ItemManager::GetInstance()->CreateItem(pos);
+		EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), pos);
+	}
 	if (health <= 0)
 	{
 		active = false;
@@ -499,7 +518,7 @@ void Plane::OnDamage(int damage)
 		{
 			state = GameObjectStates::Wait;
 			currPath = 0;
-			pos = { WINSIZE_X / 2, WINSIZE_Y + 100 };
+			pos = { static_cast<float>(static_cast<int>(playerNum) == static_cast<int>(PlayerNum::PLAYER1) ? WINSIZE_X / 2 - 150 : WINSIZE_X / 2 + 150)      , WINSIZE_Y + 100 };
 			absTime = INVINCIBILITY_TIME;
 			SetGoal();
 		}

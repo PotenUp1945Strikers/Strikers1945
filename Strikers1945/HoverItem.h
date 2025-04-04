@@ -5,6 +5,8 @@ class HoverItem : public GameObject
 {
 private:
 
+	int reflectCnt;
+
 	int currFrameX;
 	int maxFrameX;
 	int itemFrameTime;

@@ -59,6 +59,11 @@ void Tank::OnDamage(int damage)
 {
 	health -= damage;
 	currFrameY = 1;
+	if (type == Type::ENEMY && health <= 0)
+	{
+		ItemManager::GetInstance()->CreateItem(pos);
+		EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), pos);
+	}
 	if (health <= 0)
 	{
 		active = false;
@@ -111,6 +116,8 @@ void Tank::Shoot(void)
 void Tank::rotateBarrel(void)
 {
 	FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer1Pos();
+
+
 	barrelRadian = atan2f(playerPos.y - pos.y, playerPos.x - pos.x);
 	float degree = fmod(RAD_TO_DEG(barrelRadian) + 450, 360);
 	currFrameX = degree / 22.5;

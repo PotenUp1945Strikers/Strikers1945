@@ -73,12 +73,6 @@ void CollisionManager::checkCollisions()
 				// 적 데미지
 				enemy->OnDamage(playerBullet->GetDamage());
 				playerBullet->OnDamage(0);
-
-				if (!enemy->GetActive()) 
-				{
-					ItemManager::GetInstance()->CreateItem(playerBullet->GetPos());
-					EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), enemy->GetPos());
-				}
 				
 			}
 		}
@@ -123,7 +117,7 @@ void CollisionManager::checkCollisions()
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(bombPlane, enemyBullet))
 			{
-				enemyBullet->OnDamage(10);
+				enemyBullet->OnDamage(1);
 			}
 		}
 
@@ -131,13 +125,8 @@ void CollisionManager::checkCollisions()
 		{
 			if (enemy->GetActive() == false) continue;
 			if (isColliding(bombPlane, enemy))
-			{
-				enemy->OnDamage(10);
-				if (!enemy->GetActive())
-				{
-					ItemManager::GetInstance()->CreateItem(enemy->GetPos());
-					EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), enemy->GetPos());
-				}
+			{ 
+				enemy->OnDamage(1);
 					
 			}
 		}

@@ -37,7 +37,7 @@ void PlayerManager::Init(void)
 	else 
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
 
-	player1->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100});
+	player1->SetPos({ WINSIZE_X / 2 - 150, WINSIZE_Y + 100});
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player1Life = 3;
 	player1Bomb = 2;
@@ -49,14 +49,14 @@ void PlayerManager::Init(void)
 	{
 		player2 = new Plane;
 
-		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		player2->Init(TEXT(PLAYER2_PATH), 0, Type::PLAYER);
 		player2->SetPlayerNum(PlayerNum::PLAYER2);
 		CollisionManager::GetInstance()->AddCollider(player2);
 	}
 	else
-		player2->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
+		player2->Init(TEXT(PLAYER2_PATH), 0, Type::PLAYER);
 
-	player2->SetPos({ WINSIZE_X / 2, WINSIZE_Y + 100 });
+	player2->SetPos({ WINSIZE_X / 2 + 150, WINSIZE_Y + 100 });
 	player2->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player2Life = 3;
 	player2Bomb = 2;

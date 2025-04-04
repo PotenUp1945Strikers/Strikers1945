@@ -11,7 +11,7 @@ void HoverItem::Init()
 	dir = { 0.0f,0.0f };
 	pos = { 0.0f,0.0f };
 	size = { 0,0,0,0 };
-
+	reflectCnt = 0;
 	currFrameX = 0;
 	maxFrameX = 0;
 	currTime = 0.0f;
@@ -40,7 +40,7 @@ void HoverItem::Init(Type type, const wchar_t* key, FPOINT onDamagePos)
 	}
 	
 	pos = { onDamagePos.x, onDamagePos.y };
-	
+	reflectCnt = 0;
 	currFrameX = 0;
 	maxFrameX = image->GetMaxFrameX();
 	currTime = 0.0f;
@@ -78,17 +78,24 @@ void HoverItem::Update()
 		
 		if(OutOfWindow())
 		{
-			int halfWidth = image->GetWidth() / 2;
-			int halfHeight = image->GetHeight() / 2;
+			if (reflectCnt <= 4)
+			{
+				int halfWidth = image->GetWidth() / 2;
+				int halfHeight = image->GetHeight() / 2;
 
-			if (pos.x - halfWidth < 0 || pos.x + halfWidth > WINSIZE_X)
-			{
-				dir.x = -dir.x;
+				if (pos.x - halfWidth < 0 || pos.x + halfWidth > WINSIZE_X)
+				{
+
+					dir.x = -dir.x;
+					reflectCnt++;
+				}
+				else if (pos.y - halfHeight < 0 || pos.y + halfHeight > WINSIZE_Y)
+				{
+					dir.y = -dir.y;
+					reflectCnt++;
+				}
 			}
-			else if (pos.y - halfHeight < 0 || pos.y + halfHeight > WINSIZE_Y)
-			{
-				dir.y = -dir.y;
-			}
+
 		}
 	}
 }
