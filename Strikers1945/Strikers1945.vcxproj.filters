@@ -99,15 +99,21 @@
     <ClInclude Include="EffectManager.h">
       <Filter>SG</Filter>
     </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ItemManager.h">
       <Filter>TG</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h">
       <Filter>TG</Filter>
     </ClInclude>
+	  <ClInclude Include="Tank.h">
+		  <Filter>BH</Filter>
+	  </ClInclude>
+	  <ClInclude Include="MiddleEnemy.h">
+		  <Filter>BH</Filter>
+	  </ClInclude>
+	  <ClInclude Include="Boss.h">
+		  <Filter>BH</Filter>
+	  </ClInclude>
     <ClInclude Include="HoverItem.h">
       <Filter>TG</Filter>
     </ClInclude>
@@ -179,9 +185,6 @@
     <ClCompile Include="Missile.cpp">
       <Filter>SG</Filter>
     </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ItemManager.cpp">
       <Filter>TG</Filter>
     </ClCompile>
@@ -191,6 +194,15 @@
     <ClCompile Include="EffectManager.cpp">
       <Filter>SG</Filter>
     </ClCompile>
+	  <ClCompile Include="Tank.cpp">
+		  <Filter>BH</Filter>
+	  </ClCompile>
+	  <ClCompile Include="MiddleEnemy.cpp">
+		  <Filter>BH</Filter>
+	  </ClCompile>
+	  <ClCompile Include="Boss.cpp">
+		  <Filter>BH</Filter>
+	  </ClCompile>
     <ClCompile Include="HoverItem.cpp">
       <Filter>TG</Filter>
     </ClCompile>

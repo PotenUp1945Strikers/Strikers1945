@@ -13,6 +13,7 @@ protected:
 	FPOINT pos;
 	RECT size;
 	float speed;
+	int damage;
 	Image* image;
 	int health;
 
@@ -33,7 +34,8 @@ public:
 	void SetActive(bool active);
 	void SetRender(bool render);
 	RECT GetCollider();
-	virtual void OnDamage() = 0;
+	int GetDamage();
+	virtual void OnDamage(int damage) = 0;
 
 
 

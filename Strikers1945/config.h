@@ -61,16 +61,18 @@ using namespace std;
 #define NORMAL_MISSILE3_PATH "Image/NormalMissile3.bmp"
 #define NORMAL_MISSILE4_PATH "Image/NormalMissile4.bmp"
 
-
-
-#define PATTERN_ENEMY_NUM 6
-
+#define PLAYER_BULLET1_PATH "Image/PlayerBullet1.bmp"
+#define PLAYER_BULLET2_PATH "Image/PlayerBullet2.bmp"
+#define PLAYER_BULLET3_PATH "Image/PlayerBullet3.bmp"
+#define PLAYER_BULLET4_PATH "Image/PlayerBullet4.bmp"
 
 #define BACKGROUND_SPEED 120
 #define BACKGROUND_SIZE 4781
 #define BACKGROUND_CLOUD_SIZE 3370
 
-#define INVINCIBILITY_TIME 1.2f
+#define INVINCIBILITY_TIME 0.8f
+#define HIT_RENDER_TIME 0.15f
+#define ANIMATION_FRAME_TIME 0.1f
 
 #define PLAYER_START_MOVE "PlayerMoveIn"
 #define PLAYER_END_MOVE "PlayerMoveOut"
@@ -91,6 +93,15 @@ typedef struct tagColider
 	RECT Wing;
 } Colider;
 
+enum class PlaneRenderType : UINT8
+{
+	NONE,
+	NORMAL,
+	DIR,
+	DIR_X,
+	TANK
+};
+
 typedef struct tagPlaneType
 {
 	const wchar_t*	key;
@@ -99,6 +110,8 @@ typedef struct tagPlaneType
 	RECT			size;
 	FPOINT			missilePos;
 	FPOINT			centerPos;
+	int				maxFrameX;
+	PlaneRenderType	renderType;
 	const wchar_t*	missileType;
 } PlaneType;
 
@@ -118,8 +131,9 @@ typedef struct tagMissileType
 	int				damage;
 	float			reloadRate;
 	int				missileAmount;
-	// RECT			size;
+	RECT			size;
 	const wchar_t*	upgrade;
+	int				maxFrameX;
 	MissileKind		missileKind;
 
 } MissileType;
@@ -183,12 +197,15 @@ struct Task
 	FPOINT		control;
 	float		taskTime;
 	float		destRadian;
+	bool		loop;
+	size_t		loopIndex;
 };
 
 enum class EnemyType : UINT8
 {
 	NONE,
 	PLANE,
+	MIDDLE,
 	TANK,
 	BOSS
 };
@@ -200,4 +217,6 @@ typedef struct tagStageScript
 	vector<Task>*	path;
 	FPOINT			pos;
 	float			appeared;
+	bool			bomb;
+	bool			item;
 }StageScript;

@@ -14,8 +14,11 @@ void Missile::Init()
 	pos = { 0.0f, 0.0f };
 	speed = 0.0f;
 	image = nullptr;
-	health = 0;
+	health = 1;
 	size = { 0, 0, 0, 0 };
+	currFrameX = 0;
+	maxFrameX = 0;
+	frameTime = ANIMATION_FRAME_TIME;
 }
 
 void Missile::Init(Type type)
@@ -27,19 +30,26 @@ void Missile::Init(Type type)
 	pos = { 0.0f, 0.0f };
 	speed = 0.0f;
 	image = nullptr;
-	health = 0;
+	health = 1;
 	size = { 0, 0, 0, 0 };
+	currFrameX = 0;
+	maxFrameX = 0;
+	frameTime = ANIMATION_FRAME_TIME;
 }
 
-void Missile::Init(FPOINT dir, float speed, Image* image, RECT size, int health)
+void Missile::Init(FPOINT dir, float speed, Image* image, RECT size, int damage, int maxFrameX)
 {
 	this->dir = dir;
 	this->speed = speed;
 	this->image = image;
 	active = false;
 	render = false;
-	this->health = health;
+	this->health = 1;
+	this->damage = damage;
 	this->size = size;
+	currFrameX = 0;
+	this->maxFrameX = maxFrameX;
+	frameTime = ANIMATION_FRAME_TIME;
 }
 
 void Missile::Update()
@@ -60,8 +70,19 @@ void Missile::Update()
 
 void Missile::Render(HDC hdc)
 {
-	if(render)
-		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
+	if (render)
+	{
+		if (maxFrameX)
+		{
+			frameTime -= TimerManager::GetInstance()->GetDeltaTime();
+			if (frameTime < 0)
+			{
+				currFrameX = (currFrameX + 1) % maxFrameX;
+				frameTime = ANIMATION_FRAME_TIME;
+			}
+		}
+		image->FrameRender(hdc, pos.x, pos.y, currFrameX, 0);
+	}
 }
 
 void Missile::Release()
@@ -80,15 +101,12 @@ void Missile::Release()
 //	return rc;
 //}
 
-void Missile::OnDamage()
+void Missile::OnDamage(int damage)
 {
-	health--;
-	if (health <= 0) {
-		active = false;
-		render = false;
-		EffectManager::GetInstance()->OnEffect(TEXT(BOMB_EFFECT_PATH), pos);
-	}
-
+	health -= damage;
+	active = false;
+	render = false;
+	EffectManager::GetInstance()->OnEffect(TEXT(EFFECT2_PATH), pos);
 }
 
 bool Missile::Shoot(FPOINT pos, FPOINT dir)

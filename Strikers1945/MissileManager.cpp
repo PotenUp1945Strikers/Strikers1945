@@ -11,70 +11,69 @@ map<const wchar_t*, MissileType> MissileManager::missileDict;
 
 void MissileManager::FillDict()
 {
-	MissileType normalMissile;
-	normalMissile.key = TEXT(NORMAL_BULLET_PATH);
-	normalMissile.missileKind = MissileKind::Basic;
-	normalMissile.missileSpeed = 400.0f;
-	normalMissile.shootRate = 0.5f;
-	normalMissile.damage = 1;
-	normalMissile.reloadRate = 3.0f;
-	normalMissile.missileAmount = 10;
-	normalMissile.upgrade = TEXT(TARGETTING_BULLET_PATH);
-	missileDict.insert(make_pair(TEXT(NORMAL_BULLET_PATH), normalMissile));
-
-	MissileType normalMissile1;
-	normalMissile1.key = TEXT(NORMAL_MISSILE1_PATH);
-	normalMissile1.missileKind = MissileKind::Basic;
-	normalMissile1.missileSpeed = 400.0f;
-	normalMissile1.shootRate = 0.5f;
-	normalMissile1.damage = 1;
-	normalMissile1.reloadRate = 3.0f;
-	normalMissile1.missileAmount = 10;
-	normalMissile1.upgrade = TEXT(NORMAL_MISSILE2_PATH);
-	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE1_PATH), normalMissile1));
-
-	MissileType normalMissile2;
-	normalMissile2.key = TEXT(NORMAL_MISSILE2_PATH);
-	normalMissile2.missileKind = MissileKind::Basic;
-	normalMissile2.missileSpeed = 400.0f;
-	normalMissile2.shootRate = 0.5f;
-	normalMissile2.damage = 1;
-	normalMissile2.reloadRate = 3.0f;
-	normalMissile2.missileAmount = 10;
-	normalMissile2.upgrade = TEXT(NORMAL_MISSILE3_PATH);
-	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE2_PATH), normalMissile2));
-
-	MissileType normalMissile3;
-	normalMissile3.key = TEXT(NORMAL_MISSILE3_PATH);
-	normalMissile3.missileKind = MissileKind::Basic;
-	normalMissile3.missileSpeed = 400.0f;
-	normalMissile3.shootRate = 0.5f;
-	normalMissile3.damage = 1;
-	normalMissile3.reloadRate = 3.0f;
-	normalMissile3.missileAmount = 10;
-	normalMissile3.upgrade = TEXT(NORMAL_MISSILE4_PATH);
-	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE3_PATH), normalMissile3));
-
-	MissileType normalMissile4;
-	normalMissile4.key = TEXT(NORMAL_MISSILE4_PATH);
-	normalMissile4.missileKind = MissileKind::Basic;
-	normalMissile4.missileSpeed = 400.0f;
-	normalMissile4.shootRate = 0.5f;
-	normalMissile4.damage = 1;
-	normalMissile4.reloadRate = 3.0f;
-	normalMissile4.missileAmount = 10;
-	normalMissile4.upgrade = nullptr;
-	missileDict.insert(make_pair(TEXT(NORMAL_MISSILE4_PATH), normalMissile4));
+	MissileType playerMissile1;
+	playerMissile1.key = TEXT(PLAYER_BULLET1_PATH);
+	playerMissile1.missileKind = MissileKind::Basic;
+	playerMissile1.missileSpeed = 400.0f;
+	playerMissile1.shootRate = 0.15f;
+	playerMissile1.damage = 1;
+	playerMissile1.size = {-11, 3, 11, 23};
+	playerMissile1.reloadRate = 0.0f;
+	playerMissile1.missileAmount = 10;
+	playerMissile1.upgrade = TEXT(PLAYER_BULLET2_PATH);
+	playerMissile1.maxFrameX = 4;
+	missileDict.insert(make_pair(TEXT(PLAYER_BULLET1_PATH), playerMissile1));
+	
+	MissileType playerMissile2;
+	playerMissile2.key = TEXT(PLAYER_BULLET2_PATH);
+	playerMissile2.missileKind = MissileKind::Basic;
+	playerMissile2.missileSpeed = 400.0f;
+	playerMissile2.shootRate = 0.15f;
+	playerMissile2.damage = 2;
+	playerMissile2.size = { -11, -1, 11, 37 };
+	playerMissile2.reloadRate = 0.0f;
+	playerMissile2.missileAmount = 10;
+	playerMissile2.upgrade = TEXT(PLAYER_BULLET3_PATH);
+	playerMissile2.maxFrameX = 4;
+	missileDict.insert(make_pair(TEXT(PLAYER_BULLET2_PATH), playerMissile2));
+	
+	MissileType playerMissile3;
+	playerMissile3.key = TEXT(PLAYER_BULLET3_PATH);
+	playerMissile3.missileKind = MissileKind::Basic;
+	playerMissile3.missileSpeed = 400.0f;
+	playerMissile3.shootRate = 0.15f;
+	playerMissile3.damage = 3;
+	playerMissile3.size = { -17, 9, 17, 33 };
+	playerMissile3.reloadRate = 0.0f;
+	playerMissile3.missileAmount = 10;
+	playerMissile3.upgrade = TEXT(PLAYER_BULLET4_PATH);
+	playerMissile3.maxFrameX = 4;
+	missileDict.insert(make_pair(TEXT(PLAYER_BULLET3_PATH), playerMissile3));
+	
+	MissileType playerMissile4;
+	playerMissile4.key = TEXT(PLAYER_BULLET4_PATH);
+	playerMissile4.missileKind = MissileKind::Basic;
+	playerMissile4.missileSpeed = 400.0f;
+	playerMissile4.shootRate = 0.15f;
+	playerMissile4.damage = 4;
+	playerMissile4.size = { -21, -35, 21, -4 };
+	playerMissile4.reloadRate = 0.0f;
+	playerMissile4.missileAmount = 10;
+	playerMissile4.upgrade = nullptr;
+	playerMissile4.maxFrameX = 4;
+	missileDict.insert(make_pair(TEXT(PLAYER_BULLET4_PATH), playerMissile4));
 
 	MissileType targettingMissile;
 	targettingMissile.key = TEXT(TARGETTING_BULLET_PATH);
 	targettingMissile.missileKind = MissileKind::Targetting;
 	targettingMissile.missileSpeed = 200.0f;
-	targettingMissile.shootRate = 1.0f;
+	targettingMissile.shootRate = 0.3f;
 	targettingMissile.damage = 1;
+	targettingMissile.size = { -6, -6, 6, 6 };
 	targettingMissile.reloadRate = 3.0f;
 	targettingMissile.missileAmount = 10;
-	targettingMissile.upgrade = TEXT(AROUND_BULLET_PATH);
+	targettingMissile.upgrade = nullptr;
+	targettingMissile.maxFrameX = 0;
 	missileDict.insert(make_pair(TEXT(TARGETTING_BULLET_PATH), targettingMissile));
 
 	MissileType aroundMissile;
@@ -83,9 +82,11 @@ void MissileManager::FillDict()
 	aroundMissile.missileSpeed = 200.0f;
 	aroundMissile.shootRate = 0.1f;
 	aroundMissile.damage = 1;
+	aroundMissile.size = { -12, -12, 12, 12 };
 	aroundMissile.reloadRate = 5.0f;
 	aroundMissile.missileAmount = 100;
-	aroundMissile.upgrade = nullptr; // TEXT(NORMAL_BULLET_PATH);
+	aroundMissile.upgrade = nullptr;
+	aroundMissile.maxFrameX = 0;
 	missileDict.insert(make_pair(TEXT(AROUND_BULLET_PATH), aroundMissile));
 }
 void MissileManager::Init()
@@ -93,7 +94,6 @@ void MissileManager::Init()
 	missileCount = 0;
 	isReloading = false;
 	elapsedTime = 0.0f;
-	type = Type::NONE;
 	missileImage = nullptr;
 	missileSpeed = 0.0f;
 	shootRate = 0.1f;
@@ -101,17 +101,18 @@ void MissileManager::Init()
 	size = { 0,0,0,0 };
 	reloadRate = 0.0f;
 	missileAmount = 0;
-	missiles.resize(MAX_MISSILE);
 	missileKind = MissileKind::None;
+	type = Type::NONE;
+	nextMissile = nullptr;
+	maxFrameX = 0;
+
 	if (missileDict.empty())
 		FillDict();
 	
-	for (int i = 0; i < missiles.size(); i++)
+	if (!missiles.empty())
 	{
-		Missile* missile = new Missile();
-		missile->Init();
-		missiles[i] = missile;
-		CollisionManager::GetInstance()->AddCollider(missile);
+		for (auto& missile : missiles)
+			missile->Init();
 	}
 }
 
@@ -121,6 +122,8 @@ void MissileManager::Init(const wchar_t* key, Type type)
 	elapsedTime = 0.0f;
 	isReloading = false;
 	reloadTime = 0.0f;
+	maxFrameX = 0;
+
 	if (missileDict.empty())
 		FillDict();
 
@@ -146,14 +149,9 @@ void MissileManager::Init(const wchar_t* key, Type type)
 		reloadRate = (*var).second.reloadRate;
 		missileAmount = (*var).second.missileAmount;
 		missileKind = (*var).second.missileKind;
-        upgradeKey = const_cast<wchar_t*>((*var).second.upgrade);
-
-		// size = (*var).second.size;
-		size = { -missileImage->GetWidth() / 2, -missileImage->GetHeight() / 2,
-			missileImage->GetWidth() / 2, missileImage->GetHeight() / 2 };
-
-		for (auto& missile : missiles)
-			missile->Init(dir, missileSpeed, missileImage, size);
+		size = (*var).second.size;
+		nextMissile = var->second.upgrade;
+		maxFrameX = var->second.maxFrameX;
 	}
 }
 
@@ -206,16 +204,15 @@ void MissileManager::Shoot(FPOINT pos)
 	{
 		if (missiles[i]->GetActive() == false)
 		{
+			missiles[i]->Init(dir, missileSpeed, missileImage, size, missileDamage, maxFrameX);
 			MissileDirSetting(pos);
-			if (missiles[i]->Shoot(pos, dir))
+			missiles[i]->Shoot(pos, dir);
+			if (++missileCount >= missileAmount)
 			{
-				if (++missileCount >= missileAmount)
-				{
-					isReloading = true;
-					missileCount = 0;
-				}
-				break;
+				isReloading = true;
+				missileCount = 0;
 			}
+			break;
 		}
 	}
 	elapsedTime = 0;
@@ -225,7 +222,7 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 {
 	static float angle = 0.0f;
 	static bool isAngleUp = true;
-	FPOINT dest = { 100,100 };// = PlayerManager::GetInstance()->GetPlayer1()->GetPos();
+	FPOINT dest  = PlayerManager::GetInstance()->GetPlayer1Pos();
 	switch (missileKind)
 	{
 	case MissileKind::None:
@@ -253,8 +250,8 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 	}
 }
 
-void MissileManager::Upgrade()
+void MissileManager::Upgrade(void)
 {
-	if (upgradeKey == nullptr) return;
-	this->Init(upgradeKey, type);
+	if (nextMissile)
+		Init(nextMissile, type);
 }

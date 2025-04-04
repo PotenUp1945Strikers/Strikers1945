@@ -145,6 +145,7 @@
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MiddleEnemy.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="MissileManager.h" />
     <ClInclude Include="MissileFactory.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="UI.h" />
@@ -176,12 +178,14 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MiddleEnemy.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="MissileManager.cpp" />
     <ClCompile Include="MissileFactory.cpp" />
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />

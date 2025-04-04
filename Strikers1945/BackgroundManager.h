@@ -28,7 +28,6 @@ public:
 	void Release();
 	void Render(HDC hdc);
 	void Update();
-	int GetCurrPosY();
-
+	float GetCurrPosY();
 };
 

@@ -26,6 +26,9 @@ private:
 	MissileKind missileKind;
 	wchar_t* upgradeKey;
 
+	const wchar_t*	nextMissile;
+	int				maxFrameX;
+
 	void FillDict();
 public:
 	void Init();
@@ -36,5 +39,5 @@ public:
 
 	void Shoot(FPOINT pos);
 	void MissileDirSetting(FPOINT pos);
-	void Upgrade();
+	void Upgrade(void);
 };

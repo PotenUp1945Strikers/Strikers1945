@@ -12,7 +12,7 @@
 class PlayerManager: public Singleton<PlayerManager>
 {
 private:
-	static map<const wchar_t*, vector<Task>*> dict;
+	map<const wchar_t*, vector<Task>*> dict;
 
 	Plane*	player1;
 	int		player1Life;
@@ -31,7 +31,6 @@ public:
 	void Release(void);
 	
 	void LaunchBombEnd();
-
 	int GetPlayer1bomb();
 	bool ReducePlayer1Bomb();
 	bool InCreasePlayer1Bomb();
@@ -43,5 +42,9 @@ public:
 
 	
 	bool Revive(void);
+	bool Revive(void);
+
+	FPOINT GetPlayer1Pos(void);
+	void UpgradePlayer1(void);
 };
 

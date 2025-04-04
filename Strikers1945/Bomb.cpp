@@ -153,8 +153,9 @@ void Bomb::Render(HDC hdc)
 
 }
 
-void Bomb::OnDamage()
+void Bomb::OnDamage(int damage)
 {
+
 }
 
 float Bomb::GetBombPlanePosY()

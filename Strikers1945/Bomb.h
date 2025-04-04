@@ -36,7 +36,7 @@ public:
 	virtual void Release() override;
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
-	virtual void OnDamage() override;
+	virtual void OnDamage(int damage) override;
 
 	float GetBombPlanePosY();
 

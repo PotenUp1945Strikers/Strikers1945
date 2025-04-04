@@ -9,13 +9,22 @@ void ItemManager::Init()
 {
 	bombing = false;
 
-	hoverItems.resize(30);
-	for (int i = 0; i < 30; i++)
+	//hoverItems.reserve(30);
+	if (hoverItems.empty())
 	{
-		hoverItems[i] = new HoverItem;
-		hoverItems[i]->Init();
+		hoverItems.resize(30);
+		for (int i = 0; i < 30; i++)
+		{
+			hoverItems[i] = new HoverItem;
+			hoverItems[i]->Init();
+		}
+		srand(time(NULL));
 	}
-	srand(time(NULL));
+	else
+	{
+		for (int i = 0; i < 30; i++)
+			hoverItems[i]->Init();
+	}
 }
 
 void ItemManager::Release()

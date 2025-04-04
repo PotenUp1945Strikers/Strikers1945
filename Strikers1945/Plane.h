@@ -13,8 +13,12 @@
 
 class Plane: public GameObject
 {
-private:
+protected:
 	static map<const wchar_t*, PlaneType> dict;
+
+	bool				use;
+	float				hitRenderTime;
+	float				frameTime;
 
 	PlayerNum			playerNum;
 
@@ -22,6 +26,10 @@ private:
 	FPOINT				missilePos;
 	FPOINT				centerPos;
 	float				absTime;
+	PlaneRenderType		renderType;
+	int					maxFrameX;
+	int					currFrameX;
+	int					currFrameY;
 
 	vector<Task>*		path;
 	TaskType			pathType;
@@ -74,11 +82,11 @@ public:
 	void Update(void);
 	void Render(HDC hdc);
 
-	void Init(const wchar_t* key, float startPos, Type type);
-	void Shoot(void);
+	virtual void Init(const wchar_t* key, float startPos, Type type);
+	virtual void Shoot(void);
 	void UpgradeMissile();
 	void Move(FPOINT dir);
-	void OnDamage(void);
+	void OnDamage(int damage);
 	void DropBomb();
 	
 	Bomb* GetBombRef(void);
@@ -87,6 +95,7 @@ public:
 
 	GameObjectStates GetState(void);
 	void SetPath(vector<Task>* path);
+	bool CanIUseIt(void);
 	void SetPlayerNum(PlayerNum playerNum);
 
 	Plane& operator=(const PlaneType& target);

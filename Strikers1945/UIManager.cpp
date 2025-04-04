@@ -45,11 +45,11 @@ void UIManager::Init()
 	{
 		player1Life = new InGameUI;
 		player1Life->SetPlayerNum(PlayerNum::PLAYER1);
-		player1Life->Init({ 36, 50 });
+		player1Life->Init({ 40, 50 });
 		player1Life->SetImage(TEXT(LIFE_COUNT_PATH));
-		player1Life->Setinterval(42);
+		player1Life->Setinterval(41);
+		player1Life->SetCount(3);
 	}
-	player1Life->SetCount(3);
 
 	if (!player1Bomb)
 	{
@@ -58,8 +58,8 @@ void UIManager::Init()
 		player1Bomb->Init({ 38, WINSIZE_Y - 50 });
 		player1Bomb->SetImage(TEXT(BOMB_COUNT_PATH));
 		player1Bomb->Setinterval(38);
+		player1Bomb->SetCount(2);
 	}
-	player1Bomb->SetCount(2);
 
 	if (!number1)
 	{
@@ -67,6 +67,7 @@ void UIManager::Init()
 		number1->Init({ 390, 418 });
 		number1->SetImage(TEXT(NUMBER_SET1_PATH));
 		number1->SetInterval(38);
+		number1->SetNumber(10);
 	}
 	number1->SetNumber(10);
 

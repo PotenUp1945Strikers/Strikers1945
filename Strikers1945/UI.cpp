@@ -12,7 +12,6 @@ void UI::Init()
 
 void UI::Init(FPOINT renderPos)
 {
-	image = nullptr;
 	currFrameX = 0;
 	currFrameY = 0;
 	this->renderPos = { renderPos.x, renderPos.y };
