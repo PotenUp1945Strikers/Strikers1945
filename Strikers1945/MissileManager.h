@@ -24,6 +24,7 @@ private:
 	float reloadTime;
 	int missileCount;
 	MissileKind missileKind;
+	wchar_t* upgradeKey;
 
 	void FillDict();
 public:
@@ -35,4 +36,5 @@ public:
 
 	void Shoot(FPOINT pos);
 	void MissileDirSetting(FPOINT pos);
+	void Upgrade();
 };

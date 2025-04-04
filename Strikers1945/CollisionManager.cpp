@@ -6,6 +6,7 @@
 #include "Missile.h"
 #include "Plane.h"
 #include "EffectManager.h"
+#include "ScoreManager.h"
 
 void CollisionManager::Init()
 {
@@ -53,7 +54,7 @@ void CollisionManager::checkCollisions()
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(player, enemyBullet))
 			{
-				EffectManager::GetInstance()->OnEffect(TEXT(EFFECT3_PATH), player->GetPos());
+				EffectManager::GetInstance()->OnEffect(TEXT(EFFECT4_PATH), player->GetPos());
 				player->OnDamage();
 				enemyBullet->OnDamage();
 			}
@@ -113,6 +114,7 @@ void CollisionManager::checkCollisions()
 			if (isColliding(bombPlane, enemy))
 			{
 				enemy->OnDamage();
+				EffectManager::GetInstance()->OnEffect(TEXT(ITEM_EFFECT_PATH), hoverItem->GetPos());
 			}
 		}
 	}

@@ -86,7 +86,7 @@ void Missile::OnDamage()
 	if (health <= 0) {
 		active = false;
 		render = false;
-		EffectManager::GetInstance()->OnEffect(TEXT(EFFECT2_PATH), pos);
+		EffectManager::GetInstance()->OnEffect(TEXT(BOMB_EFFECT_PATH), pos);
 	}
 
 }
