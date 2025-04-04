@@ -55,7 +55,7 @@ void CollisionManager::checkCollisions()
 			if (isColliding(player, enemyBullet))
 			{
 				EffectManager::GetInstance()->OnEffect(TEXT(EFFECT4_PATH), player->GetPos());
-				//player->OnDamage(enemyBullet->GetDamage());
+				player->OnDamage(enemyBullet->GetDamage());
 				enemyBullet->OnDamage(0);
 			}
 		}

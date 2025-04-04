@@ -270,14 +270,15 @@ void EnemyManager::FillDict(void)
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::STOP;
-		tmpVec->back().taskTime = 5.0f;
+		tmpVec->back().taskTime = 10.0f;
 		tmpVec->back().loop = false;
 		tmpVec->back().loopIndex = 0;
 
 		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::NONE;
-		tmpVec->back().loop = true;
-		tmpVec->back().loopIndex = 1;
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0 , -WINSIZE_Y };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
 
 		dict.insert(make_pair(TEXT("LEFT_UP_AND_STOP"), tmpVec));
 	}
@@ -294,14 +295,15 @@ void EnemyManager::FillDict(void)
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::STOP;
-		tmpVec->back().taskTime = 5.0f;
+		tmpVec->back().taskTime = 10.0f;
 		tmpVec->back().loop = false;
 		tmpVec->back().loopIndex = 0;
 
 		tmpVec->push_back(Task{});
-		tmpVec->back().type = TaskType::NONE;
-		tmpVec->back().loop = true;
-		tmpVec->back().loopIndex = 1;
+		tmpVec->back().type = TaskType::MOVE;
+		tmpVec->back().dest = { 0 , -WINSIZE_Y };
+		tmpVec->back().loop = false;
+		tmpVec->back().loopIndex = 0;
 
 		dict.insert(make_pair(TEXT("RIGHT_UP_AND_STOP"), tmpVec));
 	}
@@ -311,17 +313,17 @@ void EnemyManager::FillDict(void)
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0, WINSIZE_Y / 3 };
+		tmpVec->back().dest = { WINSIZE_X / 3, 0 };
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::MOVEAROUND;
-		tmpVec->back().dest = { WINSIZE_X / 3, 0 };
+		tmpVec->back().dest = { 150, 150 };
 		tmpVec->back().destRadian = DEG_TO_RAD(180);
 
 
 		tmpVec->push_back(Task{});
 		tmpVec->back().type = TaskType::MOVE;
-		tmpVec->back().dest = { 0, -WINSIZE_Y / 3 };
+		tmpVec->back().dest = { -WINSIZE_X, 0 };
 
 		dict.insert(make_pair(TEXT("MOVEAROUND"), tmpVec));
 	}
@@ -544,15 +546,27 @@ void EnemyManager::CreateLevel(void)
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 300 }, 1180 });
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_TOP_TO_RIGHT_BOTTOM")], { -50, 300 }, 1260 });
 
+	level.push_back({ EnemyType::MIDDLE, TEXT(MID_ENEMY1_PATH), dict[TEXT("LEFT_UP_AND_STOP")], { -150, 700 }, 1300 });
+	level.push_back({ EnemyType::MIDDLE, TEXT(MID_ENEMY2_PATH), dict[TEXT("RIGHT_UP_AND_STOP")], { WINSIZE_X + 150, 500 }, 1300 });
+
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 50, 300 }, 1400 });
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 120, 370 }, 1400 });
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 190, 440 }, 1400 });
 
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { 400, -50 }, 1600 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { 400, -50 }, 1670 });
-	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { 400, -50 }, 1740 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { -50, 150 }, 1600 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { -50, 150 }, 1670 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { -50, 150 }, 1740 });
 
-	level.push_back({ EnemyType::BOSS, TEXT(BOSS_PATH), dict[TEXT("BOSS")], { WINSIZE_X / 2, -160 }, 3000 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 250, -50 }, 2300 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 650, -50 }, 2360 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 220, -50 }, 2400 });
+	level.push_back({ EnemyType::TANK, TEXT(TANK_PATH), nullptr, { 460, -50 }, 2420 });
+
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_UP_AND_STOP")], { -50, 600 }, 3000 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_UP_AND_STOP")], { -150, 600 }, 3000 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("LEFT_UP_AND_STOP")], { -250, 600 }, 3000 });
+
+	level.push_back({ EnemyType::BOSS, TEXT(BOSS_PATH), dict[TEXT("BOSS")], { WINSIZE_X / 2, -160 }, 3500 });
 }
 
 

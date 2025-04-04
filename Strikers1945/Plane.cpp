@@ -13,10 +13,10 @@ void Plane::FillDict(void)
 		player.health = 1;
 		player.missilePos = { 0, -31 };
 		player.centerPos = { 32, 31 };
-		player.missileType = TEXT(RAPIDFIRE_BULLET_PATH);
+		player.missileType = TEXT(PLAYER_BULLET1_PATH);
 		player.maxFrameX = 7;
 		player.renderType = PlaneRenderType::DIR_X;
-		player.speed = 180;
+		player.speed = 200;
 		dict.insert(make_pair(TEXT(PLAYER_PATH), player));
 	}
 
@@ -30,7 +30,7 @@ void Plane::FillDict(void)
 		player.missileType = TEXT(PLAYER_BULLET1_PATH);
 		player.maxFrameX = 7;
 		player.renderType = PlaneRenderType::DIR_X;
-		player.speed = 180;
+		player.speed = 200;
 		dict.insert(make_pair(TEXT(PLAYER2_PATH), player));
 	}
 
@@ -125,7 +125,7 @@ void Plane::FillDict(void)
 		boss.health = 500;
 		boss.missilePos = { -17, 24 };
 		boss.centerPos = { 232, 232 };
-		boss.missileType = TEXT(TARGETTING_BULLET_PATH);
+		boss.missileType = TEXT(RAPIDFIRE_BULLET_PATH);
 		boss.maxFrameX = 30;
 		boss.renderType = PlaneRenderType::NORMAL;
 		boss.speed = 120;
@@ -525,6 +525,7 @@ void Plane::OnDamage(int damage)
 		if (type == Type::PLAYER && PlayerManager::GetInstance()->Revive())
 		{
 			state = GameObjectStates::Wait;
+			launcher->Init(TEXT(PLAYER_BULLET1_PATH), Type::PLAYER_BULLET);
 			currPath = 0;
 			pos = { static_cast<float>(static_cast<int>(playerNum) == static_cast<int>(PlayerNum::PLAYER1) ? WINSIZE_X / 2 - 150 : WINSIZE_X / 2 + 150)      , WINSIZE_Y + 100 };
 			absTime = INVINCIBILITY_TIME;

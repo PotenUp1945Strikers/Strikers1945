@@ -83,7 +83,7 @@ void Boss::OnDamage(int damage)
 		render = false;
 		use = true;
 		state = GameObjectStates::Die;
-		//EventHandler::GetInstance()->GameClear();
+		EventHandler::GetInstance()->GameClear();
 	}
 }
 

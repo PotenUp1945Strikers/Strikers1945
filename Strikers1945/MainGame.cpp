@@ -217,13 +217,8 @@ void MainGame::UpdateInGame()
 	CollisionManager::GetInstance()->Update();
 	EffectManager::GetInstance()->Update();
 
-	if (km->IsOnceKeyDown(SUICIDE_KEY))
-		return EventHandler::GetInstance()->GameOver();
-	if (km->IsOnceKeyDown(CLEAR_KEY))
-		return EventHandler::GetInstance()->GameClear();
 	if (km->IsOnceKeyDown(PAUSE_KEY))
 		state = GameStates::Pause;
-	
 }
 
 void MainGame::UpdatePause()

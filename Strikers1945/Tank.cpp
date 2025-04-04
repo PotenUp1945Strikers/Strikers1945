@@ -38,7 +38,8 @@ void Tank::Update(void)
 		if (OutOfWindow())
 		{
 			active = false;
-			state = GameObjectStates::Die;
+			render = false;
+			use = true;
 		}
 		break;
 	}

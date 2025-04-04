@@ -71,7 +71,7 @@ void MissileManager::FillDict()
 	targettingMissile.damage = 1;
 	targettingMissile.size = { -6, -6, 6, 6 };
 	targettingMissile.reloadRate = 3.0f;
-	targettingMissile.missileAmount = 10;
+	targettingMissile.missileAmount = 3;
 	targettingMissile.upgrade = nullptr;
 	targettingMissile.maxFrameX = 0;
 	missileDict.insert(make_pair(TEXT(TARGETTING_BULLET_PATH), targettingMissile));

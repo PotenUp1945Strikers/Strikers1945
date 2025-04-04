@@ -60,12 +60,6 @@ using namespace std;
 #define EFFECT4_PATH "Image/Effect4.bmp"
 #define ITEM_EFFECT_PATH "Image/ItemEffect.bmp"
 
-
-#define NORMAL_MISSILE1_PATH "Image/NormalMissile1.bmp"
-#define NORMAL_MISSILE2_PATH "Image/NormalMissile2.bmp"
-#define NORMAL_MISSILE3_PATH "Image/NormalMissile3.bmp"
-#define NORMAL_MISSILE4_PATH "Image/NormalMissile4.bmp"
-
 #define PLAYER_BULLET1_PATH "Image/PlayerBullet1.bmp"
 #define PLAYER_BULLET2_PATH "Image/PlayerBullet2.bmp"
 #define PLAYER_BULLET3_PATH "Image/PlayerBullet3.bmp"
@@ -77,7 +71,7 @@ using namespace std;
 
 #define INVINCIBILITY_TIME 0.8f
 #define HIT_RENDER_TIME 0.15f
-#define HIT_TICK_TIME 1e-4f
+#define HIT_TICK_TIME 1e-2f
 #define ANIMATION_FRAME_TIME 0.1f
 
 #define PLAYER_START_MOVE "PlayerMoveIn"
