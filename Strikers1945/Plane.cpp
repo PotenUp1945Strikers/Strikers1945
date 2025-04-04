@@ -52,7 +52,7 @@ void Plane::FillDict(void)
 		PlaneType enemy1;
 		enemy1.key = TEXT(ENEMY1_PATH);
 		enemy1.size = RECT{ -4, -32, 6, 32 };
-		enemy1.health = 14;
+		enemy1.health = 4;
 		enemy1.missilePos = { 0, -34 };
 		enemy1.centerPos = { 39, 32 };
 		enemy1.missileType = TEXT(TARGETTING_BULLET_PATH);
@@ -66,7 +66,7 @@ void Plane::FillDict(void)
 		PlaneType enemy2;
 		enemy2.key = TEXT(ENEMY2_PATH);
 		enemy2.size = RECT{ -6, -18, 8, 6 };
-		enemy2.health = 8;
+		enemy2.health = 3;
 		enemy2.missilePos = { 0, 32 };
 		enemy2.centerPos = { 20, 30 };
 		enemy2.missileType = TEXT(TARGETTING_BULLET_PATH);
@@ -80,7 +80,7 @@ void Plane::FillDict(void)
 		PlaneType enemy3;
 		enemy3.key = TEXT(ENEMY3_PATH);
 		enemy3.size = RECT{ -10, -24, 12, 12 };
-		enemy3.health = 8;
+		enemy3.health = 3;
 		enemy3.missilePos = { 0, 32 };
 		enemy3.centerPos = { 18, 32 };
 		enemy3.missileType = TEXT(TARGETTING_BULLET_PATH);
@@ -159,6 +159,7 @@ void Plane::Init(void)
 	currFrameY = 0;
 	hitRenderTime = HIT_RENDER_TIME;
 	frameTime = ANIMATION_FRAME_TIME;
+	damageTickTime = HIT_TICK_TIME;
 	playerNum = PlayerNum::NONE;
 }
 
@@ -179,7 +180,7 @@ void Plane::Init(const wchar_t* key, float startPos, Type type)
 	currFrameY = 0;
 	hitRenderTime = HIT_RENDER_TIME;
 	frameTime = ANIMATION_FRAME_TIME;
-
+	damageTickTime = HIT_TICK_TIME;
 	playerNum = PlayerNum::NONE;
 
 	if (!launcher)
@@ -291,6 +292,8 @@ void Plane::Render(HDC hdc)
 
 void Plane::Update(void)
 {
+	damageTickTime -= TimerManager::GetInstance()->GetDeltaTime();
+
 	switch (type) {
 	case Type::PLAYER:
 		UpdatePlayer();
@@ -500,6 +503,11 @@ void Plane::MoveAlongPathMoveCurve()
 
 void Plane::OnDamage(int damage)
 {
+	if (damageTickTime >= 0)
+		return;
+	else
+		damageTickTime = HIT_TICK_TIME;
+
 	health -= damage;
 	if (type == Type::ENEMY)
 		currFrameY = 1;

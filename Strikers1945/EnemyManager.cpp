@@ -548,6 +548,10 @@ void EnemyManager::CreateLevel(void)
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 120, 370 }, 1400 });
 	level.push_back({ EnemyType::PLANE, TEXT(ENEMY1_PATH), dict[TEXT("RIGHT_TOP_TO_LEFT_BOTTOM")], { WINSIZE_X + 190, 440 }, 1400 });
 
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { 400, -50 }, 1600 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { 400, -50 }, 1670 });
+	level.push_back({ EnemyType::PLANE, TEXT(ENEMY2_PATH), dict[TEXT("MOVEAROUND")], { 400, -50 }, 1740 });
+
 	level.push_back({ EnemyType::BOSS, TEXT(BOSS_PATH), dict[TEXT("BOSS")], { WINSIZE_X / 2, -160 }, 3000 });
 }
 

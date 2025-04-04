@@ -20,6 +20,7 @@ protected:
 	bool				use;
 	float				hitRenderTime;
 	float				frameTime;
+	float				damageTickTime;
 
 	PlayerNum			playerNum;
 

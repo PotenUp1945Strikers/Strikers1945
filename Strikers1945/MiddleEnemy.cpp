@@ -46,6 +46,11 @@ void MiddleEnemy::Render(HDC hdc)
 
 void MiddleEnemy::OnDamage(int damage)
 {
+	if (damageTickTime >= 0)
+		return;
+	else
+		damageTickTime = HIT_TICK_TIME;
+
 	health -= damage;
 	currFrameY = 1;
 	if (health <= 0)

@@ -74,6 +74,7 @@ using namespace std;
 
 #define INVINCIBILITY_TIME 0.8f
 #define HIT_RENDER_TIME 0.15f
+#define HIT_TICK_TIME 1e-4f
 #define ANIMATION_FRAME_TIME 0.1f
 
 #define PLAYER_START_MOVE "PlayerMoveIn"
