@@ -13,7 +13,7 @@ void Plane::FillDict(void)
 		player.health = 1;
 		player.missilePos = { 0, -31 };
 		player.centerPos = { 32, 31 };
-		player.missileType = TEXT(PLAYER_BULLET1_PATH);
+		player.missileType = TEXT(RAPIDFIRE_BULLET_PATH);
 		player.maxFrameX = 7;
 		player.renderType = PlaneRenderType::DIR_X;
 		player.speed = 180;

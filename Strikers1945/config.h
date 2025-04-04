@@ -35,6 +35,9 @@ using namespace std;
 #define NORMAL_BULLET_PATH "Image/NormalBullet.bmp"
 #define TARGETTING_BULLET_PATH "Image/TargettingBullet.bmp"
 #define AROUND_BULLET_PATH "Image/AroundBullet.bmp"
+#define RANDOM_BULLET_PATH "Image/RandomMissile.bmp"
+#define RAPIDFIRE_BULLET_PATH "Image/RapidMissile.bmp"
+
 #define TANK_PATH "Image/Tank.bmp"
 #define ENEMY1_PATH "Image/Enemy1.bmp"
 #define ENEMY2_PATH "Image/Enemy2.bmp"
@@ -123,7 +126,9 @@ enum class MissileKind
 	None,
 	Basic,
 	Targetting,
-	Around
+	Around,
+	Random,
+	RapidFire
 };
 
 typedef struct tagMissileType
