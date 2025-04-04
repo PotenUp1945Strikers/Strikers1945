@@ -60,7 +60,7 @@ void EffectManager::Update()
 				}
 			}
 		}
-	}*/
+	}
 	for (auto& effectPair : dict)
 	{
 		for (auto& effect : effectPair.second)
@@ -110,7 +110,7 @@ void EffectManager::Release()
 
 void EffectManager::OnEffect(const wchar_t* key, FPOINT pos)
 {
-	/*if (dict.empty())
+	if (dict.empty())
 		FillDict();
 
 	auto var = dict.find(key);

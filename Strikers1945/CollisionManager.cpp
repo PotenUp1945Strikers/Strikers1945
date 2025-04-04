@@ -115,7 +115,7 @@ void CollisionManager::checkCollisions()
 			if (enemyBullet->GetActive() == false) continue;
 			if (isColliding(bombPlane, enemyBullet))
 			{
-				enemyBullet->OnDamage();
+				enemyBullet->OnDamage(0);
 			}
 		}
 
@@ -124,7 +124,7 @@ void CollisionManager::checkCollisions()
 			if (enemy->GetActive() == false) continue;
 			if (isColliding(bombPlane, enemy))
 			{
-				enemy->OnDamage();
+				enemy->OnDamage(0);
 			}
 		}
 	}

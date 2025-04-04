@@ -42,7 +42,6 @@ public:
 
 	
 	bool Revive(void);
-	bool Revive(void);
 
 	FPOINT GetPlayer1Pos(void);
 	void UpgradePlayer1(void);
