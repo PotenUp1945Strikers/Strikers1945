@@ -527,7 +527,9 @@ void Plane::OnDamage(int damage)
 			state = GameObjectStates::Wait;
 			launcher->Init(TEXT(PLAYER_BULLET1_PATH), Type::PLAYER_BULLET);
 			currPath = 0;
-			pos = { static_cast<float>(static_cast<int>(playerNum) == static_cast<int>(PlayerNum::PLAYER1) ? WINSIZE_X / 2 - 150 : WINSIZE_X / 2 + 150)      , WINSIZE_Y + 100 };
+			pos = {450, WINSIZE_Y + 100 };
+			if (playerNum == PlayerNum::PLAYER1)
+				pos.x = 150;
 			absTime = INVINCIBILITY_TIME;
 			SetGoal();
 		}

@@ -27,12 +27,12 @@ void PlayerManager::Init(void)
 	{
 		player1 = new Plane;
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
-		player1->SetPlayerNum(PlayerNum::PLAYER1);
 		CollisionManager::GetInstance()->AddCollider(player1);
 	}
 	else 
 		player1->Init(TEXT(PLAYER_PATH), 0, Type::PLAYER);
 
+	player1->SetPlayerNum(PlayerNum::PLAYER1);
 	player1->SetPos({ WINSIZE_X / 2 - 150, WINSIZE_Y + 100});
 	player1->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player1Life = 3;
@@ -46,12 +46,12 @@ void PlayerManager::Init(void)
 		player2 = new Plane;
 
 		player2->Init(TEXT(PLAYER2_PATH), 0, Type::PLAYER);
-		player2->SetPlayerNum(PlayerNum::PLAYER2);
 		CollisionManager::GetInstance()->AddCollider(player2);
 	}
 	else
 		player2->Init(TEXT(PLAYER2_PATH), 0, Type::PLAYER);
 
+	player2->SetPlayerNum(PlayerNum::PLAYER2);
 	player2->SetPos({ WINSIZE_X / 2 + 150, WINSIZE_Y + 100 });
 	player2->SetPath(dict[TEXT(PLAYER_START_MOVE)]);
 	player2Life = 3;
