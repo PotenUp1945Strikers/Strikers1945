@@ -88,6 +88,32 @@ void MissileManager::FillDict()
 	aroundMissile.upgrade = nullptr;
 	aroundMissile.maxFrameX = 0;
 	missileDict.insert(make_pair(TEXT(AROUND_BULLET_PATH), aroundMissile));
+
+	MissileType randomMissile;
+	randomMissile.key = TEXT(RANDOM_BULLET_PATH);
+	randomMissile.missileKind = MissileKind::Random;
+	randomMissile.missileSpeed = 100.0f;
+	randomMissile.shootRate = 0.5f;
+	randomMissile.damage = 2;
+	randomMissile.size = { -10, -10, 10, 10 };
+	randomMissile.reloadRate = 3.0f;
+	randomMissile.missileAmount = 20;
+	randomMissile.upgrade = nullptr;
+	randomMissile.maxFrameX = 7;
+	missileDict.insert(make_pair(TEXT(RANDOM_BULLET_PATH), randomMissile));
+
+	MissileType rapidFireMissile;
+	rapidFireMissile.key = TEXT(RAPIDFIRE_BULLET_PATH);
+	rapidFireMissile.missileKind = MissileKind::RapidFire;
+	rapidFireMissile.missileSpeed = 400.0f;
+	rapidFireMissile.shootRate = 0.05f;
+	rapidFireMissile.damage = 1;
+	rapidFireMissile.size = { -10, -10, 10, 10 };
+	rapidFireMissile.reloadRate = 3.0f;
+	rapidFireMissile.missileAmount = 10;
+	rapidFireMissile.upgrade = nullptr;
+	rapidFireMissile.maxFrameX = 0;
+	missileDict.insert(make_pair(TEXT(RAPIDFIRE_BULLET_PATH), rapidFireMissile));
 }
 void MissileManager::Init()
 {
@@ -222,18 +248,23 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 {
 	static float angle = 0.0f;
 	static bool isAngleUp = true;
-	FPOINT dest  = PlayerManager::GetInstance()->GetPlayer1Pos();
+	FPOINT dest1  = PlayerManager::GetInstance()->GetPlayer1Pos();
+	//FPOINT dest2  = PlayerManager::GetInstance()->GetPlayer2Pos();
 	switch (missileKind)
 	{
 	case MissileKind::None:
 	case MissileKind::Basic:
+	case MissileKind::RapidFire:
 		if (type == Type::PLAYER_BULLET)
 			dir = { 0,-1 };
 		else if (type == Type::ENEMY_BULLET)
 			dir = { 0,1 };
 		break;
 	case MissileKind::Targetting:
-		dir = GetUnitVector(pos, dest);
+		//if (rand() % 2 == 0)
+			dir = GetUnitVector(pos, dest1);
+		//else
+		//	dir = GetUnitVector(pos, dest2);
 		break;
 	case MissileKind::Around:
 		dir.x = cos(DEG_TO_RAD(angle));
@@ -245,6 +276,13 @@ void MissileManager::MissileDirSetting(FPOINT pos)
 		if (angle >= 180.0f) isAngleUp = false;
 		if (angle <= 0.0f) isAngleUp = true;
 		break;
+	case MissileKind::Random:
+	{
+		float randomAngle = static_cast<float>(rand() % 360);
+		dir.x = cos(DEG_TO_RAD(randomAngle));
+		dir.y = sin(DEG_TO_RAD(randomAngle));
+	}
+	break;
 	default:
 		break;
 	}
